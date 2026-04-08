@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iniestabluu | WEB制作・SNSマーケティング代行</title>
+  <meta name="description" content="iniestabluuは、WEB制作代行・SNSマーケティング代行でビジネスの成長を加速させます。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #020817;
+      --bg2: #0A0E27;
+      --purple: #7C3AED;
+      --blue: #2563EB;
+      --cyan: #06B6D4;
+      --pink: #EC4899;
+      --white: #F8FAFC;
+      --muted: #94A3B8;
+      --glass-bg: rgba(255,255,255,0.04);
+      --glass-border: rgba(255,255,255,0.08);
+      --glow-purple: 0 0 60px rgba(124,58,237,0.4);
+      --glow-cyan: 0 0 60px rgba(6,182,212,0.4);
+      --font-head: 'Space Grotesk', sans-serif;
+      --font-body: 'Noto Sans JP', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    /* ── Aurora Background ── */
+    .aurora {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .aurora-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.35;
+      animation: float 12s ease-in-out infinite;
+    }
+    .aurora-orb:nth-child(1) {
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, #7C3AED, transparent);
+      top: -200px; left: -200px;
+      animation-delay: 0s;
+    }
+    .aurora-orb:nth-child(2) {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, #2563EB, transparent);
+      top: 30%; right: -150px;
+      animation-delay: -4s;
+    }
+    .aurora-orb:nth-child(3) {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, #06B6D4, transparent);
+      bottom: 10%; left: 20%;
+      animation-delay: -8s;
+    }
+    .aurora-orb:nth-child(4) {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, #EC4899, transparent);
+      bottom: -100px; right: 10%;
+      animation-delay: -2s;
+    }
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -40px) scale(1.05); }
+      66% { transform: translate(-20px, 20px) scale(0.95); }
+    }
+
+    /* ── Canvas Particles ── */
+    #particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(2, 8, 23, 0.6);
+      border-bottom: 1px solid var(--glass-border);
+      transition: all 0.3s ease;
+    }
+    .nav-logo {
+      font-family: var(--font-head);
+      font-size: 1.4rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #fff 0%, var(--cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.02em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      padding: 0.5rem 1.25rem;
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      border-radius: 8px;
+      color: #fff !important;
+      font-weight: 600 !important;
+      font-size: 0.85rem !important;
+      transition: transform 0.2s, box-shadow 0.2s !important;
+    }
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(124,58,237,0.5) !important;
+      color: #fff !important;
+    }
+
+    /* ── Sections ── */
+    section { position: relative; z-index: 1; }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 999px;
+      font-size: 0.8rem;
+      color: var(--cyan);
+      margin-bottom: 2rem;
+      backdrop-filter: blur(10px);
+      animation: fadeInDown 0.8s ease both;
+    }
+    .hero-badge span { width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.5;transform:scale(1.3);} }
+    @keyframes fadeInDown { from{opacity:0;transform:translateY(-20px);} to{opacity:1;transform:translateY(0);} }
+    @keyframes fadeInUp { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
+    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+
+    .hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.9s ease 0.2s both;
+    }
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, var(--cyan) 0%, var(--purple) 50%, var(--pink) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      background-size: 200% 200%;
+      animation: gradientShift 4s ease infinite;
+    }
+    @keyframes gradientShift {
+      0%,100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      animation: fadeInUp 0.9s ease 0.4s both;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.9s ease 0.6s both;
+    }
+    .btn-primary {
+      padding: 0.9rem 2rem;
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      border-radius: 12px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      border: none;
+      font-family: var(--font-body);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(124,58,237,0.6);
+    }
+    .btn-secondary {
+      padding: 0.9rem 2rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      color: var(--white);
+      font-weight: 500;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      backdrop-filter: blur(10px);
+      font-family: var(--font-body);
+    }
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      animation: fadeIn 1s ease 1.5s both;
+    }
+    .scroll-indicator span { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--muted), transparent);
+      animation: scrollDown 2s ease-in-out infinite;
+    }
+    @keyframes scrollDown { 0%{transform:scaleY(0);transform-origin:top;} 50%{transform:scaleY(1);transform-origin:top;} 51%{transform:scaleY(1);transform-origin:bottom;} 100%{transform:scaleY(0);transform-origin:bottom;} }
+
+    /* ── Stats Bar ── */
+    .stats-bar {
+      padding: 3rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--glass-border);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      backdrop-filter: blur(20px);
+      background-clip: padding-box;
+    }
+    .stat-item {
+      padding: 1.5rem;
+      text-align: center;
+      background: var(--glass-bg);
+    }
+    .stat-item:first-child { border-radius: 19px 0 0 19px; }
+    .stat-item:last-child { border-radius: 0 19px 19px 0; }
+    .stat-num {
+      font-family: var(--font-head);
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--white), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label { font-size: 0.85rem; color: var(--muted); margin-top: 0.3rem; }
+
+    /* ── Section Common ── */
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+    }
+    .section-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+    .section-desc {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin-bottom: 3rem;
+    }
+
+    /* ── Services ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .service-card {
+      padding: 2.5rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      backdrop-filter: blur(20px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      cursor: default;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      border-color: rgba(255,255,255,0.15);
+    }
+    .service-card:nth-child(1):hover { box-shadow: 0 20px 60px rgba(124,58,237,0.25); }
+    .service-card:nth-child(2):hover { box-shadow: 0 20px 60px rgba(6,182,212,0.25); }
+    .service-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .service-card:nth-child(1) .service-icon { background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(37,99,235,0.3)); }
+    .service-card:nth-child(2) .service-icon { background: linear-gradient(135deg, rgba(6,182,212,0.3), rgba(37,99,235,0.3)); }
+    .service-card h3 {
+      font-family: var(--font-head);
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+    .service-card p { color: var(--muted); font-size: 0.95rem; line-height: 1.8; }
+    .service-features {
+      list-style: none;
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .service-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .service-features li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cyan);
+      flex-shrink: 0;
+    }
+
+    /* ── Process ── */
+    .process-section { background: linear-gradient(180deg, transparent, rgba(124,58,237,0.05), transparent); }
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      position: relative;
+    }
+    .process-step {
+      text-align: center;
+      padding: 2rem 1.5rem;
+    }
+    .step-number {
+      font-family: var(--font-head);
+      font-size: 4rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(6,182,212,0.3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .process-step h3 {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+    .process-step p { color: var(--muted); font-size: 0.9rem; }
+
+    /* ── About ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .about-visual {
+      position: relative;
+    }
+    .about-card-main {
+      padding: 2.5rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      backdrop-filter: blur(20px);
+    }
+    .about-card-main h3 {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--white), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .company-info-table { width: 100%; border-collapse: collapse; }
+    .company-info-table tr { border-bottom: 1px solid var(--glass-border); }
+    .company-info-table tr:last-child { border-bottom: none; }
+    .company-info-table td { padding: 0.9rem 0; font-size: 0.9rem; }
+    .company-info-table td:first-child { color: var(--muted); width: 40%; }
+    .company-info-table td:last-child { color: var(--white); font-weight: 500; }
+    .floating-badge {
+      position: absolute;
+      top: -1rem;
+      right: -1rem;
+      padding: 0.75rem 1.25rem;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      border-radius: 14px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      box-shadow: 0 8px 30px rgba(124,58,237,0.4);
+      animation: floatBadge 4s ease-in-out infinite;
+    }
+    @keyframes floatBadge { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px);} }
+    .about-text .section-desc { max-width: 100%; }
+    .about-values {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .value-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+    }
+    .value-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .value-item h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .value-item p { font-size: 0.85rem; color: var(--muted); }
+
+    /* ── CTA ── */
+    .cta-section {
+      text-align: center;
+      padding: 6rem 2rem;
+    }
+    .cta-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 4rem 3rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 32px;
+      backdrop-filter: blur(30px);
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-inner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(124,58,237,0.1), rgba(6,182,212,0.1));
+      pointer-events: none;
+    }
+    .cta-glow {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,58,237,0.3), transparent);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      filter: blur(60px);
+      pointer-events: none;
+    }
+    .cta-inner h2 {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    .cta-inner p { color: var(--muted); margin-bottom: 2.5rem; position: relative; }
+
+    /* ── Footer ── */
+    footer {
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--glass-border);
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: var(--font-head);
+      font-size: 1.3rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #fff, var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+    .footer-copy { color: var(--muted); font-size: 0.85rem; }
+
+    /* ── Reveal animations ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Ensure content is always visible even if JS fails */
+    .no-js .reveal { opacity: 1; transform: none; }
+
+    /* ── Gradient line ── */
+    .gradient-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--purple), var(--cyan), var(--pink), transparent);
+      opacity: 0.4;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .stats-bar { grid-template-columns: 1fr; gap: 1px; }
+      .stat-item:first-child { border-radius: 19px 19px 0 0; }
+      .stat-item:last-child { border-radius: 0 0 19px 19px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .floating-badge { display: none; }
+      .cta-inner { padding: 2.5rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Aurora Background -->
+  <div class="aurora">
+    <div class="aurora-orb"></div>
+    <div class="aurora-orb"></div>
+    <div class="aurora-orb"></div>
+    <div class="aurora-orb"></div>
+  </div>
+  <canvas id="particles"></canvas>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-logo">iniestabluu</div>
+    <ul class="nav-links">
+      <li><a href="#services">サービス</a></li>
+      <li><a href="#process">プロセス</a></li>
+      <li><a href="#about">会社概要</a></li>
+      <li><a href="#contact" class="nav-cta">お問い合わせ</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-badge">
+      <span></span>
+      WEB制作 × SNSマーケティング
+    </div>
+    <h1>
+      ビジネスを<br />
+      <span class="gradient-text">次のステージへ</span>
+    </h1>
+    <p>
+      最先端のWEB制作とSNSマーケティングで、<br />
+      あなたのブランドを加速させます。
+    </p>
+    <div class="hero-buttons">
+      <a href="#contact" class="btn-primary">無料相談を予約する</a>
+      <a href="#services" class="btn-secondary">サービスを見る</a>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section style="padding: 0 2rem 5rem; position: relative; z-index: 1;">
+    <div class="stats-bar reveal">
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">クライアント満足度</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">AI駆動</div>
+        <div class="stat-label">最新技術で高速納品</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2026</div>
+        <div class="stat-label">設立</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="gradient-line"></div>
+
+  <!-- Services -->
+  <section id="services">
+    <div class="section-inner">
+      <div class="reveal">
+        <span class="section-tag">Services</span>
+        <h2 class="section-title">提供するサービス</h2>
+        <p class="section-desc">ビジネスの成長に必要なデジタル戦略を、トータルでサポートします。</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-icon">🌐</div>
+          <h3>WEB制作代行</h3>
+          <p>ビジネスに合った高品質なウェブサイトを制作。コーポレートサイトからECサイト、LPまで幅広く対応します。</p>
+          <ul class="service-features">
+            <li>コーポレートサイト</li>
+            <li>ランディングページ（LP）</li>
+            <li>ECサイト・ショッピングサイト</li>
+            <li>レスポンシブ対応・SEO最適化</li>
+          </ul>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">📱</div>
+          <h3>SNSマーケティング代行</h3>
+          <p>Instagram・X・TikTokなどの各種SNSを戦略的に運用。フォロワー増加から購買転換まで一貫してサポート。</p>
+          <ul class="service-features">
+            <li>SNSアカウント運用代行</li>
+            <li>コンテンツ企画・制作</li>
+            <li>広告運用（Instagram/Meta広告）</li>
+            <li>データ分析・レポーティング</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="gradient-line"></div>
+
+  <!-- Process -->
+  <section id="process" class="process-section">
+    <div class="section-inner">
+      <div class="reveal">
+        <span class="section-tag">Process</span>
+        <h2 class="section-title">進め方</h2>
+        <p class="section-desc">シンプルなプロセスで、最速・最高品質のアウトプットを届けます。</p>
+      </div>
+      <div class="process-steps">
+        <div class="process-step reveal">
+          <div class="step-number">01</div>
+          <h3>ヒアリング</h3>
+          <p>まずは無料相談。ビジネスの目標・課題・予算をお聞きします。</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-number">02</div>
+          <h3>提案・設計</h3>
+          <p>課題に最適なソリューションをご提案。戦略とデザインを設計します。</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-number">03</div>
+          <h3>制作・実装</h3>
+          <p>最新技術で高速に制作。進捗は随時共有しながら進めます。</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-number">04</div>
+          <h3>納品・運用</h3>
+          <p>納品後もデータを見ながら改善・運用サポートを続けます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="gradient-line"></div>
+
+  <!-- About -->
+  <section id="about">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-visual reveal">
+          <div class="about-card-main">
+            <h3>会社概要</h3>
+            <table class="company-info-table">
+              <tr><td>会社名</td><td>iniestabluu</td></tr>
+              <tr><td>代表者</td><td>武 奏汰</td></tr>
+              <tr><td>設立</td><td>2026年5月11日</td></tr>
+              <tr><td>事業内容</td><td>WEB制作代行<br />SNSマーケティング代行</td></tr>
+            </table>
+          </div>
+          <div class="floating-badge">✦ 設立2026</div>
+        </div>
+        <div class="about-text reveal">
+          <span class="section-tag">About</span>
+          <h2 class="section-title">テクノロジーと<br />クリエイティブで<br />成長を加速する</h2>
+          <p class="section-desc">iniestabluuは、最新のAI技術とクリエイティブの力で、クライアントのビジネス成長を最大化するデジタルエージェンシーです。</p>
+          <div class="about-values">
+            <div class="value-item">
+              <span class="value-icon">⚡</span>
+              <div>
+                <h4>スピード優先</h4>
+                <p>遅い完璧より、速い80点。まず動かして改善する。</p>
+              </div>
+            </div>
+            <div class="value-item">
+              <span class="value-icon">🎯</span>
+              <div>
+                <h4>成果にコミット</h4>
+                <p>見た目だけでなく、ビジネス成果につながるものを作る。</p>
+              </div>
+            </div>
+            <div class="value-item">
+              <span class="value-icon">🤖</span>
+              <div>
+                <h4>AI × 人間の融合</h4>
+                <p>最新のAI技術を活用し、人間のクリエイティビティを最大化。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="contact" class="cta-section">
+    <div class="cta-inner reveal">
+      <div class="cta-glow"></div>
+      <h2>まず、話してみましょう</h2>
+      <p>無料相談から始められます。あなたのビジネスに最適なプランをご提案します。</p>
+      <a href="mailto:contact@iniestabluu.com" class="btn-primary" style="display:inline-block; position:relative;">
+        無料相談を予約する →
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-logo">iniestabluu</div>
+    <p class="footer-copy">© 2026 iniestabluu. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // ── Particles ──
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = Array.from({length: 80}, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 1.5 + 0.5,
+      alpha: Math.random() * 0.5 + 0.1,
+      color: ['#7C3AED','#2563EB','#06B6D4','#EC4899'][Math.floor(Math.random()*4)]
+    }));
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.fill();
+      });
+      // Draw lines between nearby particles
+      ctx.globalAlpha = 1;
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 120) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(99,102,241,${0.15 * (1 - dist/120)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(drawParticles);
+    }
+    drawParticles();
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    // ── Scroll Reveal ──
+    const revealEls = document.querySelectorAll('.reveal');
+    // Force show all after short delay as fallback
+    setTimeout(() => {
+      revealEls.forEach((el, i) => {
+        setTimeout(() => el.classList.add('visible'), i * 100);
+      });
+    }, 300);
+    // Also use IntersectionObserver for scroll-triggered reveals
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            observer.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
+      revealEls.forEach(el => observer.observe(el));
+    }
+
+    // ── Nav scroll effect ──
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 50) {
+        nav.style.background = 'rgba(2,8,23,0.9)';
+      } else {
+        nav.style.background = 'rgba(2,8,23,0.6)';
+      }
+    });
+
+    // ── Counter animation ──
+    document.querySelectorAll('.stat-num').forEach(el => {
+      const text = el.textContent;
+      if (!isNaN(parseInt(text))) return;
+    });
+  </script>
+</body>
+</html>
