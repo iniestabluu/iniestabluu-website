@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Landing Page | iniestabluu</title>
+  <meta name="description" content="ランディングページ制作の料金・実績。iniestabluu." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #fafafa; --surface: #ffffff; --surface-2: #f4f4f5;
+      --border: rgba(0,0,0,0.08); --text: #18181b; --text-2: #52525b; --text-3: #a1a1aa;
+      --accent: #f59e0b; --accent-2: #d97706; --accent-glow: rgba(245,158,11,0.12);
+      --font-en: 'Space Grotesk', sans-serif; --font-jp: 'Noto Sans JP', sans-serif;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-en); -webkit-font-smoothing: antialiased; overflow-x: hidden; cursor: none; }
+    a { color: inherit; text-decoration: none; cursor: none; }
+    button { cursor: none; }
+    .cursor { position: fixed; width: 20px; height: 20px; border: 1.5px solid var(--accent); border-radius: 50%; pointer-events: none; z-index: 9999; transition: width 0.3s var(--ease-spring), height 0.3s var(--ease-spring), background 0.3s ease; transform: translate(-50%, -50%); opacity: 0; }
+    .cursor.active { opacity: 1; }
+    .cursor.hovering { width: 56px; height: 56px; background: rgba(245,158,11,0.08); }
+    .cursor-dot { position: fixed; width: 5px; height: 5px; background: var(--accent); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); opacity: 0; }
+    .cursor-dot.active { opacity: 1; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 clamp(1.5rem, 4vw, 4rem); height: 72px; display: flex; align-items: center; justify-content: space-between; background: rgba(250,250,250,0.8); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.04em; color: var(--text); }
+    .nav-back { font-size: 0.8rem; color: var(--text-3); font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: color 0.3s; }
+    .nav-back:hover { color: var(--text); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 clamp(1.5rem, 4vw, 4rem); }
+    .page-hero { padding: 10rem 0 5rem; position: relative; overflow: hidden; }
+    .page-hero-glow { position: absolute; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%); top: 30%; left: 60%; transform: translate(-50%, -50%); filter: blur(80px); opacity: 0.5; }
+    .page-hero .container { position: relative; z-index: 1; }
+    .page-label { font-size: 0.65rem; font-weight: 600; color: var(--accent-2); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+    .page-label::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
+    .page-title { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; letter-spacing: -0.05em; line-height: 1.05; margin-bottom: 1.5rem; }
+    .page-title .gradient-text { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 50%, #ea580c 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .page-desc { font-family: var(--font-jp); font-size: 1rem; color: var(--text-2); line-height: 2; max-width: 600px; }
+    .section { padding: clamp(4rem, 8vw, 7rem) 0; }
+    .section-label { font-size: 0.65rem; font-weight: 600; color: var(--accent-2); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+    .section-label::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
+    .section-title { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 700; letter-spacing: -0.04em; margin-bottom: 1rem; }
+    .section-desc { font-family: var(--font-jp); color: var(--text-2); font-size: 0.9rem; line-height: 1.9; max-width: 500px; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+    .includes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .include-item { display: flex; align-items: flex-start; gap: 1rem; padding: 1.5rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; transition: border-color 0.3s; }
+    .include-item:hover { border-color: rgba(245,158,11,0.25); }
+    .include-icon { width: 36px; height: 36px; border-radius: 8px; background: rgba(245,158,11,0.08); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .include-icon svg { width: 18px; height: 18px; stroke: var(--accent-2); fill: none; stroke-width: 1.5; }
+    .include-item h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .include-item p { font-family: var(--font-jp); font-size: 0.78rem; color: var(--text-2); line-height: 1.6; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .pricing-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; position: relative; transition: transform 0.3s var(--ease-out), box-shadow 0.3s ease; }
+    .pricing-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,0,0,0.08); }
+    .pricing-card.featured { border-color: var(--accent); }
+    .pricing-card.featured::before { content: 'POPULAR'; position: absolute; top: -10px; right: 20px; background: var(--accent); color: #fff; font-size: 0.6rem; font-weight: 700; padding: 0.3rem 0.8rem; border-radius: 6px; letter-spacing: 0.1em; }
+    .pricing-name { font-size: 0.75rem; font-weight: 600; color: var(--text-3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
+    .pricing-price { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.04em; margin-bottom: 0.3rem; }
+    .pricing-price span { font-size: 0.9rem; font-weight: 500; color: var(--text-3); }
+    .pricing-note { font-family: var(--font-jp); font-size: 0.75rem; color: var(--text-3); margin-bottom: 2rem; }
+    .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+    .pricing-features li { font-family: var(--font-jp); font-size: 0.85rem; color: var(--text-2); display: flex; align-items: center; gap: 0.6rem; }
+    .pricing-features li::before { content: ''; width: 16px; height: 16px; border-radius: 50%; background: rgba(245,158,11,0.1); flex-shrink: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23d97706' stroke-width='3'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: center; }
+    .pricing-btn { display: block; width: 100%; text-align: center; padding: 0.85rem; border-radius: 10px; font-size: 0.85rem; font-weight: 600; font-family: var(--font-en); border: none; transition: transform 0.3s var(--ease-spring), box-shadow 0.3s; }
+    .pricing-btn-primary { background: var(--text); color: var(--bg); }
+    .pricing-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
+    .pricing-btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .pricing-btn-ghost:hover { border-color: var(--text-3); transform: translateY(-2px); }
+    .portfolio-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .portfolio-card { border-radius: 16px; overflow: hidden; position: relative; aspect-ratio: 16 / 10; background: var(--surface-2); border: 1px solid var(--border); transition: transform 0.4s var(--ease-out), box-shadow 0.4s; }
+    .portfolio-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,0,0,0.08); }
+    .portfolio-canvas { width: 100%; height: 100%; position: absolute; inset: 0; }
+    .portfolio-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(255,255,255,0.95) 0%, transparent 50%); }
+    .portfolio-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem 2rem; }
+    .portfolio-tag { font-size: 0.6rem; font-weight: 600; color: var(--accent-2); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem; }
+    .portfolio-info h3 { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 0.2rem; }
+    .portfolio-info p { font-family: var(--font-jp); font-size: 0.78rem; color: var(--text-2); }
+    .cta { padding: clamp(5rem, 10vw, 8rem) 0; text-align: center; position: relative; }
+    .cta-glow { position: absolute; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%); left: 50%; top: 50%; transform: translate(-50%, -50%); filter: blur(60px); opacity: 0.4; }
+    .cta h2 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; letter-spacing: -0.04em; margin-bottom: 1rem; position: relative; }
+    .cta p { font-family: var(--font-jp); color: var(--text-2); margin-bottom: 2.5rem; position: relative; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.85rem 2rem; background: var(--text); color: var(--bg); font-size: 0.85rem; font-weight: 600; border-radius: 12px; border: none; font-family: var(--font-en); transition: transform 0.3s var(--ease-spring), box-shadow 0.3s; position: relative; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
+    .btn-arrow { display: inline-block; transition: transform 0.3s var(--ease-out); }
+    .btn-primary:hover .btn-arrow { transform: translateX(3px); }
+    footer { padding: 2.5rem 0; border-top: 1px solid var(--border); }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo { font-size: 0.9rem; font-weight: 700; letter-spacing: -0.03em; color: var(--text-3); }
+    .footer-copy { font-size: 0.7rem; color: var(--text-3); }
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); }
+    .reveal.visible { opacity: 1; transform: none; }
+    .stagger-children > * { opacity: 0; transform: translateY(25px); transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out); }
+    .stagger-children.visible > *:nth-child(1) { transition-delay: 0s; opacity: 1; transform: none; }
+    .stagger-children.visible > *:nth-child(2) { transition-delay: 0.08s; opacity: 1; transform: none; }
+    .stagger-children.visible > *:nth-child(3) { transition-delay: 0.16s; opacity: 1; transform: none; }
+    .stagger-children.visible > *:nth-child(4) { transition-delay: 0.24s; opacity: 1; transform: none; }
+    @media (max-width: 768px) { body{cursor:auto;} .cursor,.cursor-dot{display:none;} .pricing-grid{grid-template-columns:1fr;} .portfolio-grid{grid-template-columns:1fr;} .includes-grid{grid-template-columns:1fr;} footer .footer-inner{flex-direction:column;gap:0.75rem;text-align:center;} }
+    @media (prefers-reduced-motion: reduce) { *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important;} }
+  </style>
+</head>
+<body>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+  <nav>
+    <a href="index.html" class="nav-logo">iniestabluu</a>
+    <a href="index.html#services" class="nav-back">&larr; Services</a>
+  </nav>
+
+  <section class="page-hero">
+    <div class="page-hero-glow"></div>
+    <div class="container">
+      <p class="page-label">Landing Page</p>
+      <h1 class="page-title"><span class="gradient-text">コンバージョン</span>を<br>最大化する。</h1>
+      <p class="page-desc">広告効果を最大限に引き出すLP。データドリブンな設計と訴求力のあるビジュアルで、成果に直結するページを制作します。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <p class="section-label">What's Included</p>
+      <h2 class="section-title">含まれるもの</h2>
+      <p class="section-desc">成果を出すために必要な要素をすべて。</p>
+      <div class="includes-grid stagger-children">
+        <div class="include-item">
+          <div class="include-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+          <div><h4>高速表示最適化</h4><p>Core Web Vitals対応。表示速度で離脱を防ぐ。</p></div>
+        </div>
+        <div class="include-item">
+          <div class="include-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+          <div><h4>A/Bテスト対応</h4><p>ヘッドライン・CTAの最適化テスト設計。</p></div>
+        </div>
+        <div class="include-item">
+          <div class="include-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+          <div><h4>レスポンシブ対応</h4><p>スマホからのアクセスに完全最適化。</p></div>
+        </div>
+        <div class="include-item">
+          <div class="include-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div><h4>最短3日納品</h4><p>スピード重視。最短3営業日で公開可能。</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--surface-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+      <p class="section-label">Pricing</p>
+      <h2 class="section-title">料金プラン</h2>
+      <p class="section-desc">目的と規模に合わせた3プラン。</p>
+      <div class="pricing-grid stagger-children">
+        <div class="pricing-card">
+          <p class="pricing-name">Quick</p>
+          <p class="pricing-price">¥58,000 <span>〜</span></p>
+          <p class="pricing-note">1ページ / 最短3日</p>
+          <ul class="pricing-features">
+            <li>テンプレートベース</li>
+            <li>ヘッダー〜CTA構成</li>
+            <li>レスポンシブ対応</li>
+            <li>フォーム設置</li>
+          </ul>
+          <a href="#contact" class="pricing-btn pricing-btn-ghost">相談する</a>
+        </div>
+        <div class="pricing-card featured">
+          <p class="pricing-name">Standard</p>
+          <p class="pricing-price">¥128,000 <span>〜</span></p>
+          <p class="pricing-note">1ページ / 最短1週間</p>
+          <ul class="pricing-features">
+            <li>オリジナルデザイン</li>
+            <li>アニメーション演出</li>
+            <li>コンバージョン最適化</li>
+            <li>アクセス解析設定</li>
+            <li>A/Bテスト設計</li>
+          </ul>
+          <a href="#contact" class="pricing-btn pricing-btn-primary">相談する</a>
+        </div>
+        <div class="pricing-card">
+          <p class="pricing-name">Premium</p>
+          <p class="pricing-price">¥248,000 <span>〜</span></p>
+          <p class="pricing-note">複数ページ / 最短2週間</p>
+          <ul class="pricing-features">
+            <li>Standardの全内容</li>
+            <li>動画・インタラクション</li>
+            <li>マルチステップフォーム</li>
+            <li>広告連携設定</li>
+            <li>改善レポート（1ヶ月）</li>
+          </ul>
+          <a href="#contact" class="pricing-btn pricing-btn-ghost">相談する</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <p class="section-label">Portfolio</p>
+      <h2 class="section-title">制作イメージ</h2>
+      <p class="section-desc">LP制作の事例・イメージです。</p>
+      <div class="portfolio-grid stagger-children">
+        <div class="portfolio-card"><canvas class="portfolio-canvas" id="pCanvas1"></canvas><div class="portfolio-overlay"></div><div class="portfolio-info"><p class="portfolio-tag">LP</p><h3>SaaS Product Launch</h3><p>SaaS型サービスのローンチLP</p></div></div>
+        <div class="portfolio-card"><canvas class="portfolio-canvas" id="pCanvas2"></canvas><div class="portfolio-overlay"></div><div class="portfolio-info"><p class="portfolio-tag">LP</p><h3>Event Promotion</h3><p>イベント集客LP</p></div></div>
+        <div class="portfolio-card"><canvas class="portfolio-canvas" id="pCanvas3"></canvas><div class="portfolio-overlay"></div><div class="portfolio-info"><p class="portfolio-tag">LP</p><h3>App Download</h3><p>アプリDL促進LP</p></div></div>
+        <div class="portfolio-card"><canvas class="portfolio-canvas" id="pCanvas4"></canvas><div class="portfolio-overlay"></div><div class="portfolio-info"><p class="portfolio-tag">LP</p><h3>Lead Generation</h3><p>BtoBリード獲得LP</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="cta">
+    <div class="cta-glow"></div>
+    <div class="container reveal">
+      <h2>成果が出るLPを。</h2>
+      <p>まずはお気軽にご相談ください。</p>
+      <a href="mailto:contact@iniestabluu.com" class="btn-primary">お問い合わせ <span class="btn-arrow">&rarr;</span></a>
+    </div>
+  </section>
+
+  <footer><div class="container"><div class="footer-inner"><a href="index.html" class="footer-logo">iniestabluu</a><p class="footer-copy">&copy; 2026 iniestabluu. All rights reserved.</p></div></div></footer>
+
+  <script>
+  (function() {
+    'use strict';
+    const cursor=document.getElementById('cursor'),dot=document.getElementById('cursorDot');let cx=0,cy=0,dx=0,dy=0;
+    document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;dot.style.left=cx+'px';dot.style.top=cy+'px';if(!cursor.classList.contains('active')){cursor.classList.add('active');dot.classList.add('active');}});
+    function raf(){dx+=(cx-dx)*0.1;dy+=(cy-dy)*0.1;cursor.style.left=dx+'px';cursor.style.top=dy+'px';requestAnimationFrame(raf);}raf();
+    document.querySelectorAll('a,button,.pricing-card,.portfolio-card,.include-item').forEach(el=>{el.addEventListener('mouseenter',()=>cursor.classList.add('hovering'));el.addEventListener('mouseleave',()=>cursor.classList.remove('hovering'));});
+    const reveals=document.querySelectorAll('.reveal,.stagger-children');
+    const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.1});
+    reveals.forEach(el=>obs.observe(el));setTimeout(()=>reveals.forEach(el=>el.classList.add('visible')),2000);
+    function draw(id,hue,style){const c=document.getElementById(id);if(!c)return;const ctx=c.getContext('2d'),rect=c.parentElement.getBoundingClientRect();c.width=rect.width*2;c.height=rect.height*2;ctx.scale(2,2);const w=rect.width,h=rect.height;ctx.fillStyle='#f0f0f3';ctx.fillRect(0,0,w,h);
+      if(style==='gradient'){const grd=ctx.createLinearGradient(0,0,w,h);grd.addColorStop(0,'hsla('+hue+',70%,60%,0.08)');grd.addColorStop(1,'hsla('+(hue+40)+',60%,50%,0.12)');ctx.fillStyle=grd;ctx.fillRect(0,0,w,h);ctx.font='700 '+(w*0.08)+'px Space Grotesk';ctx.fillStyle='rgba(0,0,0,0.05)';ctx.fillText('CONVERT',w*0.05,h*0.5);for(let i=0;i<5;i++){ctx.fillStyle='hsla('+hue+',60%,50%,'+(0.04+Math.random()*0.06)+')';ctx.fillRect(w*0.6+i*15,h*0.2+i*20,80,30);}}
+      else if(style==='zigzag'){ctx.strokeStyle='hsla('+hue+',60%,50%,0.1)';ctx.lineWidth=1.5;for(let j=0;j<5;j++){ctx.beginPath();for(let i=0;i<=w;i+=20){ctx.lineTo(i,h*0.15+j*h*0.18+(i%40<20?15:-15));}ctx.stroke();}}
+      else if(style==='dots'){for(let x=20;x<w;x+=25)for(let y=20;y<h;y+=25){ctx.beginPath();ctx.arc(x,y,2+Math.random()*2,0,Math.PI*2);ctx.fillStyle='hsla('+hue+',50%,50%,'+(0.05+Math.random()*0.1)+')';ctx.fill();}}
+      else{for(let i=0;i<8;i++){ctx.fillStyle='hsla('+(hue+i*15)+',55%,55%,'+(0.04+Math.random()*0.06)+')';const rx=Math.random()*w*0.6,ry=Math.random()*h*0.6;ctx.beginPath();ctx.moveTo(rx,ry);ctx.lineTo(rx+60+Math.random()*40,ry);ctx.lineTo(rx+40+Math.random()*30,ry+50+Math.random()*30);ctx.closePath();ctx.fill();}}}
+    window.addEventListener('load',()=>{draw('pCanvas1',35,'gradient');draw('pCanvas2',25,'zigzag');draw('pCanvas3',40,'dots');draw('pCanvas4',30,'triangles');});
+  })();
+  </script>
+</body>
+</html>
