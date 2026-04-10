@@ -1101,7 +1101,7 @@
         <div class="work-info">
           <p class="work-type">Hair Salon</p>
           <h3>HAUM</h3>
-          <p>表参道 美容室サイト制作</p>
+          <p>美容室サイト制作</p>
         </div>
       </a>
       <a class="work-card" href="https://portfolio-restaurant-blond.vercel.app" target="_blank" rel="noopener">
@@ -1109,7 +1109,7 @@
         <div class="work-info">
           <p class="work-type">Restaurant</p>
           <h3>SORA</h3>
-          <p>代官山 イタリアンレストラン</p>
+          <p>イタリアンレストランサイト制作</p>
         </div>
       </a>
       <div class="work-card">
@@ -1634,12 +1634,132 @@
       }
     }
 
+    // Draw HAUM - warm beige hair salon
+    function drawHaum(canvasId) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width * 2; canvas.height = rect.height * 2;
+      ctx.scale(2, 2);
+      const w = rect.width, h = rect.height;
+      // BG - warm beige
+      ctx.fillStyle = '#faf9f7'; ctx.fillRect(0, 0, w, h);
+      // Browser chrome
+      ctx.fillStyle = '#f0ede8'; ctx.fillRect(0, 0, w, 24);
+      ['#e0dbd4','#e0dbd4','#e0dbd4'].forEach((c,i) => { ctx.fillStyle=c; ctx.beginPath(); ctx.arc(10+i*14,12,4,0,Math.PI*2); ctx.fill(); });
+      ctx.fillStyle = '#e8e4de'; ctx.fillRect(w*0.28, 6, w*0.44, 12);
+      // Nav
+      ctx.fillStyle = 'rgba(250,249,247,0.9)'; ctx.fillRect(0, 24, w, 28);
+      ctx.fillStyle = '#1a1814'; ctx.font = '500 9px serif'; ctx.fillText('HAUM', 14, 42);
+      ctx.fillStyle = '#b0ada8'; ctx.font = '400 6px sans-serif';
+      ['Concept','Menu','Gallery','Reserve'].forEach((t,i) => ctx.fillText(t, w-170+i*40, 42));
+      // Hero - split layout
+      ctx.fillStyle = '#e8e0d4'; ctx.fillRect(w*0.5, 52, w*0.5, h*0.42);
+      // Hair silhouette on right
+      ctx.strokeStyle = 'rgba(42,37,32,0.25)'; ctx.lineWidth = 0.8;
+      for (let i=0;i<12;i++) {
+        const x = w*0.55 + i*(w*0.18/12);
+        ctx.beginPath(); ctx.moveTo(x, 52);
+        ctx.bezierCurveTo(x+(Math.random()-.5)*15, 52+h*.15, x+(Math.random()-.5)*20, 52+h*.3, x+(Math.random()-.5)*25, 52+h*.42);
+        ctx.stroke();
+      }
+      // Hero text left
+      ctx.fillStyle = '#c9a96e'; ctx.font = '500 5px sans-serif'; ctx.fillText('TOKYO HAIR SALON', 14, 68);
+      ctx.fillStyle = '#1a1814'; ctx.font = '300 13px serif'; ctx.fillText('Your Hair,', 14, 86);
+      ctx.font = 'italic 300 13px serif'; ctx.fillStyle = '#c9a96e'; ctx.fillText('Your Story.', 14, 100);
+      ctx.fillStyle = '#6b6560'; ctx.font = '300 5.5px sans-serif';
+      ctx.fillText('大人のための隠れ家サロン。', 14, 114);
+      ctx.fillText('あなたの個性を引き出すヘアデザイン。', 14, 122);
+      ctx.fillStyle = '#1a1814'; ctx.fillRect(14, 132, 60, 16);
+      ctx.fillStyle = '#fff'; ctx.font = '400 6px sans-serif'; ctx.fillText('予約する', 30, 143);
+      // Menu section
+      const my = 52+h*0.48;
+      ctx.fillStyle = '#fff'; ctx.fillRect(0, my, w, h*0.38);
+      ctx.fillStyle = '#c9a96e'; ctx.font = '400 5px sans-serif'; ctx.fillText('MENU', 14, my+14);
+      ctx.fillStyle = '#1a1814'; ctx.font = '300 10px serif'; ctx.fillText('Services', 14, my+26);
+      for (let i=0;i<3;i++) {
+        const mx2 = 14+i*(w*0.3+6);
+        ctx.fillStyle = '#faf9f7'; ctx.strokeStyle = '#e8e4de'; ctx.lineWidth = 0.5;
+        ctx.fillRect(mx2, my+32, w*0.28, h*0.22); ctx.strokeRect(mx2, my+32, w*0.28, h*0.22);
+        ctx.fillStyle = '#c9a96e'; ctx.font = '400 5px sans-serif';
+        ctx.fillText(['Cut','Color','Perm'][i], mx2+8, my+44);
+        ctx.fillStyle = '#1a1814'; ctx.font = '300 8px serif';
+        ctx.fillText(['Hair Cut','Full Color','Digital Perm'][i], mx2+8, my+56);
+        ctx.fillStyle = '#c9a96e'; ctx.font = '400 7px sans-serif';
+        ctx.fillText(['¥8,800','¥12,100','¥22,000'][i], mx2+8, my+70);
+      }
+      // Gold accent line
+      ctx.strokeStyle = 'rgba(201,169,110,0.3)'; ctx.lineWidth = 0.5;
+      ctx.beginPath(); ctx.moveTo(0, h-8); ctx.lineTo(w, h-8); ctx.stroke();
+    }
+
+    // Draw SORA - dark moody restaurant
+    function drawSora(canvasId) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width * 2; canvas.height = rect.height * 2;
+      ctx.scale(2, 2);
+      const w = rect.width, h = rect.height;
+      // BG - dark
+      ctx.fillStyle = '#0e0c0a'; ctx.fillRect(0, 0, w, h);
+      // Browser chrome dark
+      ctx.fillStyle = '#1a1610'; ctx.fillRect(0, 0, w, 24);
+      ['#2a2520','#2a2520','#2a2520'].forEach((c,i) => { ctx.fillStyle=c; ctx.beginPath(); ctx.arc(10+i*14,12,4,0,Math.PI*2); ctx.fill(); });
+      ctx.fillStyle = '#2a2520'; ctx.fillRect(w*0.28, 6, w*0.44, 12);
+      // Nav
+      ctx.fillStyle = 'rgba(14,12,10,0.95)'; ctx.fillRect(0, 24, w, 28);
+      ctx.fillStyle = '#d4a853'; ctx.font = '400 10px serif'; ctx.fillText('SORA', 14, 42);
+      ctx.fillStyle = '#605850'; ctx.font = '400 6px sans-serif';
+      ['Story','Menu','Access','Reserve'].forEach((t,i) => ctx.fillText(t, w-170+i*40, 42));
+      // Hero full bleed
+      const heroH = h * 0.48;
+      // Candle glow
+      const glow = ctx.createRadialGradient(w*0.5, 52+heroH*0.45, 0, w*0.5, 52+heroH*0.45, w*0.5);
+      glow.addColorStop(0, 'rgba(212,168,83,0.2)'); glow.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = glow; ctx.fillRect(0, 52, w, heroH);
+      // Plate
+      ctx.fillStyle = '#f0ece4'; ctx.beginPath(); ctx.ellipse(w*0.6, 52+heroH*0.6, w*0.15, w*0.06, 0, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#c8843a'; ctx.beginPath(); ctx.ellipse(w*0.6, 52+heroH*0.58, w*0.08, w*0.03, 0, 0, Math.PI*2); ctx.fill();
+      // Candle
+      ctx.fillStyle = '#f5f0e8'; ctx.fillRect(w*0.5-2, 52+heroH*0.2, 4, heroH*0.3);
+      const flame = ctx.createRadialGradient(w*0.5, 52+heroH*0.18, 0, w*0.5, 52+heroH*0.18, 12);
+      flame.addColorStop(0,'rgba(255,240,180,1)'); flame.addColorStop(1,'rgba(255,100,0,0)');
+      ctx.fillStyle = flame; ctx.beginPath(); ctx.ellipse(w*0.5, 52+heroH*0.17, 7, 10, 0, 0, Math.PI*2); ctx.fill();
+      // Hero text
+      ctx.fillStyle = 'rgba(212,168,83,0.8)'; ctx.font = '400 5px sans-serif'; ctx.fillText('ITALIAN RESTAURANT', 14, 68);
+      ctx.fillStyle = '#f0ece4'; ctx.font = '400 12px serif'; ctx.fillText('Where Food', 14, 84);
+      ctx.font = 'italic 400 12px serif'; ctx.fillStyle = '#d4a853'; ctx.fillText('meets Art.', 14, 98);
+      ctx.fillStyle = 'rgba(240,236,228,0.6)'; ctx.font = '300 5.5px sans-serif';
+      ctx.fillText('旬の食材が語りかける、一皿の物語。', 14, 112);
+      ctx.fillStyle = '#d4a853'; ctx.fillRect(14, 120, 64, 16);
+      ctx.fillStyle = '#0e0c0a'; ctx.font = '400 6px sans-serif'; ctx.fillText('ご予約はこちら', 24, 131);
+      // Menu section
+      const my = 52+heroH+8;
+      ctx.fillStyle = '#161410'; ctx.fillRect(0, my, w, h-my);
+      ctx.fillStyle = '#d4a853'; ctx.font = '400 5px sans-serif'; ctx.fillText('MENU', 14, my+14);
+      ctx.fillStyle = '#f0ece4'; ctx.font = '400 10px serif'; ctx.fillText('Our Cuisine', 14, my+26);
+      for (let i=0;i<2;i++) {
+        const mx2 = 14+i*(w*0.45+8);
+        ctx.strokeStyle = 'rgba(255,255,255,0.07)'; ctx.lineWidth = 0.5;
+        ctx.strokeRect(mx2, my+32, w*0.43, h*0.14);
+        ctx.fillStyle = '#f0ece4'; ctx.font = '300 7px serif';
+        ctx.fillText(['Tagliatelle al Tartufo','Filetto di Manzo'][i], mx2+8, my+44);
+        ctx.fillStyle = '#a09890'; ctx.font = '300 5.5px sans-serif';
+        ctx.fillText(['黒トリュフのタリアテッレ','牛フィレ肉のロースト'][i], mx2+8, my+54);
+        ctx.fillStyle = '#d4a853'; ctx.font = '400 7px sans-serif';
+        ctx.fillText(['¥3,200','¥5,800'][i], mx2+w*0.35, my+44);
+      }
+    }
+
     // Initialize canvases after load
     window.addEventListener('load', () => {
-      drawMockup('workCanvas1', 240, 'corporate');
-      drawMockup('workCanvas2', 150, 'ec');
-      drawMockup('workCanvas3', 30, 'lp');
-      drawMockup('workCanvas4', 260, 'dashboard');
+      drawMockup('workCanvas1', 215, 'corporate');
+      drawHaum('workCanvas2');
+      drawSora('workCanvas3');
+      drawMockup('workCanvas4', 150, 'ec');
     });
 
     // ── Mobile Menu ──
