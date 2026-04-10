@@ -568,8 +568,8 @@
       scroll-snap-align: start;
       border-radius: 16px;
       overflow: hidden;
-      position: relative;
-      aspect-ratio: 16 / 10;
+      display: flex;
+      flex-direction: column;
       background: var(--surface);
       border: 1px solid var(--border);
       transition: transform 0.4s var(--ease-out);
@@ -580,33 +580,34 @@
       object-fit: cover;
       display: block;
     }
-    .work-gradient {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(255,255,255,0.95) 0%, transparent 60%);
+    .work-gradient { display: none; }
+    .work-canvas-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
     }
     .work-info {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 2rem;
+      padding: 1.2rem 1.5rem;
     }
     .work-type {
       font-size: 0.65rem;
       color: var(--accent-2);
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
       font-weight: 600;
     }
     .work-info h3 {
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       font-weight: 600;
       letter-spacing: -0.02em;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.2rem;
     }
     .work-info p {
       font-family: var(--font-jp);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-2);
     }
     /* Canvas preview for work cards */
@@ -1088,8 +1089,7 @@
     </div>
     <div class="works-scroll" id="worksScroll">
       <div class="work-card">
-        <canvas class="work-canvas" id="workCanvas1"></canvas>
-        <div class="work-gradient"></div>
+        <div class="work-canvas-wrap"><canvas class="work-canvas" id="workCanvas1"></canvas></div>
         <div class="work-info">
           <p class="work-type">Corporate Site</p>
           <h3>iniestabluu.com</h3>
@@ -1097,8 +1097,7 @@
         </div>
       </div>
       <div class="work-card">
-        <canvas class="work-canvas" id="workCanvas2"></canvas>
-        <div class="work-gradient"></div>
+        <div class="work-canvas-wrap"><canvas class="work-canvas" id="workCanvas2"></canvas></div>
         <div class="work-info">
           <p class="work-type">EC Site</p>
           <h3>Mall Flower</h3>
@@ -1106,8 +1105,7 @@
         </div>
       </div>
       <div class="work-card">
-        <canvas class="work-canvas" id="workCanvas3"></canvas>
-        <div class="work-gradient"></div>
+        <div class="work-canvas-wrap"><canvas class="work-canvas" id="workCanvas3"></canvas></div>
         <div class="work-info">
           <p class="work-type">Landing Page</p>
           <h3>Tech Startup LP</h3>
@@ -1115,8 +1113,7 @@
         </div>
       </div>
       <div class="work-card">
-        <canvas class="work-canvas" id="workCanvas4"></canvas>
-        <div class="work-gradient"></div>
+        <div class="work-canvas-wrap"><canvas class="work-canvas" id="workCanvas4"></canvas></div>
         <div class="work-info">
           <p class="work-type">Web Application</p>
           <h3>Dashboard UI</h3>
