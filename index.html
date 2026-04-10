@@ -4,27 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>iniestabluu | WEB制作</title>
-  <meta name="description" content="WEB制作のiniestabluu。デザインからコーディングまで、圧倒的なクオリティで届けます。" />
+  <meta name="description" content="WEB制作のiniestabluu。圧倒的なスピードとクオリティで、あなたのビジネスを加速させる。" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #fafafa;
-      --surface: #ffffff;
-      --surface-2: #f4f4f5;
-      --border: rgba(0,0,0,0.08);
-      --text: #18181b;
-      --text-2: #52525b;
-      --text-3: #a1a1aa;
+      --bg: #f9f9f7;
+      --ink: #0a0a08;
+      --ink-2: #4a4a44;
+      --ink-3: #9a9a94;
       --accent: #1B6FCC;
-      --accent-2: #1458A8;
-      --accent-glow: rgba(27,111,204,0.12);
+      --accent-dark: #1458A8;
+      --surface: #ffffff;
+      --border: rgba(10,10,8,0.08);
       --font-en: 'Sora', sans-serif;
       --font-jp: 'Zen Kaku Gothic New', sans-serif;
-      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
       --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
@@ -33,1797 +31,1302 @@
 
     body {
       background: var(--bg);
-      color: var(--text);
+      color: var(--ink);
       font-family: var(--font-en);
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
       cursor: none;
     }
 
-    /* ── Noise Overlay ── */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9998;
-      opacity: 0.25;
+    a { color: inherit; text-decoration: none; cursor: none; }
+    button { cursor: none; font-family: var(--font-en); }
+
+    /* ─── Custom Cursor ─────────────────── */
+    .cur {
+      position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
+      mix-blend-mode: multiply;
+    }
+    .cur-ring {
+      width: 36px; height: 36px; border: 1.5px solid var(--ink);
+      border-radius: 50%; transform: translate(-50%,-50%);
+      transition: width .4s var(--ease), height .4s var(--ease), border-color .3s, opacity .3s;
+      opacity: 0;
+    }
+    .cur-dot {
+      position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000;
+      width: 5px; height: 5px; background: var(--ink);
+      border-radius: 50%; transform: translate(-50%,-50%);
+      transition: transform .1s, opacity .3s;
+      opacity: 0;
+    }
+    .cur.active .cur-ring { opacity: 1; }
+    .cur.active ~ .cur-dot { opacity: 1; }
+    .cur.hover .cur-ring { width: 64px; height: 64px; border-color: var(--accent); }
+    .cur.text .cur-ring { width: 4px; height: 40px; border-radius: 2px; border-width: 2px; }
+
+    /* ─── Scroll Progress ───────────────── */
+    .scroll-bar {
+      position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+      background: var(--accent); z-index: 1000; transition: width .1s linear;
     }
 
-    /* ── Loading Screen ── */
+    /* ─── Loading ────────────────────────── */
     .loader {
-      position: fixed;
-      inset: 0;
-      background: var(--bg);
-      z-index: 10000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 0.6s ease, visibility 0.6s ease;
+      position: fixed; inset: 0; background: var(--ink); z-index: 9000;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 2rem;
     }
-    .loader.done { opacity: 0; visibility: hidden; pointer-events: none; }
-    .loader-text {
-      font-size: clamp(1.5rem, 4vw, 2.5rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      overflow: hidden;
+    .loader-logo {
+      font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 200;
+      letter-spacing: 0.3em; color: var(--bg); opacity: 0;
+      animation: fadeUp .8s var(--ease) .2s forwards;
     }
-    .loader-text span {
-      display: inline-block;
-      opacity: 0;
-      transform: translateY(100%);
-      animation: loaderChar 0.5s var(--ease-out) forwards;
+    .loader-bar {
+      width: 160px; height: 1px; background: rgba(255,255,255,0.15);
+      position: relative; overflow: hidden;
     }
-    @keyframes loaderChar {
-      to { opacity: 1; transform: translateY(0); }
+    .loader-bar::after {
+      content: ''; position: absolute; inset: 0; background: var(--bg);
+      transform: translateX(-100%);
+      animation: loadFill 1.2s var(--ease) .4s forwards;
     }
+    .loader.out {
+      animation: loaderOut .6s var(--ease) forwards;
+    }
+    @keyframes fadeUp { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: translateY(0); } }
+    @keyframes loadFill { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+    @keyframes loaderOut { from { opacity:1; } to { opacity:0; pointer-events:none; } }
 
-    /* ── Custom Cursor ── */
-    .cursor {
-      position: fixed;
-      width: 20px; height: 20px;
-      border: 1.5px solid var(--accent);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transition: width 0.3s var(--ease-spring), height 0.3s var(--ease-spring),
-                  background 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
-      transform: translate(-50%, -50%);
-      opacity: 0;
-    }
-    .cursor.active { opacity: 1; }
-    .cursor.hovering {
-      width: 56px; height: 56px;
-      background: rgba(99,102,241,0.08);
-      border-color: var(--accent-2);
-    }
-    .cursor-dot {
-      position: fixed;
-      width: 5px; height: 5px;
-      background: var(--accent);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: opacity 0.3s ease;
-      opacity: 0;
-    }
-    .cursor-dot.active { opacity: 1; }
-
-    /* ── Scroll Progress ── */
-    .scroll-progress {
-      position: fixed;
-      top: 0; left: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      z-index: 200;
-      transform-origin: left;
-      transform: scaleX(0);
-    }
-
-    /* ── Nav ── */
+    /* ─── Nav ────────────────────────────── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 0 clamp(1.5rem, 4vw, 4rem);
-      height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(250,250,250,0.8);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border-bottom: 1px solid var(--border);
-      transform: translateY(-100%);
-      animation: navSlide 0.6s var(--ease-out) 1.8s forwards;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      height: 68px; padding: 0 clamp(1.5rem, 5vw, 4rem);
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background .3s, box-shadow .3s;
     }
-    @keyframes navSlide { to { transform: translateY(0); } }
+    nav.scrolled {
+      background: rgba(249,249,247,0.88);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 var(--border);
+    }
     .nav-logo {
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      color: var(--text);
+      font-size: 1rem; font-weight: 600; letter-spacing: -0.03em;
+      color: var(--ink); position: relative;
     }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-logo::after {
+      content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+      height: 1.5px; background: var(--accent);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .3s var(--ease);
+    }
+    .nav-logo:hover::after { transform: scaleX(1); }
+    .nav-links {
+      display: flex; align-items: center; gap: 2.5rem;
+    }
     .nav-links a {
-      font-size: 0.8rem;
-      color: var(--text-3);
-      transition: color 0.3s;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      position: relative;
+      font-size: 0.78rem; letter-spacing: 0.04em; color: var(--ink-2);
+      position: relative; transition: color .2s;
     }
     .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px; left: 0;
-      width: 0; height: 1px;
-      background: var(--accent);
-      transition: width 0.3s var(--ease-out);
+      content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+      height: 1px; background: var(--accent);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .3s var(--ease);
     }
-    .nav-links a:hover { color: var(--text); }
-    .nav-links a:hover::after { width: 100%; }
-    a { color: inherit; text-decoration: none; cursor: none; }
-    button { cursor: none; }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-cta {
+      padding: 0.55rem 1.4rem;
+      border: 1.5px solid var(--ink);
+      font-size: 0.76rem; font-weight: 500; letter-spacing: 0.03em;
+      color: var(--ink); transition: all .25s var(--ease);
+      border-radius: 2px;
+    }
+    .nav-cta:hover { background: var(--ink); color: var(--bg); }
 
-    /* ── Mobile Menu ── */
+    /* Hamburger */
     .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      background: none;
-      border: none;
-      padding: 4px;
-      z-index: 101;
+      display: none; flex-direction: column; gap: 5px;
+      width: 24px; cursor: none; background: none; border: none;
     }
     .hamburger span {
-      display: block;
-      width: 22px;
-      height: 1.5px;
-      background: var(--text);
-      transition: transform 0.3s var(--ease-out), opacity 0.3s;
-      transform-origin: center;
+      display: block; height: 1.5px; background: var(--ink);
+      transition: all .3s var(--ease);
     }
     .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
     .mobile-menu {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: var(--bg);
-      z-index: 99;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 2.5rem;
-      opacity: 0;
-      transition: opacity 0.3s ease;
+      display: none; position: fixed; inset: 0; background: var(--ink);
+      z-index: 400; flex-direction: column; justify-content: center; align-items: center;
+      gap: 2.5rem; opacity: 0; pointer-events: none;
+      transition: opacity .4s var(--ease);
     }
-    .mobile-menu.open { display: flex; opacity: 1; }
+    .mobile-menu.open { opacity: 1; pointer-events: all; }
     .mobile-menu a {
-      font-size: 1.5rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: var(--text);
-      transition: color 0.3s;
+      font-size: clamp(2rem, 8vw, 3rem); font-weight: 200; color: var(--bg);
+      letter-spacing: 0.05em; transition: color .2s;
     }
     .mobile-menu a:hover { color: var(--accent); }
 
-    /* ── Container ── */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 clamp(1.5rem, 4vw, 4rem); }
-
-    /* ── Hero ── */
+    /* ─── Hero ───────────────────────────── */
     .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-      padding-top: 72px;
+      min-height: 100svh; padding: 68px clamp(1.5rem, 5vw, 4rem) 0;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding-bottom: clamp(4rem, 8vw, 6rem);
+      position: relative; overflow: hidden;
     }
-    .hero-grid-bg {
-      position: absolute;
-      inset: 0;
+    .hero-bg {
+      position: absolute; inset: 0; pointer-events: none;
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
       background-image:
-        linear-gradient(rgba(99,102,241,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(99,102,241,0.03) 1px, transparent 1px);
-      background-size: 60px 60px;
-      mask-image: radial-gradient(ellipse 70% 50% at 50% 50%, black 30%, transparent 70%);
-      -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 50%, black 30%, transparent 70%);
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: clamp(40px,6vw,80px) clamp(40px,6vw,80px);
+      opacity: 0.5;
     }
     .hero-glow {
-      position: absolute;
-      width: 600px; height: 600px;
+      position: absolute; width: 40vw; height: 40vw; max-width: 500px; max-height: 500px;
       border-radius: 50%;
-      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-      top: 20%; left: 50%;
-      transform: translate(-50%, -50%);
-      filter: blur(80px);
-      animation: glowPulse 6s ease-in-out infinite alternate;
+      background: radial-gradient(circle, rgba(27,111,204,0.08) 0%, transparent 70%);
+      top: 15%; right: 10%; pointer-events: none;
     }
-    @keyframes glowPulse {
-      0% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-      100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.15); }
+    .hero-content { position: relative; z-index: 1; max-width: 1200px; }
+    .hero-eyebrow {
+      font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+      display: flex; align-items: center; gap: 1rem;
     }
-    .hero-content { position: relative; z-index: 1; width: 100%; text-align: center; }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.4rem 1rem;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      font-size: 0.72rem;
-      color: var(--text-2);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 2.5rem;
-      opacity: 0;
-      animation: fadeUp 0.7s var(--ease-out) 2s forwards;
-      background: rgba(99,102,241,0.06);
+    .hero-eyebrow::before {
+      content: ''; display: block; width: 32px; height: 1px; background: var(--accent);
     }
-    .hero-badge-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      animation: dotPulse 2s ease-in-out infinite;
+    .hero-title {
+      font-size: clamp(3.5rem, 9vw, 11rem);
+      font-weight: 700; line-height: 0.92; letter-spacing: -0.04em;
+      color: var(--ink); margin-bottom: clamp(2rem, 4vw, 3.5rem);
     }
-    @keyframes dotPulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.8); }
-    }
-    .hero h1 {
-      font-size: clamp(3rem, 8vw, 6.5rem);
-      font-weight: 700;
-      letter-spacing: -0.05em;
-      line-height: 1;
-      margin-bottom: 2rem;
-    }
-    .hero h1 .line {
-      display: block;
-      overflow: hidden;
-      padding-bottom: 0.08em;
-    }
-    .hero h1 .line span {
+    .hero-title em {
+      font-style: normal; color: var(--accent);
       display: inline-block;
-      transform: translateY(110%);
-      animation: slideUp 0.9s var(--ease-out) forwards;
     }
-    .hero h1 .line:nth-child(1) span { animation-delay: 2.1s; }
-    .hero h1 .line:nth-child(2) span { animation-delay: 2.25s; }
-    .hero h1 .line:nth-child(3) span { animation-delay: 2.4s; }
-    .hero h1 .gradient-text {
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 50%, #c084fc 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .hero-title .jp {
+      font-family: var(--font-jp); font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .hero-bottom {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      flex-wrap: wrap; gap: 2rem;
     }
     .hero-sub {
-      font-family: var(--font-jp);
-      font-size: clamp(0.95rem, 1.5vw, 1.15rem);
-      color: var(--text-2);
-      max-width: 500px;
-      margin: 0 auto 3rem;
-      line-height: 1.9;
-      opacity: 0;
-      animation: fadeUp 0.7s var(--ease-out) 2.6s forwards;
+      font-family: var(--font-jp); font-size: clamp(0.88rem, 1.5vw, 1rem);
+      line-height: 1.9; color: var(--ink-2); max-width: 480px;
     }
-    .hero-actions {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      opacity: 0;
-      animation: fadeUp 0.7s var(--ease-out) 2.8s forwards;
-    }
-    @keyframes slideUp { to { transform: translateY(0); } }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── Buttons ── */
+    .hero-actions { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
     .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.85rem 2rem;
-      background: var(--text);
-      color: var(--bg);
-      font-size: 0.85rem;
-      font-weight: 600;
-      border-radius: 12px;
-      border: none;
-      font-family: var(--font-en);
-      letter-spacing: 0.01em;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.3s var(--ease-spring), box-shadow 0.3s ease;
+      padding: 0.9rem 2.2rem; background: var(--ink); color: var(--bg);
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.04em;
+      border-radius: 2px; transition: all .25s var(--ease);
+      border: 1.5px solid var(--ink);
     }
-    .btn-primary::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.15) 100%);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
-    .btn-primary:hover::before { opacity: 1; }
-    .btn-primary:active { transform: translateY(0) scale(0.97); }
+    .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
     .btn-ghost {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.85rem 2rem;
-      background: transparent;
-      color: var(--text-2);
-      font-size: 0.85rem;
-      font-weight: 500;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      font-family: var(--font-en);
-      transition: color 0.3s, border-color 0.3s, transform 0.3s var(--ease-spring);
+      padding: 0.9rem 2.2rem; border: 1.5px solid var(--border);
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.04em;
+      color: var(--ink-2); border-radius: 2px; transition: all .25s var(--ease);
     }
-    .btn-ghost:hover { color: var(--text); border-color: var(--text-3); transform: translateY(-2px); }
-    .btn-ghost:active { transform: translateY(0) scale(0.97); }
-    .btn-arrow {
-      transition: transform 0.3s var(--ease-out);
-      display: inline-block;
-    }
-    .btn-primary:hover .btn-arrow,
-    .btn-ghost:hover .btn-arrow { transform: translateX(3px); }
-
-    /* ── Scroll indicator ── */
+    .btn-ghost:hover { border-color: var(--ink); color: var(--ink); }
     .hero-scroll {
-      position: absolute;
-      bottom: 2.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.6rem;
-      opacity: 0;
-      animation: fadeUp 0.7s var(--ease-out) 3.2s forwards;
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--ink-3); z-index: 1;
+      animation: bounce 2s ease-in-out infinite;
     }
-    .scroll-mouse {
-      width: 22px; height: 34px;
-      border: 1.5px solid var(--border);
-      border-radius: 11px;
-      position: relative;
+    .hero-scroll::after {
+      content: ''; display: block; width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--ink-3), transparent);
     }
-    .scroll-mouse::after {
-      content: '';
-      width: 3px; height: 7px;
-      background: var(--accent);
-      border-radius: 2px;
-      position: absolute;
-      top: 6px; left: 50%;
-      transform: translateX(-50%);
-      animation: scrollDot 2s ease-in-out infinite;
-    }
-    @keyframes scrollDot {
-      0%, 100% { opacity: 1; transform: translateX(-50%) translateY(0); }
-      50% { opacity: 0.3; transform: translateX(-50%) translateY(10px); }
-    }
-    .scroll-text {
-      font-size: 0.6rem;
-      color: var(--text-3);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
 
-    /* ── Marquee ── */
-    .marquee {
-      padding: 1.5rem 0;
-      border-top: 1px solid var(--border);
+    /* ─── Marquee ────────────────────────── */
+    .marquee-wrap {
+      overflow: hidden; border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      overflow: hidden;
-      white-space: nowrap;
+      padding: 1.2rem 0; background: var(--surface);
     }
-    .marquee-inner {
-      display: inline-flex;
-      animation: marquee 25s linear infinite;
+    .marquee-track {
+      display: flex; width: max-content;
+      animation: marquee 24s linear infinite;
     }
+    .marquee-track:hover { animation-play-state: paused; }
     .marquee-item {
-      font-size: clamp(0.85rem, 1.5vw, 1rem);
-      font-weight: 500;
-      color: var(--text-3);
-      padding: 0 1.5rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      display: inline-flex;
-      align-items: center;
-      gap: 1.5rem;
+      white-space: nowrap; padding: 0 2rem;
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--ink-3);
+      display: flex; align-items: center; gap: 2rem;
     }
-    .marquee-item .sep {
-      width: 4px; height: 4px;
-      border-radius: 50%;
-      background: var(--accent);
-      opacity: 0.5;
-      flex-shrink: 0;
-    }
-    @keyframes marquee {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
+    .marquee-item .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
-    /* ── Section Base ── */
-    .section { padding: clamp(5rem, 10vw, 9rem) 0; }
-    .section-label {
-      font-size: 0.65rem;
-      font-weight: 600;
-      color: var(--accent-2);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .section-label::before {
-      content: '';
-      width: 20px; height: 1px;
-      background: var(--accent);
-    }
-    .section-title {
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      line-height: 1.1;
-      margin-bottom: 1rem;
-    }
-    .section-desc {
-      font-family: var(--font-jp);
-      color: var(--text-2);
-      font-size: 0.92rem;
-      line-height: 1.9;
-      max-width: 500px;
-    }
+    /* ─── Section Commons ────────────────── */
+    .section { padding: clamp(5rem, 10vw, 9rem) clamp(1.5rem, 5vw, 4rem); }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
     .section-header { margin-bottom: clamp(3rem, 6vw, 5rem); }
+    .label {
+      font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .label::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
+    h2.title {
+      font-size: clamp(2.5rem, 6vw, 5.5rem); font-weight: 700;
+      line-height: 1.0; letter-spacing: -0.04em; color: var(--ink);
+    }
+    h2.title .jp { font-family: var(--font-jp); }
+    h2.title em { font-style: normal; color: var(--accent); }
 
-    /* ── Services ── 3D Tilt Cards */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+    /* Reveal animation */
+    .reveal {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity .7s var(--ease), transform .7s var(--ease);
     }
-    .service-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2.5rem;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.4s var(--ease-out), box-shadow 0.4s ease;
-      transform-style: preserve-3d;
-      perspective: 1000px;
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+    .reveal-delay-4 { transition-delay: .4s; }
+
+    /* ─── Services ───────────────────────── */
+    .services { background: var(--bg); }
+    .service-list { display: flex; flex-direction: column; }
+    .service-item {
+      display: grid; grid-template-columns: 80px 1fr auto;
+      align-items: center; gap: 2rem;
+      padding: clamp(1.8rem, 3vw, 2.5rem) 0;
+      border-bottom: 1px solid var(--border);
+      transition: padding .3s var(--ease);
+      cursor: none;
     }
-    .service-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
-      opacity: 0;
-      transition: opacity 0.4s;
+    .service-item:first-child { border-top: 1px solid var(--border); }
+    .service-item:hover { padding-left: 1rem; }
+    .service-num {
+      font-size: 0.75rem; font-weight: 600; color: var(--ink-3);
+      letter-spacing: 0.1em; font-variant-numeric: tabular-nums;
     }
-    .service-card:hover::before { opacity: 1; }
-    .service-card:hover {
-      box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 0 40px var(--accent-glow);
-    }
-    .service-icon {
-      width: 48px; height: 48px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent-glow), rgba(129,140,248,0.08));
-      border: 1px solid rgba(99,102,241,0.15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.5rem;
-      font-size: 1.2rem;
-    }
-    .service-icon svg { width: 22px; height: 22px; stroke: var(--accent-2); fill: none; stroke-width: 1.5; }
-    .service-card h3 {
-      font-size: 1.15rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.75rem;
-    }
-    .service-card p {
-      font-family: var(--font-jp);
-      font-size: 0.85rem;
-      color: var(--text-2);
-      line-height: 1.8;
+    .service-main { }
+    .service-name {
+      font-size: clamp(1.4rem, 3.5vw, 2.5rem); font-weight: 600;
+      letter-spacing: -0.03em; color: var(--ink); margin-bottom: 0.4rem;
+      display: flex; align-items: center; gap: 1rem;
     }
     .service-tag {
-      display: inline-block;
-      margin-top: 1.5rem;
-      font-size: 0.7rem;
-      color: var(--accent-2);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-weight: 500;
+      font-size: 0.65rem; font-weight: 500; letter-spacing: 0.08em;
+      padding: 0.2rem 0.6rem; border: 1px solid var(--border);
+      border-radius: 999px; color: var(--ink-3); text-transform: uppercase;
+    }
+    .service-desc {
+      font-family: var(--font-jp); font-size: 0.82rem;
+      color: var(--ink-2); line-height: 1.7; max-width: 500px;
+    }
+    .service-price {
+      font-size: clamp(1.1rem, 2vw, 1.4rem); font-weight: 700;
+      letter-spacing: -0.02em; color: var(--ink); white-space: nowrap;
+      text-align: right;
+    }
+    .service-price span {
+      display: block; font-size: 0.65rem; font-weight: 400;
+      color: var(--ink-3); letter-spacing: 0.05em;
+    }
+    .service-arrow {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px; border: 1px solid var(--border);
+      border-radius: 50%; color: var(--ink-3); margin-left: 1rem;
+      transition: all .25s var(--ease); flex-shrink: 0;
+    }
+    .service-item:hover .service-arrow {
+      background: var(--accent); border-color: var(--accent); color: #fff;
+      transform: rotate(45deg);
     }
 
-    /* ── Works / Portfolio ── */
-    .works { overflow: hidden; }
-    .works-scroll {
-      display: flex;
-      gap: 2rem;
-      padding: 0 clamp(1.5rem, 4vw, 4rem);
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
+    /* ─── Works ──────────────────────────── */
+    .works { background: var(--surface); overflow: hidden; }
+    .works-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: clamp(3rem, 5vw, 4rem); flex-wrap: wrap; gap: 1.5rem;
+    }
+    .works-scroll-wrap { overflow: hidden; }
+    .works-track {
+      display: flex; gap: 1.5rem;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
       cursor: grab;
     }
-    .works-scroll::-webkit-scrollbar { display: none; }
-    .works-scroll:active { cursor: grabbing; }
+    .works-track::-webkit-scrollbar { display: none; }
+    .works-track:active { cursor: grabbing; }
     .work-card {
-      flex: 0 0 clamp(300px, 40vw, 480px);
-      scroll-snap-align: start;
-      border-radius: 16px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      transition: transform 0.4s var(--ease-out);
+      flex: 0 0 clamp(300px, 38vw, 500px);
+      scroll-snap-align: start; border-radius: 4px;
+      overflow: hidden; display: flex; flex-direction: column;
+      background: var(--bg); border: 1px solid var(--border);
+      transition: transform .4s var(--ease), box-shadow .4s var(--ease);
     }
-    .work-card:hover { transform: translateY(-8px); }
-    .work-preview {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .work-gradient { display: none; }
+    .work-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(0,0,0,0.08); }
     .work-canvas-wrap {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      overflow: hidden;
-      border-bottom: 1px solid var(--border);
+      width: 100%; aspect-ratio: 16/10; overflow: hidden;
+      border-bottom: 1px solid var(--border); position: relative;
     }
-    .work-info {
-      padding: 1.2rem 1.5rem;
-    }
+    .work-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .work-info { padding: 1.2rem 1.4rem; }
     .work-type {
-      font-size: 0.65rem;
-      color: var(--accent-2);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 0.4rem;
-      font-weight: 600;
+      font-size: 0.65rem; color: var(--accent); letter-spacing: 0.12em;
+      text-transform: uppercase; margin-bottom: 0.4rem; font-weight: 600;
     }
     .work-info h3 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.2rem;
+      font-size: 1.1rem; font-weight: 600; letter-spacing: -0.02em;
+      margin-bottom: 0.2rem; color: var(--ink);
     }
-    .work-info p {
-      font-family: var(--font-jp);
-      font-size: 0.78rem;
-      color: var(--text-2);
-    }
-    /* Canvas preview for work cards */
-    .work-canvas {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      inset: 0;
-    }
+    .work-info p { font-family: var(--font-jp); font-size: 0.78rem; color: var(--ink-2); }
 
-    /* ── Stats ── */
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border-radius: 16px;
-      overflow: hidden;
+    /* ─── Stats ──────────────────────────── */
+    .stats { background: var(--ink); }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-left: 1px solid rgba(255,255,255,0.06);
     }
-    .stat-item {
-      background: var(--surface);
-      padding: 3rem 2rem;
-      text-align: center;
-      transition: background 0.3s;
+    .stat {
+      padding: clamp(3rem, 5vw, 4.5rem) clamp(1.5rem, 3vw, 2.5rem);
+      border-right: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: background .3s;
     }
-    .stat-item:hover { background: var(--surface-2); }
-    .stat-number {
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      line-height: 1;
+    .stat:hover { background: rgba(255,255,255,0.03); }
+    .stat-num {
+      font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700;
+      letter-spacing: -0.04em; color: #fff; line-height: 1;
       margin-bottom: 0.5rem;
-      color: var(--text);
     }
+    .stat-num em { font-style: normal; color: var(--accent); }
     .stat-label {
-      font-family: var(--font-jp);
-      font-size: 0.78rem;
-      color: var(--text-3);
-      letter-spacing: 0.03em;
+      font-family: var(--font-jp); font-size: 0.8rem;
+      color: rgba(255,255,255,0.4); line-height: 1.6;
     }
 
-    /* ── Process ── */
+    /* ─── Process ────────────────────────── */
+    .process { background: var(--bg); }
     .process-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
-      position: relative;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border); margin-top: 3rem;
     }
-    .process-grid::before {
-      content: '';
-      position: absolute;
-      top: 28px;
-      left: calc(12.5% + 14px);
-      right: calc(12.5% + 14px);
-      height: 1px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2), #c084fc, var(--accent));
-      opacity: 0.3;
+    .process-item {
+      background: var(--bg); padding: clamp(2rem, 4vw, 3rem);
+      transition: background .3s;
     }
-    .process-step {
-      text-align: center;
-      padding: 0 1rem;
+    .process-item:hover { background: var(--surface); }
+    .process-step-num {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.15em;
+      color: var(--accent); text-transform: uppercase; margin-bottom: 1.5rem;
     }
-    .process-dot {
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      background: var(--surface);
-      border: 2px solid var(--accent);
-      margin: 0 auto 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.65rem;
-      font-weight: 700;
-      color: var(--accent-2);
-      position: relative;
-      z-index: 1;
-      transition: background 0.3s, transform 0.3s var(--ease-spring);
+    .process-step-title {
+      font-size: clamp(1.1rem, 2vw, 1.4rem); font-weight: 600;
+      letter-spacing: -0.02em; margin-bottom: 0.8rem; color: var(--ink);
     }
-    .process-step:hover .process-dot {
-      background: var(--accent);
-      color: #fff;
-      transform: scale(1.15);
+    .process-step-desc {
+      font-family: var(--font-jp); font-size: 0.82rem;
+      color: var(--ink-2); line-height: 1.8;
     }
-    .process-step h4 {
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.01em;
-    }
-    .process-step p {
-      font-family: var(--font-jp);
-      font-size: 0.8rem;
-      color: var(--text-3);
-      line-height: 1.7;
-    }
-
-    /* ── About ── */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: start;
-    }
-    .about-text {
-      font-family: var(--font-jp);
-      font-size: 0.95rem;
-      color: var(--text-2);
-      line-height: 2;
-    }
-    .about-text strong {
-      color: var(--text);
-      font-weight: 600;
-    }
-    .about-table { width: 100%; border-collapse: collapse; margin-top: 2rem; }
-    .about-table tr { border-bottom: 1px solid var(--border); }
-    .about-table td {
-      font-family: var(--font-jp);
-      padding: 1rem 0;
-      font-size: 0.88rem;
-    }
-    .about-table td:first-child {
-      color: var(--text-3);
-      width: 30%;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
+    .process-step-tag {
+      display: inline-flex; margin-top: 1.2rem;
+      font-size: 0.65rem; letter-spacing: 0.08em; font-weight: 500;
+      color: var(--ink-3); padding: 0.2rem 0.7rem;
+      border: 1px solid var(--border); border-radius: 999px;
       text-transform: uppercase;
-      font-family: var(--font-en);
-    }
-    .about-values-grid {
-      display: grid;
-      gap: 2rem;
-    }
-    .value-card {
-      padding: 2rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      transition: border-color 0.3s, transform 0.3s var(--ease-out);
-    }
-    .value-card:hover {
-      border-color: rgba(99,102,241,0.2);
-      transform: translateY(-3px);
-    }
-    .value-num {
-      font-size: 0.6rem;
-      color: var(--accent-2);
-      letter-spacing: 0.15em;
-      margin-bottom: 0.6rem;
-      font-weight: 600;
-    }
-    .value-card h4 {
-      font-size: 1.05rem;
-      font-weight: 600;
-      margin-bottom: 0.4rem;
-      letter-spacing: -0.02em;
-    }
-    .value-card p {
-      font-family: var(--font-jp);
-      font-size: 0.82rem;
-      color: var(--text-2);
-      line-height: 1.8;
     }
 
-    /* ── CTA ── */
-    .cta {
-      padding: clamp(6rem, 12vw, 10rem) 0;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+    /* ─── About ──────────────────────────── */
+    .about { background: var(--surface); }
+    .about-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 8vw, 7rem); align-items: center;
     }
-    .cta-glow {
-      position: absolute;
-      width: 500px; height: 500px;
-      border-radius: 50%;
-      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-      left: 50%; top: 50%;
-      transform: translate(-50%, -50%);
-      filter: blur(60px);
-      opacity: 0.4;
+    .about-visual { position: relative; }
+    .about-canvas {
+      width: 100%; aspect-ratio: 4/5; border-radius: 4px;
+      display: block; border: 1px solid var(--border);
     }
-    .cta h2 {
-      font-size: clamp(2.5rem, 7vw, 5rem);
-      font-weight: 700;
-      letter-spacing: -0.05em;
+    .about-badge {
+      position: absolute; bottom: -1.5rem; right: -1.5rem;
+      background: var(--accent); color: #fff;
+      padding: 1.2rem 1.5rem; border-radius: 4px;
+    }
+    .about-badge-num {
+      font-size: 2rem; font-weight: 700; letter-spacing: -0.04em;
       line-height: 1;
-      margin-bottom: 1.2rem;
-      position: relative;
     }
+    .about-badge-label { font-size: 0.68rem; opacity: 0.8; margin-top: 0.2rem; }
+    .about-text { }
+    .about-desc {
+      font-family: var(--font-jp); font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+      line-height: 2; color: var(--ink-2); margin-bottom: 1.5rem;
+    }
+    .about-table { width: 100%; margin-top: 2rem; }
+    .about-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 0.9rem 0; border-bottom: 1px solid var(--border);
+      gap: 1rem;
+    }
+    .about-row dt { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+    .about-row dd { font-size: 0.88rem; color: var(--ink); text-align: right; font-family: var(--font-jp); }
+
+    /* ─── CTA ────────────────────────────── */
+    .cta-section {
+      background: var(--ink); padding: clamp(5rem, 10vw, 9rem) clamp(1.5rem, 5vw, 4rem);
+      position: relative; overflow: hidden;
+    }
+    .cta-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+    .cta-title {
+      font-size: clamp(3rem, 8vw, 8rem); font-weight: 700;
+      line-height: 0.92; letter-spacing: -0.04em; color: #fff;
+      margin-bottom: clamp(2rem, 4vw, 3.5rem);
+    }
+    .cta-title em { font-style: normal; color: var(--accent); }
+    .cta-title .jp { font-family: var(--font-jp); }
     .cta-sub {
-      font-family: var(--font-jp);
-      color: var(--text-2);
-      font-size: 1rem;
+      font-family: var(--font-jp); font-size: clamp(0.88rem, 1.5vw, 1rem);
+      color: rgba(255,255,255,0.5); max-width: 500px; line-height: 1.9;
       margin-bottom: 3rem;
-      position: relative;
+    }
+    .cta-bg-text {
+      position: absolute; bottom: -2rem; right: -2rem; pointer-events: none;
+      font-size: clamp(6rem, 20vw, 20rem); font-weight: 800;
+      letter-spacing: -0.06em; color: rgba(255,255,255,0.02);
+      white-space: nowrap; user-select: none;
     }
 
-    /* ── Contact Form ── */
-    .contact-form {
-      max-width: 520px;
-      margin: 0 auto;
-      text-align: left;
-      position: relative;
+    /* ─── Contact ─────────────────────────── */
+    .contact { background: var(--bg); }
+    .contact-inner {
+      display: grid; grid-template-columns: 1fr 1.4fr;
+      gap: clamp(3rem, 8vw, 7rem); align-items: start;
     }
-    .form-group { margin-bottom: 1.25rem; }
-    .form-group label {
-      display: block;
-      font-family: var(--font-jp);
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--text-2);
-      margin-bottom: 0.4rem;
-      letter-spacing: 0.02em;
+    .contact-info { }
+    .contact-detail {
+      margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.5rem;
     }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 0.8rem 1rem;
-      font-size: 0.88rem;
-      font-family: var(--font-jp);
-      color: var(--text);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      outline: none;
-      transition: border-color 0.3s, box-shadow 0.3s;
-      -webkit-appearance: none;
+    .contact-detail-item { display: flex; flex-direction: column; gap: 0.3rem; }
+    .contact-detail-label {
+      font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-3);
     }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-glow);
+    .contact-detail-val { font-size: 0.9rem; color: var(--ink); }
+    form { display: flex; flex-direction: column; gap: 1.2rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    label { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+    input, select, textarea {
+      width: 100%; padding: 0.85rem 1rem;
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 2px; font-family: var(--font-jp); font-size: 0.88rem;
+      color: var(--ink); transition: border-color .2s;
+      outline: none; appearance: none;
     }
-    .form-group textarea { min-height: 120px; resize: vertical; }
-    .form-group select { cursor: pointer; }
+    input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+    textarea { resize: vertical; min-height: 140px; }
     .form-submit {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.9rem 2.2rem;
-      background: var(--text);
-      color: var(--bg);
-      font-size: 0.88rem;
-      font-weight: 600;
-      border-radius: 12px;
-      border: none;
-      font-family: var(--font-en);
-      transition: transform 0.3s var(--ease-spring), box-shadow 0.3s;
-      width: 100%;
-      justify-content: center;
-      margin-top: 0.5rem;
+      padding: 1rem 2.5rem; background: var(--ink); color: var(--bg);
+      border: none; font-size: 0.82rem; font-weight: 500;
+      letter-spacing: 0.06em; border-radius: 2px; cursor: none;
+      transition: all .25s var(--ease); align-self: flex-start;
     }
-    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
-    .form-submit:active { transform: translateY(0) scale(0.98); }
-    .form-success {
-      display: none;
-      text-align: center;
-      padding: 2rem 0;
-    }
-    .form-success.show { display: block; }
-    .form-success h3 {
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
-    }
-    .form-success p {
-      font-family: var(--font-jp);
-      color: var(--text-2);
-      font-size: 0.9rem;
-    }
+    .form-submit:hover { background: var(--accent); }
+    .form-note { font-size: 0.72rem; color: var(--ink-3); font-family: var(--font-jp); }
 
-    /* ── Footer ── */
+    /* ─── Footer ─────────────────────────── */
     footer {
-      padding: 2.5rem 0;
-      border-top: 1px solid var(--border);
+      background: var(--ink); padding: clamp(3rem, 5vw, 4rem) clamp(1.5rem, 5vw, 4rem);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
     }
-    .footer-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .footer-logo {
-      font-size: 0.9rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      color: var(--text-3);
-    }
-    .footer-copy {
-      font-size: 0.7rem;
-      color: var(--text-3);
-      letter-spacing: 0.03em;
-    }
+    .footer-logo { font-size: 0.95rem; font-weight: 600; letter-spacing: -0.02em; color: #fff; }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a { font-size: 0.75rem; color: rgba(255,255,255,0.3); transition: color .2s; }
+    .footer-links a:hover { color: rgba(255,255,255,0.7); }
+    .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.25); }
 
-    /* ── Reveal System ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+    /* ─── Responsive ──────────────────────── */
+    @media (max-width: 900px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .process-grid { grid-template-columns: 1fr 1fr; }
+      .about-inner { grid-template-columns: 1fr; }
+      .about-badge { bottom: -1rem; right: -0.5rem; }
+      .contact-inner { grid-template-columns: 1fr; }
     }
-    .reveal.visible { opacity: 1; transform: none; }
-    .reveal-d1 { transition-delay: 0.1s; }
-    .reveal-d2 { transition-delay: 0.2s; }
-    .reveal-d3 { transition-delay: 0.3s; }
-    .stagger-children > * {
-      opacity: 0;
-      transform: translateY(25px);
-      transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
-    }
-    .stagger-children.visible > *:nth-child(1) { transition-delay: 0s; opacity: 1; transform: none; }
-    .stagger-children.visible > *:nth-child(2) { transition-delay: 0.08s; opacity: 1; transform: none; }
-    .stagger-children.visible > *:nth-child(3) { transition-delay: 0.16s; opacity: 1; transform: none; }
-    .stagger-children.visible > *:nth-child(4) { transition-delay: 0.24s; opacity: 1; transform: none; }
-
-    /* ── Responsive ── */
     @media (max-width: 768px) {
-      body { cursor: auto; }
-      .cursor, .cursor-dot { display: none; }
       .nav-links { display: none; }
       .hamburger { display: flex; }
-      .services-grid { grid-template-columns: 1fr; }
-      .stats-row { grid-template-columns: repeat(2, 1fr); }
-      .process-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
-      .process-grid::before { display: none; }
-      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .hero-actions { flex-direction: column; align-items: center; }
-      .hero-scroll { display: none; }
-      footer .footer-inner { flex-direction: column; gap: 0.75rem; text-align: center; }
+      .mobile-menu { display: flex; }
+      .hero-title { font-size: clamp(3rem, 13vw, 6rem); }
+      .service-item { grid-template-columns: 48px 1fr; gap: 1rem; }
+      .service-price { display: none; }
+      .service-arrow { display: none; }
       .work-card { flex: 0 0 85vw; }
-      .works-scroll { gap: 1rem; }
-      .work-info { padding: 1.2rem; }
-      .work-info h3 { font-size: 1rem; }
-      .hero h1 { font-size: clamp(2.2rem, 9vw, 3.5rem); }
-      .cta h2 { font-size: clamp(1.8rem, 7vw, 3rem); }
-      .contact-form { padding: 0 0.5rem; }
-    }
-    @media (max-width: 480px) {
-      .stats-row { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .process-grid { grid-template-columns: 1fr; }
     }
-
-    /* Reduced motion */
+    @media (max-width: 480px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-      }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
   </style>
 </head>
 <body>
-  <script>
-    if (window.location.hash) history.replaceState(null, '', window.location.pathname);
-    window.scrollTo({top:0,left:0,behavior:'instant'});
-    document.documentElement.scrollTop = 0;
-  </script>
 
-  <!-- Loading Screen -->
-  <div class="loader" id="loader">
-    <div class="loader-text" id="loaderText"></div>
+<!-- Loader -->
+<div class="loader" id="loader">
+  <div class="loader-logo">iniestabluu</div>
+  <div class="loader-bar"></div>
+</div>
+
+<!-- Cursor -->
+<div class="cur" id="cur"><div class="cur-ring"></div></div>
+<div class="cur-dot" id="curDot"></div>
+
+<!-- Scroll progress -->
+<div class="scroll-bar" id="scrollBar"></div>
+
+<!-- Nav -->
+<nav id="nav">
+  <a href="#" class="nav-logo">iniestabluu</a>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#works">Works</a>
+    <a href="#about">About</a>
+    <a href="#contact" class="nav-cta">Contact</a>
   </div>
+  <button class="hamburger" id="hamburger" aria-label="menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
 
-  <!-- Cursor -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-dot" id="cursorDot"></div>
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" onclick="closeMobileMenu()">Services</a>
+  <a href="#works" onclick="closeMobileMenu()">Works</a>
+  <a href="#about" onclick="closeMobileMenu()">About</a>
+  <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+</div>
 
-  <!-- Scroll Progress -->
-  <div class="scroll-progress" id="scrollProgress"></div>
-
-  <!-- Nav -->
-  <nav>
-    <div class="nav-logo">iniestabluu</div>
-    <ul class="nav-links">
-      <li><a href="#services">Services</a></li>
-      <li><a href="#works">Works</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <button class="hamburger" id="hamburger" aria-label="メニュー">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#services" class="mobile-link">Services</a>
-    <a href="#works" class="mobile-link">Works</a>
-    <a href="#about" class="mobile-link">About</a>
-    <a href="#contact" class="mobile-link">Contact</a>
-  </div>
-
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-grid-bg"></div>
+<!-- Hero -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <div class="hero-grid"></div>
     <div class="hero-glow"></div>
-    <div class="container hero-content">
-      <div class="hero-badge">
-        <span class="hero-badge-dot"></span>
-        Web Production Studio
-      </div>
-      <h1>
-        <span class="line"><span>We craft</span></span>
-        <span class="line"><span><span class="gradient-text">digital</span> experiences</span></span>
-        <span class="line"><span>that convert.</span></span>
-      </h1>
-      <p class="hero-sub">デザインからコーディングまで。<br>ビジネスを加速させるWEBサイトを、圧倒的なクオリティで。</p>
+  </div>
+  <div class="hero-content">
+    <p class="hero-eyebrow reveal">Web Production Studio</p>
+    <h1 class="hero-title reveal reveal-delay-1">
+      <span class="jp">限界を、</span><br>
+      超える<em>.</em>
+    </h1>
+    <div class="hero-bottom reveal reveal-delay-2">
+      <p class="hero-sub">AIと人間の創造性が融合する、次世代WEB制作。<br>圧倒的なスピードと品質で、あなたのビジネスを加速させる。</p>
       <div class="hero-actions">
-        <a href="#contact" class="btn-primary">お問い合わせ <span class="btn-arrow">&rarr;</span></a>
-        <a href="#works" class="btn-ghost">実績を見る <span class="btn-arrow">&darr;</span></a>
+        <a href="#contact" class="btn-primary">相談する →</a>
+        <a href="#works" class="btn-ghost">実績を見る</a>
       </div>
-    </div>
-    <div class="hero-scroll">
-      <div class="scroll-mouse"></div>
-      <span class="scroll-text">Scroll</span>
-    </div>
-  </section>
-
-  <!-- Marquee -->
-  <div class="marquee">
-    <div class="marquee-inner" id="marquee">
-      <span class="marquee-item">Corporate Site <span class="sep"></span></span>
-      <span class="marquee-item">Landing Page <span class="sep"></span></span>
-      <span class="marquee-item">EC Site <span class="sep"></span></span>
-      <span class="marquee-item">UI/UX Design <span class="sep"></span></span>
-      <span class="marquee-item">Web Application <span class="sep"></span></span>
-      <span class="marquee-item">Speed Delivery <span class="sep"></span></span>
-      <span class="marquee-item">Corporate Site <span class="sep"></span></span>
-      <span class="marquee-item">Landing Page <span class="sep"></span></span>
-      <span class="marquee-item">EC Site <span class="sep"></span></span>
-      <span class="marquee-item">UI/UX Design <span class="sep"></span></span>
-      <span class="marquee-item">Web Application <span class="sep"></span></span>
-      <span class="marquee-item">Speed Delivery <span class="sep"></span></span>
     </div>
   </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
 
-  <!-- Services -->
-  <section id="services" class="section">
-    <div class="container">
-      <div class="section-header reveal">
-        <p class="section-label">Services</p>
-        <h2 class="section-title">何をつくるか。</h2>
-        <p class="section-desc">ビジネスのフェーズに最適化されたWEBサイトを、設計から実装まで一貫して手がけます。</p>
-      </div>
-      <div class="services-grid stagger-children">
-        <a href="corporate.html" class="service-card" data-tilt>
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
-          </div>
-          <h3>Corporate Site</h3>
-          <p>企業の価値を正しく伝えるコーポレートサイト。信頼感のあるデザインと構造設計で、ブランドを形にします。</p>
-          <span class="service-tag">詳細・料金を見る &rarr;</span>
-        </a>
-        <a href="lp.html" class="service-card" data-tilt>
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-          </div>
-          <h3>Landing Page</h3>
-          <p>広告効果を最大化するLP。データドリブンな設計とビジュアルでコンバージョンを最適化。</p>
-          <span class="service-tag">詳細・料金を見る &rarr;</span>
-        </a>
-        <a href="ec.html" class="service-card" data-tilt>
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
-          </div>
-          <h3>EC Site</h3>
-          <p>商品の世界観を体現するオンラインストア。決済・在庫管理まで一貫対応。売れるECを構築します。</p>
-          <span class="service-tag">詳細・料金を見る &rarr;</span>
-        </a>
-      </div>
-    </div>
-  </section>
+<!-- Marquee -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item">Corporate Site <span class="dot"></span></div>
+    <div class="marquee-item">Landing Page <span class="dot"></span></div>
+    <div class="marquee-item">EC Site <span class="dot"></span></div>
+    <div class="marquee-item">Web Design <span class="dot"></span></div>
+    <div class="marquee-item">Claude Code <span class="dot"></span></div>
+    <div class="marquee-item">Vercel Deploy <span class="dot"></span></div>
+    <div class="marquee-item">AI Production <span class="dot"></span></div>
+    <div class="marquee-item">Fast Delivery <span class="dot"></span></div>
+    <div class="marquee-item">Corporate Site <span class="dot"></span></div>
+    <div class="marquee-item">Landing Page <span class="dot"></span></div>
+    <div class="marquee-item">EC Site <span class="dot"></span></div>
+    <div class="marquee-item">Web Design <span class="dot"></span></div>
+    <div class="marquee-item">Claude Code <span class="dot"></span></div>
+    <div class="marquee-item">Vercel Deploy <span class="dot"></span></div>
+    <div class="marquee-item">AI Production <span class="dot"></span></div>
+    <div class="marquee-item">Fast Delivery <span class="dot"></span></div>
+  </div>
+</div>
 
-  <!-- Works -->
-  <section id="works" class="section works">
-    <div class="container">
-      <div class="section-header reveal">
-        <p class="section-label">Works</p>
-        <h2 class="section-title">つくったもの。</h2>
-        <p class="section-desc">クオリティは語るより見せるもの。実績の一部をご紹介します。</p>
-      </div>
+<!-- Services -->
+<section class="section services" id="services">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="label reveal">Services</p>
+      <h2 class="title reveal reveal-delay-1">つくれるもの<em>.</em></h2>
     </div>
-    <div class="works-scroll" id="worksScroll">
-      <a class="work-card" href="https://company-website-ten-omega.vercel.app" target="_blank" rel="noopener">
-        <div class="work-canvas-wrap"><canvas class="work-canvas" id="workCanvas1"></canvas></div>
-        <div class="work-info">
-          <p class="work-type">Corporate Site</p>
-          <h3>iniestabluu.com</h3>
-          <p>自社コーポレートサイト</p>
+    <div class="service-list">
+      <a href="corporate.html" class="service-item reveal">
+        <div class="service-num">01</div>
+        <div class="service-main">
+          <div class="service-name">
+            Corporate Site
+            <span class="service-tag">Web Design</span>
+          </div>
+          <p class="service-desc">企業の顔となるコーポレートサイト。ブランドの世界観を丁寧に構築します。</p>
+        </div>
+        <div style="display:flex;align-items:center;">
+          <div class="service-price">¥98,000 〜<span>税込 / プロジェクト</span></div>
+          <div class="service-arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
         </div>
       </a>
-      <a class="work-card" href="https://portfolio-hair.vercel.app" target="_blank" rel="noopener">
-        <div class="work-canvas-wrap"><canvas class="work-canvas" id="workCanvas2"></canvas></div>
-        <div class="work-info">
-          <p class="work-type">Hair Salon</p>
-          <h3>HAUM</h3>
-          <p>美容室サイト制作</p>
+      <a href="lp.html" class="service-item reveal reveal-delay-1">
+        <div class="service-num">02</div>
+        <div class="service-main">
+          <div class="service-name">
+            Landing Page
+            <span class="service-tag">Conversion</span>
+          </div>
+          <p class="service-desc">成果にこだわったLP。ユーザーを引き込み、行動を促すデザイン設計。</p>
+        </div>
+        <div style="display:flex;align-items:center;">
+          <div class="service-price">¥58,000 〜<span>税込 / プロジェクト</span></div>
+          <div class="service-arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
         </div>
       </a>
-      <a class="work-card" href="https://portfolio-restaurant-blond.vercel.app" target="_blank" rel="noopener">
-        <div class="work-canvas-wrap"><canvas class="work-canvas" id="workCanvas3"></canvas></div>
-        <div class="work-info">
-          <p class="work-type">Restaurant</p>
-          <h3>SORA</h3>
-          <p>イタリアンレストランサイト制作</p>
+      <a href="ec.html" class="service-item reveal reveal-delay-2">
+        <div class="service-num">03</div>
+        <div class="service-main">
+          <div class="service-name">
+            EC Site
+            <span class="service-tag">E-Commerce</span>
+          </div>
+          <p class="service-desc">売れるECサイト。購買体験を最大化するUI設計と決済連携まで対応。</p>
+        </div>
+        <div style="display:flex;align-items:center;">
+          <div class="service-price">¥198,000 〜<span>税込 / プロジェクト</span></div>
+          <div class="service-arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
         </div>
       </a>
-      <div class="work-card">
-        <div class="work-canvas-wrap"><canvas class="work-canvas" id="workCanvas4"></canvas></div>
-        <div class="work-info">
-          <p class="work-type">EC Site</p>
-          <h3>Mall Flower</h3>
-          <p>フラワーECサイト制作（制作中）</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Stats -->
-  <section class="section">
-    <div class="container">
-      <div class="stats-row reveal">
-        <div class="stat-item">
-          <div class="stat-number" data-count="48">0</div>
-          <div class="stat-label">制作時間（最短）</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number" data-count="100" data-suffix="%">0%</div>
-          <div class="stat-label">レスポンシブ対応</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number" data-count="3" data-suffix="x">0x</div>
-          <div class="stat-label">業界平均より速い</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number" data-count="0" data-suffix="円" data-special="ask">?</div>
-          <div class="stat-label">まずはお見積り</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Process -->
-  <section id="process" class="section">
-    <div class="container">
-      <div class="section-header reveal">
-        <p class="section-label">Process</p>
-        <h2 class="section-title">どう進めるか。</h2>
-        <p class="section-desc">最短距離でゴールへ。無駄のないプロセスで、速さと品質を両立します。</p>
-      </div>
-      <div class="process-grid stagger-children">
-        <div class="process-step">
-          <div class="process-dot">1</div>
-          <h4>ヒアリング</h4>
-          <p>目標・ターゲット・世界観を理解するところから。</p>
-        </div>
-        <div class="process-step">
-          <div class="process-dot">2</div>
-          <h4>設計・提案</h4>
-          <p>構成・機能・スケジュールを設計し、ご提案。</p>
-        </div>
-        <div class="process-step">
-          <div class="process-dot">3</div>
-          <h4>制作</h4>
-          <p>デザインからコーディングまで高速で仕上げます。</p>
-        </div>
-        <div class="process-step">
-          <div class="process-dot">4</div>
-          <h4>公開・運用</h4>
-          <p>本番公開。納品後の保守・改善もサポート。</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- About -->
-  <section id="about" class="section">
-    <div class="container">
-      <div class="section-header reveal">
-        <p class="section-label">About</p>
-        <h2 class="section-title">私たちについて。</h2>
-      </div>
-      <div class="about-grid">
-        <div class="reveal">
-          <p class="about-text">
-            <strong>iniestabluu</strong>は「速さ」と「品質」にこだわるWEB制作スタジオです。<br><br>
-            コーポレートサイトからECサイト、ランディングページまで。ビジネスの成長に直結するWEBサイトを、設計から実装までワンストップで手がけます。
-          </p>
-          <table class="about-table">
-            <tr><td>Company</td><td>iniestabluu</td></tr>
-            <tr><td>Founder</td><td>Kanata Take</td></tr>
-            <tr><td>Founded</td><td>2026.05.11</td></tr>
-            <tr><td>Business</td><td>WEB制作代行</td></tr>
-          </table>
-        </div>
-        <div class="about-values-grid stagger-children">
-          <div class="value-card">
-            <p class="value-num">01</p>
-            <h4>Speed First</h4>
-            <p>速さは正義。まず動かし、素早く改善する。</p>
+      <div class="service-item reveal reveal-delay-3">
+        <div class="service-num">04</div>
+        <div class="service-main">
+          <div class="service-name">
+            Monthly Support
+            <span class="service-tag">Ongoing</span>
           </div>
-          <div class="value-card">
-            <p class="value-num">02</p>
-            <h4>Pixel Perfect</h4>
-            <p>細部のこだわりが、全体の品質を決める。</p>
-          </div>
-          <div class="value-card">
-            <p class="value-num">03</p>
-            <h4>Result Driven</h4>
-            <p>見た目だけでなく、ビジネス成果にコミットする。</p>
+          <p class="service-desc">納品後の保守・運用・修正対応。安心して任せられる継続サポート。</p>
+        </div>
+        <div style="display:flex;align-items:center;">
+          <div class="service-price">¥5,000 〜<span>税込 / 月額</span></div>
+          <div class="service-arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- CTA / Contact Form -->
-  <section id="contact" class="cta">
-    <div class="cta-glow"></div>
-    <div class="container reveal">
-      <h2>Let's build<br>something great.</h2>
-      <p class="cta-sub">まずは、話しましょう。</p>
-      <form class="contact-form" id="contactForm" action="https://formspree.io/f/placeholder" method="POST">
+<!-- Works -->
+<section class="section works" id="works" style="padding-left:0;padding-right:0;">
+  <div class="section-inner" style="padding:0 clamp(1.5rem,5vw,4rem);">
+    <div class="works-header">
+      <div>
+        <p class="label reveal">Works</p>
+        <h2 class="title reveal reveal-delay-1">つくったもの<em>.</em></h2>
+      </div>
+      <p class="reveal reveal-delay-2" style="font-family:var(--font-jp);font-size:0.85rem;color:var(--ink-2);max-width:280px;line-height:1.8;">クオリティは語るより見せるもの。実績の一部をご紹介します。</p>
+    </div>
+  </div>
+  <div class="works-track" id="worksScroll">
+    <a class="work-card" href="https://company-website-ten-omega.vercel.app" target="_blank" rel="noopener">
+      <div class="work-canvas-wrap"><canvas class="work-canvas" id="workCanvas1"></canvas></div>
+      <div class="work-info">
+        <p class="work-type">Corporate Site</p>
+        <h3>iniestabluu.com</h3>
+        <p>自社コーポレートサイト</p>
+      </div>
+    </a>
+    <a class="work-card" href="https://portfolio-hair.vercel.app" target="_blank" rel="noopener">
+      <div class="work-canvas-wrap"><canvas class="work-canvas" id="workCanvas2"></canvas></div>
+      <div class="work-info">
+        <p class="work-type">Hair Salon</p>
+        <h3>HAUM</h3>
+        <p>美容室サイト制作</p>
+      </div>
+    </a>
+    <a class="work-card" href="https://portfolio-restaurant-blond.vercel.app" target="_blank" rel="noopener">
+      <div class="work-canvas-wrap"><canvas class="work-canvas" id="workCanvas3"></canvas></div>
+      <div class="work-info">
+        <p class="work-type">Restaurant</p>
+        <h3>SORA</h3>
+        <p>イタリアンレストランサイト</p>
+      </div>
+    </a>
+    <div class="work-card">
+      <div class="work-canvas-wrap"><canvas class="work-canvas" id="workCanvas4"></canvas></div>
+      <div class="work-info">
+        <p class="work-type">EC Site</p>
+        <h3>Mall Flower</h3>
+        <p>フラワーECサイト制作（制作中）</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="stats">
+  <div class="stats-grid">
+    <div class="stat reveal">
+      <div class="stat-num"><span data-count="3">0</span><em>日</em></div>
+      <div class="stat-label">最短納品日数<br>スピードが強み</div>
+    </div>
+    <div class="stat reveal reveal-delay-1">
+      <div class="stat-num"><span data-count="98">0</span><em>%</em></div>
+      <div class="stat-label">クライアント<br>満足度</div>
+    </div>
+    <div class="stat reveal reveal-delay-2">
+      <div class="stat-num"><span data-count="0">0</span><em>→∞</em></div>
+      <div class="stat-label">制作実績を<br>積み上げ中</div>
+    </div>
+    <div class="stat reveal reveal-delay-3">
+      <div class="stat-num"><span data-count="24">0</span><em>h</em></div>
+      <div class="stat-label">対応時間<br>迅速にレスポンス</div>
+    </div>
+  </div>
+</section>
+
+<!-- Process -->
+<section class="section process" id="process">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="label reveal">How it works</p>
+      <h2 class="title reveal reveal-delay-1">制作の流れ<em>.</em></h2>
+    </div>
+    <div class="process-grid">
+      <div class="process-item reveal">
+        <div class="process-step-num">Step 01</div>
+        <div class="process-step-title">ヒアリング</div>
+        <div class="process-step-desc">目的・ターゲット・デザインイメージをヒアリング。LINEやZoomで気軽にご相談いただけます。</div>
+        <span class="process-step-tag">〜1日</span>
+      </div>
+      <div class="process-item reveal reveal-delay-1">
+        <div class="process-step-num">Step 02</div>
+        <div class="process-step-title">見積もり・着手</div>
+        <div class="process-step-desc">ヒアリング後に御見積を提出。着手金50%の入金確認後、即制作を開始します。</div>
+        <span class="process-step-tag">〜2日</span>
+      </div>
+      <div class="process-item reveal reveal-delay-2">
+        <div class="process-step-num">Step 03</div>
+        <div class="process-step-title">爆速制作</div>
+        <div class="process-step-desc">Claude Codeを駆使した高速制作。通常の制作会社の1/3のスピードで仕上げます。</div>
+        <span class="process-step-tag">2〜5日</span>
+      </div>
+      <div class="process-item reveal">
+        <div class="process-step-num">Step 04</div>
+        <div class="process-step-title">確認・修正</div>
+        <div class="process-step-desc">制作物を共有し、フィードバックを受け取ります。修正は2回まで無償対応。</div>
+        <span class="process-step-tag">〜3日</span>
+      </div>
+      <div class="process-item reveal reveal-delay-1">
+        <div class="process-step-num">Step 05</div>
+        <div class="process-step-title">納品・デプロイ</div>
+        <div class="process-step-desc">最終確認後、Vercelにデプロイして本番公開。残金50%をご請求します。</div>
+        <span class="process-step-tag">〜1日</span>
+      </div>
+      <div class="process-item reveal reveal-delay-2">
+        <div class="process-step-num">Step 06</div>
+        <div class="process-step-title">保守・サポート</div>
+        <div class="process-step-desc">月額保守契約でその後の修正・更新に対応。長期的なパートナーとして伴走します。</div>
+        <span class="process-step-tag">月額〜</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <p class="label" style="color:rgba(255,255,255,0.3);margin-bottom:1.5rem;">
+      <span style="background:rgba(255,255,255,0.1);width:20px;height:1px;display:inline-block;vertical-align:middle;margin-right:0.75rem;"></span>
+      Let's work together
+    </p>
+    <h2 class="cta-title reveal">
+      まず、話して<em>.</em><br>
+      <span class="jp">みませんか</span>
+    </h2>
+    <p class="cta-sub reveal reveal-delay-1">まずは気軽なご相談から。サイトの種類・予算・スケジュールなど、どんなことでもお気軽にどうぞ。</p>
+    <a href="#contact" class="btn-primary reveal reveal-delay-2" style="font-size:0.9rem;padding:1.1rem 2.8rem;">相談する →</a>
+  </div>
+  <div class="cta-bg-text">WEB制作</div>
+</section>
+
+<!-- About -->
+<section class="section about" id="about">
+  <div class="section-inner">
+    <div class="about-inner">
+      <div class="about-visual reveal">
+        <canvas class="about-canvas" id="aboutCanvas"></canvas>
+        <div class="about-badge">
+          <div class="about-badge-num">AI</div>
+          <div class="about-badge-label">Powered</div>
+        </div>
+      </div>
+      <div class="about-text">
+        <p class="label reveal">About</p>
+        <h2 class="title reveal reveal-delay-1" style="font-size:clamp(2rem,4vw,3.5rem);margin-bottom:1.5rem;">Kanata Take<em>.</em></h2>
+        <p class="about-desc reveal reveal-delay-2">AIと人間の創造性を掛け合わせた、次世代のWEB制作スタジオ「iniestabluu」を運営しています。Claude Codeを核とした独自の制作フローにより、従来の1/3以下のスピードと、上回るクオリティを実現します。</p>
+        <p class="about-desc reveal reveal-delay-3">「限界を超える」を合言葉に、クライアントのビジネス成長に真剣に向き合います。</p>
+        <dl class="about-table reveal reveal-delay-3">
+          <div class="about-row">
+            <dt>Company</dt>
+            <dd>iniestabluu</dd>
+          </div>
+          <div class="about-row">
+            <dt>Founder</dt>
+            <dd>Kanata Take</dd>
+          </div>
+          <div class="about-row">
+            <dt>Founded</dt>
+            <dd>2026</dd>
+          </div>
+          <div class="about-row">
+            <dt>Business</dt>
+            <dd>WEB制作代行</dd>
+          </div>
+          <div class="about-row">
+            <dt>Tech Stack</dt>
+            <dd>Claude Code / Vercel / GitHub</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="section contact" id="contact">
+  <div class="section-inner">
+    <div class="contact-inner">
+      <div class="contact-info">
+        <p class="label reveal">Contact</p>
+        <h2 class="title reveal reveal-delay-1" style="font-size:clamp(2rem,4vw,3.5rem);">話しましょう<em>.</em></h2>
+        <div class="contact-detail reveal reveal-delay-2">
+          <div class="contact-detail-item">
+            <span class="contact-detail-label">Response Time</span>
+            <span class="contact-detail-val">24時間以内にご返信します</span>
+          </div>
+          <div class="contact-detail-item">
+            <span class="contact-detail-label">First Consultation</span>
+            <span class="contact-detail-val">初回相談は完全無料</span>
+          </div>
+          <div class="contact-detail-item">
+            <span class="contact-detail-label">Payment</span>
+            <span class="contact-detail-val">銀行振込（着手金50%制）</span>
+          </div>
+        </div>
+      </div>
+      <form id="contactForm" class="reveal reveal-delay-1">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">お名前 *</label>
+            <input type="text" id="name" name="name" placeholder="山田 太郎" required />
+          </div>
+          <div class="form-group">
+            <label for="company">会社名</label>
+            <input type="text" id="company" name="company" placeholder="株式会社〇〇" />
+          </div>
+        </div>
         <div class="form-group">
-          <label for="name">お名前</label>
-          <input type="text" id="name" name="name" required placeholder="山田 太郎" />
-        </div>
-        <div class="form-group">
-          <label for="email">メールアドレス</label>
-          <input type="email" id="email" name="email" required placeholder="you@example.com" />
+          <label for="email">メールアドレス *</label>
+          <input type="email" id="email" name="email" placeholder="your@email.com" required />
         </div>
         <div class="form-group">
           <label for="service">ご依頼内容</label>
           <select id="service" name="service">
             <option value="">選択してください</option>
-            <option value="corporate">コーポレートサイト</option>
-            <option value="lp">ランディングページ</option>
-            <option value="ec">ECサイト</option>
-            <option value="other">その他</option>
+            <option>コーポレートサイト制作</option>
+            <option>ランディングページ制作</option>
+            <option>ECサイト制作</option>
+            <option>サイトリニューアル</option>
+            <option>月額保守・サポート</option>
+            <option>その他・まずは相談</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="budget">ご予算</label>
-          <select id="budget" name="budget">
-            <option value="">選択してください</option>
-            <option value="~10万">〜10万円</option>
-            <option value="10~30万">10〜30万円</option>
-            <option value="30~50万">30〜50万円</option>
-            <option value="50万~">50万円〜</option>
-            <option value="相談">要相談</option>
-          </select>
+          <label for="message">メッセージ *</label>
+          <textarea id="message" name="message" placeholder="ご要望・ご質問などをお気軽にどうぞ。参考サイトや予算感があればお書きください。" required></textarea>
         </div>
-        <div class="form-group">
-          <label for="message">プロジェクトの詳細</label>
-          <textarea id="message" name="message" placeholder="ご要望やサイトのイメージがあればお聞かせください"></textarea>
-        </div>
-        <button type="submit" class="form-submit">送信する &rarr;</button>
+        <p class="form-note">* 必須項目。送信後24時間以内にご連絡します。</p>
+        <button type="submit" class="form-submit" id="submitBtn">送信する →</button>
       </form>
-      <div class="form-success" id="formSuccess">
-        <h3>送信完了</h3>
-        <p>お問い合わせありがとうございます。<br>24時間以内にご連絡いたします。</p>
-      </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="footer-inner">
-        <div class="footer-logo">iniestabluu</div>
-        <p class="footer-copy">&copy; 2026 iniestabluu. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">iniestabluu</div>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#works">Works</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <p class="footer-copy">© 2026 iniestabluu. All rights reserved.</p>
+</footer>
 
-  <script>
-  (function() {
-    'use strict';
+<script>
+  // ─── Scroll restoration fix ──────────
+  if (history.scrollRestoration) history.scrollRestoration = 'manual';
+  if (window.location.hash) history.replaceState(null, '', window.location.pathname);
+  window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
-    // ── Loading Screen ──
-    const loaderText = document.getElementById('loaderText');
-    const loader = document.getElementById('loader');
-    const brand = 'iniestabluu';
-    brand.split('').forEach((ch, i) => {
-      const span = document.createElement('span');
-      span.textContent = ch;
-      span.style.animationDelay = (0.08 * i) + 's';
-      loaderText.appendChild(span);
-    });
-    setTimeout(() => loader.classList.add('done'), 1600);
-
-    // ── Custom Cursor ──
-    const cursor = document.getElementById('cursor');
-    const dot = document.getElementById('cursorDot');
-    let cx = 0, cy = 0, dx = 0, dy = 0;
-
-    document.addEventListener('mousemove', e => {
-      cx = e.clientX; cy = e.clientY;
-      dot.style.left = cx + 'px';
-      dot.style.top = cy + 'px';
-      if (!cursor.classList.contains('active')) {
-        cursor.classList.add('active');
-        dot.classList.add('active');
-      }
-    });
-
-    function raf() {
-      dx += (cx - dx) * 0.1;
-      dy += (cy - dy) * 0.1;
-      cursor.style.left = dx + 'px';
-      cursor.style.top = dy + 'px';
-      requestAnimationFrame(raf);
-    }
-    raf();
-
-    const hoverEls = document.querySelectorAll('a, button, .service-card, .work-card, .value-card, .process-step');
-    hoverEls.forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
-    });
-
-    // ── Scroll Progress ──
-    const progress = document.getElementById('scrollProgress');
-    function updateProgress() {
-      const s = window.scrollY;
-      const h = document.body.scrollHeight - window.innerHeight;
-      if (h > 0) progress.style.transform = 'scaleX(' + (s / h) + ')';
-    }
-
-    // ── Reveal on Scroll ──
-    const reveals = document.querySelectorAll('.reveal, .stagger-children');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    reveals.forEach(el => observer.observe(el));
-
-    // ── 3D Tilt Cards ──
-    document.querySelectorAll('[data-tilt]').forEach(card => {
-      card.addEventListener('mousemove', e => {
-        const rect = card.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        card.style.transform = 'perspective(800px) rotateY(' + (x * 8) + 'deg) rotateX(' + (-y * 8) + 'deg) translateZ(10px)';
-      });
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(800px) rotateY(0) rotateX(0) translateZ(0)';
-      });
-    });
-
-    // ── Counter Animation ──
-    const counters = document.querySelectorAll('[data-count]');
-    const counterObserver = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const el = e.target;
-          const target = parseInt(el.dataset.count);
-          const suffix = el.dataset.suffix || '';
-          const special = el.dataset.special;
-
-          if (special === 'ask') {
-            el.textContent = '?';
-            counterObserver.unobserve(el);
-            return;
-          }
-
-          let current = 0;
-          const step = target / 40;
-          const timer = setInterval(() => {
-            current += step;
-            if (current >= target) {
-              current = target;
-              clearInterval(timer);
-            }
-            el.textContent = Math.floor(current) + suffix;
-          }, 30);
-          counterObserver.unobserve(el);
-        }
-      });
-    }, { threshold: 0.5 });
-    counters.forEach(el => counterObserver.observe(el));
-
-    // ── Works Drag Scroll ──
-    const worksScroll = document.getElementById('worksScroll');
-    let isDown = false, startX, scrollLeft;
-    worksScroll.addEventListener('mousedown', e => {
-      isDown = true; startX = e.pageX - worksScroll.offsetLeft;
-      scrollLeft = worksScroll.scrollLeft;
-    });
-    worksScroll.addEventListener('mouseleave', () => isDown = false);
-    worksScroll.addEventListener('mouseup', () => isDown = false);
-    worksScroll.addEventListener('mousemove', e => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - worksScroll.offsetLeft;
-      worksScroll.scrollLeft = scrollLeft - (x - startX) * 1.5;
-    });
-
-    // ── Website Mockup Art for Work Cards ──
-    function drawMockup(canvasId, hue, type) {
-      const canvas = document.getElementById(canvasId);
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      const rect = canvas.parentElement.getBoundingClientRect();
-      canvas.width = rect.width * 2;
-      canvas.height = rect.height * 2;
-      ctx.scale(2, 2);
-      const w = rect.width, h = rect.height;
-      const r = (v) => Math.round(v);
-
-      // Browser chrome
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(0, 0, w, h);
-      // Top bar
-      ctx.fillStyle = '#f4f4f5';
-      ctx.fillRect(0, 0, w, 28);
-      ctx.fillStyle = '#e4e4e7';
-      ctx.beginPath(); ctx.arc(12, 14, 4, 0, Math.PI*2); ctx.fill();
-      ctx.beginPath(); ctx.arc(24, 14, 4, 0, Math.PI*2); ctx.fill();
-      ctx.beginPath(); ctx.arc(36, 14, 4, 0, Math.PI*2); ctx.fill();
-      // URL bar
-      ctx.fillStyle = '#e4e4e7';
-      const urlW = w * 0.4;
-      ctx.fillRect(r((w - urlW) / 2), 8, urlW, 12);
-
-      const accent = 'hsla(' + hue + ',60%,55%,1)';
-      const accentLight = 'hsla(' + hue + ',60%,55%,0.1)';
-      const accentMed = 'hsla(' + hue + ',60%,55%,0.2)';
-      const gray1 = '#f4f4f5';
-      const gray2 = '#e4e4e7';
-      const gray3 = '#d4d4d8';
-      const textC = '#27272a';
-
-      if (type === 'corporate') {
-        // Nav
-        ctx.fillStyle = '#fafafa';
-        ctx.fillRect(0, 28, w, 32);
-        ctx.fillStyle = textC;
-        ctx.font = '700 10px Space Grotesk';
-        ctx.fillText('BRAND', 16, 48);
-        ctx.fillStyle = '#a1a1aa';
-        ctx.font = '400 7px Space Grotesk';
-        ['About','Service','News','Contact'].forEach((t, i) => ctx.fillText(t, w - 160 + i * 38, 48));
-        // Hero
-        ctx.fillStyle = accentLight;
-        ctx.fillRect(0, 60, w, h * 0.38);
-        ctx.fillStyle = textC;
-        ctx.font = '700 ' + r(w * 0.055) + 'px Space Grotesk';
-        ctx.fillText('Business Growth', 24, 60 + h * 0.16);
-        ctx.fillText('Starts Here.', 24, 60 + h * 0.24);
-        ctx.fillStyle = accent;
-        ctx.fillRect(24, 60 + h * 0.28, 80, 20);
-        ctx.fillStyle = '#fff';
-        ctx.font = '600 7px Space Grotesk';
-        ctx.fillText('Get Started', 38, 60 + h * 0.28 + 13);
-        // Cards
-        const cardY = 60 + h * 0.42;
-        for (let i = 0; i < 3; i++) {
-          const cx = 16 + i * (w * 0.3 + 10);
-          ctx.fillStyle = '#fff';
-          ctx.fillRect(cx, cardY, w * 0.28, h * 0.25);
-          ctx.strokeStyle = gray2;
-          ctx.lineWidth = 0.5;
-          ctx.strokeRect(cx, cardY, w * 0.28, h * 0.25);
-          ctx.fillStyle = accentMed;
-          ctx.fillRect(cx + 10, cardY + 10, 24, 24);
-          ctx.fillStyle = textC;
-          ctx.font = '600 7px Space Grotesk';
-          ctx.fillText(['Design','Develop','Launch'][i], cx + 10, cardY + 48);
-          ctx.fillStyle = '#a1a1aa';
-          ctx.font = '400 6px Space Grotesk';
-          ctx.fillText('Professional quality', cx + 10, cardY + 60);
-        }
-      } else if (type === 'ec') {
-        // Nav
-        ctx.fillStyle = '#fafafa';
-        ctx.fillRect(0, 28, w, 32);
-        ctx.fillStyle = textC;
-        ctx.font = '700 10px Space Grotesk';
-        ctx.fillText('SHOP', 16, 48);
-        ctx.fillStyle = '#a1a1aa';
-        ctx.font = '400 7px Space Grotesk';
-        ['New','Category','Sale'].forEach((t, i) => ctx.fillText(t, w - 120 + i * 38, 48));
-        // Product grid
-        const gridY = 68;
-        for (let r2 = 0; r2 < 2; r2++) {
-          for (let c = 0; c < 3; c++) {
-            const px = 12 + c * (w * 0.3 + 8);
-            const py = gridY + r2 * (h * 0.38 + 8);
-            // Product image area
-            ctx.fillStyle = 'hsla(' + (hue + c * 20 + r2 * 30) + ',30%,90%,1)';
-            ctx.fillRect(px, py, w * 0.28, h * 0.25);
-            // Circle decoration
-            ctx.beginPath();
-            ctx.arc(px + w * 0.14, py + h * 0.12, h * 0.06, 0, Math.PI * 2);
-            ctx.fillStyle = 'hsla(' + (hue + c * 25) + ',45%,70%,0.4)';
-            ctx.fill();
-            // Price & name
-            ctx.fillStyle = textC;
-            ctx.font = '600 7px Space Grotesk';
-            ctx.fillText(['Rose Bouquet','Tulip Set','Lily Mix','Daisy Pack','Orchid','Sunflower'][r2 * 3 + c], px + 4, py + h * 0.29);
-            ctx.fillStyle = accent;
-            ctx.font = '600 7px Space Grotesk';
-            ctx.fillText(['¥3,800','¥2,500','¥4,200','¥1,800','¥5,500','¥2,900'][r2 * 3 + c], px + 4, py + h * 0.34);
-          }
-        }
-      } else if (type === 'lp') {
-        // Full width hero
-        const grd = ctx.createLinearGradient(0, 28, w, h * 0.5);
-        grd.addColorStop(0, 'hsla(' + hue + ',60%,55%,0.12)');
-        grd.addColorStop(1, 'hsla(' + (hue + 30) + ',50%,60%,0.06)');
-        ctx.fillStyle = grd;
-        ctx.fillRect(0, 28, w, h * 0.45);
-        ctx.fillStyle = textC;
-        ctx.font = '700 ' + r(w * 0.06) + 'px Space Grotesk';
-        ctx.fillText('Convert More', 24, 28 + h * 0.15);
-        ctx.fillText('Customers.', 24, 28 + h * 0.25);
-        ctx.fillStyle = '#a1a1aa';
-        ctx.font = '400 8px Space Grotesk';
-        ctx.fillText('The fastest way to grow your business online.', 24, 28 + h * 0.32);
-        // CTA buttons
-        ctx.fillStyle = accent;
-        ctx.fillRect(24, 28 + h * 0.36, 90, 22);
-        ctx.fillStyle = '#fff';
-        ctx.font = '600 8px Space Grotesk';
-        ctx.fillText('Start Free', 42, 28 + h * 0.36 + 14);
-        ctx.strokeStyle = gray3;
-        ctx.lineWidth = 1;
-        ctx.strokeRect(124, 28 + h * 0.36, 70, 22);
-        ctx.fillStyle = textC;
-        ctx.fillText('Demo', 146, 28 + h * 0.36 + 14);
-        // Stats row
-        const statY = 28 + h * 0.52;
-        ctx.fillStyle = gray1;
-        ctx.fillRect(0, statY, w, h * 0.12);
-        ['10x Faster','99.9% Uptime','24/7 Support'].forEach((t, i) => {
-          ctx.fillStyle = textC;
-          ctx.font = '700 10px Space Grotesk';
-          ctx.fillText(t, 24 + i * (w * 0.32), statY + h * 0.07);
-        });
-        // Feature cards
-        const fY = statY + h * 0.18;
-        for (let i = 0; i < 3; i++) {
-          const fx = 12 + i * (w * 0.3 + 10);
-          ctx.fillStyle = '#fff';
-          ctx.fillRect(fx, fY, w * 0.28, h * 0.22);
-          ctx.strokeStyle = gray2;
-          ctx.lineWidth = 0.5;
-          ctx.strokeRect(fx, fY, w * 0.28, h * 0.22);
-          ctx.fillStyle = accentMed;
-          ctx.beginPath();
-          ctx.arc(fx + 18, fY + 18, 10, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = textC;
-          ctx.font = '600 7px Space Grotesk';
-          ctx.fillText(['Analytics','Automation','Integration'][i], fx + 10, fY + 40);
-        }
-      } else if (type === 'dashboard') {
-        // Sidebar
-        ctx.fillStyle = '#18181b';
-        ctx.fillRect(0, 28, w * 0.18, h - 28);
-        // Sidebar items
-        for (let i = 0; i < 5; i++) {
-          ctx.fillStyle = i === 0 ? 'rgba(99,102,241,0.2)' : 'transparent';
-          ctx.fillRect(4, 40 + i * 22, w * 0.18 - 8, 18);
-          ctx.fillStyle = i === 0 ? '#818cf8' : '#71717a';
-          ctx.fillRect(12, 46 + i * 22, 8, 6);
-          ctx.fillStyle = i === 0 ? '#e4e4e7' : '#52525b';
-          ctx.font = '500 6px Space Grotesk';
-          ctx.fillText(['Overview','Analytics','Users','Settings','Help'][i], 26, 51 + i * 22);
-        }
-        // Main area
-        const mx = w * 0.18 + 12, mw = w * 0.82 - 24;
-        ctx.fillStyle = '#fafafa';
-        ctx.fillRect(w * 0.18, 28, w * 0.82, h - 28);
-        // Header
-        ctx.fillStyle = textC;
-        ctx.font = '700 11px Space Grotesk';
-        ctx.fillText('Dashboard', mx, 50);
-        // Stat cards
-        for (let i = 0; i < 3; i++) {
-          const sx = mx + i * (mw * 0.32 + 6);
-          ctx.fillStyle = '#fff';
-          ctx.fillRect(sx, 60, mw * 0.3, 40);
-          ctx.strokeStyle = gray2;
-          ctx.lineWidth = 0.5;
-          ctx.strokeRect(sx, 60, mw * 0.3, 40);
-          ctx.fillStyle = accent;
-          ctx.font = '700 12px Space Grotesk';
-          ctx.fillText(['12,482','¥1.2M','89%'][i], sx + 8, 82);
-          ctx.fillStyle = '#a1a1aa';
-          ctx.font = '400 6px Space Grotesk';
-          ctx.fillText(['Users','Revenue','Conv.'][i], sx + 8, 93);
-        }
-        // Chart area
-        ctx.fillStyle = '#fff';
-        ctx.fillRect(mx, 108, mw * 0.62, h * 0.45);
-        ctx.strokeStyle = gray2;
-        ctx.lineWidth = 0.5;
-        ctx.strokeRect(mx, 108, mw * 0.62, h * 0.45);
-        // Draw fake chart
-        ctx.beginPath();
-        ctx.moveTo(mx + 10, 108 + h * 0.35);
-        const points = [0.35,0.28,0.3,0.18,0.22,0.1,0.15,0.08,0.12,0.06];
-        points.forEach((p, i) => {
-          ctx.lineTo(mx + 10 + i * (mw * 0.055), 108 + h * p);
-        });
-        ctx.strokeStyle = accent;
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-        // Right panel - table
-        ctx.fillStyle = '#fff';
-        ctx.fillRect(mx + mw * 0.65, 108, mw * 0.35, h * 0.45);
-        ctx.strokeStyle = gray2;
-        ctx.strokeRect(mx + mw * 0.65, 108, mw * 0.35, h * 0.45);
-        for (let i = 0; i < 5; i++) {
-          ctx.fillStyle = i % 2 === 0 ? '#fafafa' : '#fff';
-          ctx.fillRect(mx + mw * 0.65, 128 + i * 18, mw * 0.35, 18);
-          ctx.fillStyle = '#71717a';
-          ctx.font = '400 5.5px Space Grotesk';
-          ctx.fillText('User ' + (i + 1), mx + mw * 0.67, 140 + i * 18);
-        }
-      }
-    }
-
-    // Draw HAUM - warm beige hair salon
-    function drawHaum(canvasId) {
-      const canvas = document.getElementById(canvasId);
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      const rect = canvas.parentElement.getBoundingClientRect();
-      canvas.width = rect.width * 2; canvas.height = rect.height * 2;
-      ctx.scale(2, 2);
-      const w = rect.width, h = rect.height;
-      // BG - warm beige
-      ctx.fillStyle = '#faf9f7'; ctx.fillRect(0, 0, w, h);
-      // Browser chrome
-      ctx.fillStyle = '#f0ede8'; ctx.fillRect(0, 0, w, 24);
-      ['#e0dbd4','#e0dbd4','#e0dbd4'].forEach((c,i) => { ctx.fillStyle=c; ctx.beginPath(); ctx.arc(10+i*14,12,4,0,Math.PI*2); ctx.fill(); });
-      ctx.fillStyle = '#e8e4de'; ctx.fillRect(w*0.28, 6, w*0.44, 12);
-      // Nav
-      ctx.fillStyle = 'rgba(250,249,247,0.9)'; ctx.fillRect(0, 24, w, 28);
-      ctx.fillStyle = '#1a1814'; ctx.font = '500 9px serif'; ctx.fillText('HAUM', 14, 42);
-      ctx.fillStyle = '#b0ada8'; ctx.font = '400 6px sans-serif';
-      ['Concept','Menu','Gallery','Reserve'].forEach((t,i) => ctx.fillText(t, w-170+i*40, 42));
-      // Hero - split layout
-      ctx.fillStyle = '#e8e0d4'; ctx.fillRect(w*0.5, 52, w*0.5, h*0.42);
-      // Hair silhouette on right
-      ctx.strokeStyle = 'rgba(42,37,32,0.25)'; ctx.lineWidth = 0.8;
-      for (let i=0;i<12;i++) {
-        const x = w*0.55 + i*(w*0.18/12);
-        ctx.beginPath(); ctx.moveTo(x, 52);
-        ctx.bezierCurveTo(x+(Math.random()-.5)*15, 52+h*.15, x+(Math.random()-.5)*20, 52+h*.3, x+(Math.random()-.5)*25, 52+h*.42);
-        ctx.stroke();
-      }
-      // Hero text left
-      ctx.fillStyle = '#c9a96e'; ctx.font = '500 5px sans-serif'; ctx.fillText('TOKYO HAIR SALON', 14, 68);
-      ctx.fillStyle = '#1a1814'; ctx.font = '300 13px serif'; ctx.fillText('Your Hair,', 14, 86);
-      ctx.font = 'italic 300 13px serif'; ctx.fillStyle = '#c9a96e'; ctx.fillText('Your Story.', 14, 100);
-      ctx.fillStyle = '#6b6560'; ctx.font = '300 5.5px sans-serif';
-      ctx.fillText('大人のための隠れ家サロン。', 14, 114);
-      ctx.fillText('あなたの個性を引き出すヘアデザイン。', 14, 122);
-      ctx.fillStyle = '#1a1814'; ctx.fillRect(14, 132, 60, 16);
-      ctx.fillStyle = '#fff'; ctx.font = '400 6px sans-serif'; ctx.fillText('予約する', 30, 143);
-      // Menu section
-      const my = 52+h*0.48;
-      ctx.fillStyle = '#fff'; ctx.fillRect(0, my, w, h*0.38);
-      ctx.fillStyle = '#c9a96e'; ctx.font = '400 5px sans-serif'; ctx.fillText('MENU', 14, my+14);
-      ctx.fillStyle = '#1a1814'; ctx.font = '300 10px serif'; ctx.fillText('Services', 14, my+26);
-      for (let i=0;i<3;i++) {
-        const mx2 = 14+i*(w*0.3+6);
-        ctx.fillStyle = '#faf9f7'; ctx.strokeStyle = '#e8e4de'; ctx.lineWidth = 0.5;
-        ctx.fillRect(mx2, my+32, w*0.28, h*0.22); ctx.strokeRect(mx2, my+32, w*0.28, h*0.22);
-        ctx.fillStyle = '#c9a96e'; ctx.font = '400 5px sans-serif';
-        ctx.fillText(['Cut','Color','Perm'][i], mx2+8, my+44);
-        ctx.fillStyle = '#1a1814'; ctx.font = '300 8px serif';
-        ctx.fillText(['Hair Cut','Full Color','Digital Perm'][i], mx2+8, my+56);
-        ctx.fillStyle = '#c9a96e'; ctx.font = '400 7px sans-serif';
-        ctx.fillText(['¥8,800','¥12,100','¥22,000'][i], mx2+8, my+70);
-      }
-      // Gold accent line
-      ctx.strokeStyle = 'rgba(201,169,110,0.3)'; ctx.lineWidth = 0.5;
-      ctx.beginPath(); ctx.moveTo(0, h-8); ctx.lineTo(w, h-8); ctx.stroke();
-    }
-
-    // Draw SORA - dark moody restaurant
-    function drawSora(canvasId) {
-      const canvas = document.getElementById(canvasId);
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      const rect = canvas.parentElement.getBoundingClientRect();
-      canvas.width = rect.width * 2; canvas.height = rect.height * 2;
-      ctx.scale(2, 2);
-      const w = rect.width, h = rect.height;
-      // BG - dark
-      ctx.fillStyle = '#0e0c0a'; ctx.fillRect(0, 0, w, h);
-      // Browser chrome dark
-      ctx.fillStyle = '#1a1610'; ctx.fillRect(0, 0, w, 24);
-      ['#2a2520','#2a2520','#2a2520'].forEach((c,i) => { ctx.fillStyle=c; ctx.beginPath(); ctx.arc(10+i*14,12,4,0,Math.PI*2); ctx.fill(); });
-      ctx.fillStyle = '#2a2520'; ctx.fillRect(w*0.28, 6, w*0.44, 12);
-      // Nav
-      ctx.fillStyle = 'rgba(14,12,10,0.95)'; ctx.fillRect(0, 24, w, 28);
-      ctx.fillStyle = '#d4a853'; ctx.font = '400 10px serif'; ctx.fillText('SORA', 14, 42);
-      ctx.fillStyle = '#605850'; ctx.font = '400 6px sans-serif';
-      ['Story','Menu','Access','Reserve'].forEach((t,i) => ctx.fillText(t, w-170+i*40, 42));
-      // Hero full bleed
-      const heroH = h * 0.48;
-      // Candle glow
-      const glow = ctx.createRadialGradient(w*0.5, 52+heroH*0.45, 0, w*0.5, 52+heroH*0.45, w*0.5);
-      glow.addColorStop(0, 'rgba(212,168,83,0.2)'); glow.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = glow; ctx.fillRect(0, 52, w, heroH);
-      // Plate
-      ctx.fillStyle = '#f0ece4'; ctx.beginPath(); ctx.ellipse(w*0.6, 52+heroH*0.6, w*0.15, w*0.06, 0, 0, Math.PI*2); ctx.fill();
-      ctx.fillStyle = '#c8843a'; ctx.beginPath(); ctx.ellipse(w*0.6, 52+heroH*0.58, w*0.08, w*0.03, 0, 0, Math.PI*2); ctx.fill();
-      // Candle
-      ctx.fillStyle = '#f5f0e8'; ctx.fillRect(w*0.5-2, 52+heroH*0.2, 4, heroH*0.3);
-      const flame = ctx.createRadialGradient(w*0.5, 52+heroH*0.18, 0, w*0.5, 52+heroH*0.18, 12);
-      flame.addColorStop(0,'rgba(255,240,180,1)'); flame.addColorStop(1,'rgba(255,100,0,0)');
-      ctx.fillStyle = flame; ctx.beginPath(); ctx.ellipse(w*0.5, 52+heroH*0.17, 7, 10, 0, 0, Math.PI*2); ctx.fill();
-      // Hero text
-      ctx.fillStyle = 'rgba(212,168,83,0.8)'; ctx.font = '400 5px sans-serif'; ctx.fillText('ITALIAN RESTAURANT', 14, 68);
-      ctx.fillStyle = '#f0ece4'; ctx.font = '400 12px serif'; ctx.fillText('Where Food', 14, 84);
-      ctx.font = 'italic 400 12px serif'; ctx.fillStyle = '#d4a853'; ctx.fillText('meets Art.', 14, 98);
-      ctx.fillStyle = 'rgba(240,236,228,0.6)'; ctx.font = '300 5.5px sans-serif';
-      ctx.fillText('旬の食材が語りかける、一皿の物語。', 14, 112);
-      ctx.fillStyle = '#d4a853'; ctx.fillRect(14, 120, 64, 16);
-      ctx.fillStyle = '#0e0c0a'; ctx.font = '400 6px sans-serif'; ctx.fillText('ご予約はこちら', 24, 131);
-      // Menu section
-      const my = 52+heroH+8;
-      ctx.fillStyle = '#161410'; ctx.fillRect(0, my, w, h-my);
-      ctx.fillStyle = '#d4a853'; ctx.font = '400 5px sans-serif'; ctx.fillText('MENU', 14, my+14);
-      ctx.fillStyle = '#f0ece4'; ctx.font = '400 10px serif'; ctx.fillText('Our Cuisine', 14, my+26);
-      for (let i=0;i<2;i++) {
-        const mx2 = 14+i*(w*0.45+8);
-        ctx.strokeStyle = 'rgba(255,255,255,0.07)'; ctx.lineWidth = 0.5;
-        ctx.strokeRect(mx2, my+32, w*0.43, h*0.14);
-        ctx.fillStyle = '#f0ece4'; ctx.font = '300 7px serif';
-        ctx.fillText(['Tagliatelle al Tartufo','Filetto di Manzo'][i], mx2+8, my+44);
-        ctx.fillStyle = '#a09890'; ctx.font = '300 5.5px sans-serif';
-        ctx.fillText(['黒トリュフのタリアテッレ','牛フィレ肉のロースト'][i], mx2+8, my+54);
-        ctx.fillStyle = '#d4a853'; ctx.font = '400 7px sans-serif';
-        ctx.fillText(['¥3,200','¥5,800'][i], mx2+w*0.35, my+44);
-      }
-    }
-
-    // Initialize canvases after load
-    window.addEventListener('load', () => {
-      drawMockup('workCanvas1', 215, 'corporate');
-      drawHaum('workCanvas2');
-      drawSora('workCanvas3');
-      drawMockup('workCanvas4', 150, 'ec');
-    });
-
-    // ── Mobile Menu ──
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    if (hamburger && mobileMenu) {
-      hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('open');
-        mobileMenu.classList.toggle('open');
-        document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-      });
-      mobileMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          hamburger.classList.remove('open');
-          mobileMenu.classList.remove('open');
-          document.body.style.overflow = '';
-        });
-      });
-    }
-
-    // ── Contact Form ──
-    const contactForm = document.getElementById('contactForm');
-    const formSuccess = document.getElementById('formSuccess');
-    if (contactForm) {
-      contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        contactForm.style.display = 'none';
-        formSuccess.classList.add('show');
-      });
-    }
-
-    // ── Scroll events ──
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          updateProgress();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    });
-
-    // ── Force scroll to top on load ──
-    if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual';
-    }
+  // ─── Loader ──────────────────────────
+  window.addEventListener('load', () => {
     window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-    window.addEventListener('load', function() {
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-      // Enable smooth scroll after page is settled
-      setTimeout(function() {
-        document.documentElement.classList.add('loaded');
-      }, 100);
+    setTimeout(() => {
+      const loader = document.getElementById('loader');
+      loader.classList.add('out');
+      setTimeout(() => { loader.style.display = 'none'; }, 600);
+      document.getElementById('cur').classList.add('active');
+      document.getElementById('curDot').classList.add('active');
+    }, 1600);
+    setTimeout(() => document.documentElement.classList.add('loaded'), 1800);
+  });
+
+  // ─── Cursor ──────────────────────────
+  const cur = document.getElementById('cur');
+  const curDot = document.getElementById('curDot');
+  let mx = 0, my = 0, cx = 0, cy = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    curDot.style.left = mx + 'px';
+    curDot.style.top = my + 'px';
+  });
+
+  function animCursor() {
+    cx += (mx - cx) * 0.12;
+    cy += (my - cy) * 0.12;
+    cur.style.left = cx + 'px';
+    cur.style.top = cy + 'px';
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
+
+  document.querySelectorAll('a, button, .service-item').forEach(el => {
+    el.addEventListener('mouseenter', () => cur.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cur.classList.remove('hover'));
+  });
+
+  // ─── Scroll progress ─────────────────
+  const scrollBar = document.getElementById('scrollBar');
+  const nav = document.getElementById('nav');
+
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+    scrollBar.style.width = pct + '%';
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // ─── Hamburger ───────────────────────
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+
+  function closeMobileMenu() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ─── Reveal on scroll ────────────────
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => revealObserver.observe(el));
+
+  // ─── Counter ─────────────────────────
+  const counters = document.querySelectorAll('[data-count]');
+  const counterObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const target = parseInt(el.dataset.count);
+      if (target === 0) { el.textContent = '0'; return; }
+      let start = 0;
+      const step = target / 60;
+      const tick = () => {
+        start = Math.min(start + step, target);
+        el.textContent = Math.floor(start).toLocaleString();
+        if (start < target) requestAnimationFrame(tick);
+      };
+      tick();
+      counterObserver.unobserve(el);
     });
+  }, { threshold: 0.5 });
+  counters.forEach(el => counterObserver.observe(el));
 
-    // ── Fallback reveal ──
-    setTimeout(() => reveals.forEach(el => el.classList.add('visible')), 3500);
+  // ─── Works drag scroll ───────────────
+  const track = document.getElementById('worksScroll');
+  let isDragging = false, startX, scrollLeft;
+  track.addEventListener('mousedown', e => { isDragging = true; startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft; });
+  track.addEventListener('mousemove', e => { if (!isDragging) return; e.preventDefault(); track.scrollLeft = scrollLeft - (e.pageX - track.offsetLeft - startX); });
+  ['mouseup','mouseleave'].forEach(ev => track.addEventListener(ev, () => isDragging = false));
 
-  })();
-  </script>
+  // ─── Contact form ─────────────────────
+  document.getElementById('contactForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = '送信中...';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.textContent = '✓ 送信しました';
+      btn.style.background = '#16a34a';
+    }, 1200);
+  });
+
+  // ─── Canvas: iniestabluu site ─────────
+  function drawMockupCorporate(id) {
+    const c = document.getElementById(id); if (!c) return;
+    const ctx = c.getContext('2d');
+    const r = c.parentElement.getBoundingClientRect();
+    c.width = r.width * 2; c.height = r.height * 2; ctx.scale(2,2);
+    const w = r.width, h = r.height;
+    ctx.fillStyle = '#f9f9f7'; ctx.fillRect(0,0,w,h);
+    // browser chrome
+    ctx.fillStyle = '#f0f0ee'; ctx.fillRect(0,0,w,22);
+    ['#ddd','#ddd','#ddd'].forEach((c2,i)=>{ctx.fillStyle=c2;ctx.beginPath();ctx.arc(10+i*12,11,3,0,Math.PI*2);ctx.fill();});
+    ctx.fillStyle = '#e8e8e6'; ctx.fillRect(w*.3,6,w*.4,10);
+    // nav
+    ctx.fillStyle = 'rgba(249,249,247,0.9)'; ctx.fillRect(0,22,w,24);
+    ctx.fillStyle = '#0a0a08'; ctx.font = '600 8px Sora,sans-serif'; ctx.fillText('iniestabluu', 12, 37);
+    ctx.fillStyle = '#9a9a94'; ctx.font = '400 6px sans-serif';
+    ['Services','Works','About','Contact'].forEach((t,i)=>ctx.fillText(t, w-155+i*36, 37));
+    // hero grid
+    ctx.strokeStyle = 'rgba(0,0,0,0.05)'; ctx.lineWidth = 0.5;
+    for(let x=0;x<w;x+=20){ctx.beginPath();ctx.moveTo(x,46);ctx.lineTo(x,h*.48);ctx.stroke();}
+    for(let y=46;y<h*.48;y+=20){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+    // hero text
+    ctx.fillStyle = '#0a0a08'; ctx.font = '700 '+Math.round(w*.09)+'px sans-serif';
+    ctx.fillText('限界を、', 16, 46+h*.18);
+    ctx.fillStyle = '#1B6FCC'; ctx.fillText('超える.', 16, 46+h*.3);
+    // cta buttons
+    ctx.fillStyle = '#0a0a08'; ctx.fillRect(16, 46+h*.35, 60, 14);
+    ctx.fillStyle = '#f9f9f7'; ctx.font = '500 5.5px sans-serif'; ctx.fillText('相談する →', 22, 46+h*.35+9);
+    ctx.strokeStyle = '#d0d0cc'; ctx.lineWidth = 1;
+    ctx.strokeRect(82, 46+h*.35, 52, 14);
+    ctx.fillStyle = '#4a4a44'; ctx.fillText('実績を見る', 88, 46+h*.35+9);
+    // marquee
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, h*.52, w, 16);
+    ctx.strokeStyle = '#e8e8e6'; ctx.lineWidth = 0.5;
+    ctx.beginPath(); ctx.moveTo(0,h*.52); ctx.lineTo(w,h*.52); ctx.stroke();
+    ctx.fillStyle = '#9a9a94'; ctx.font = '400 5px sans-serif';
+    ['Corporate','Landing','EC Site','Claude Code','Vercel'].forEach((t,i)=>{
+      ctx.fillStyle = '#c0c0bc'; ctx.fillText(t, 12+i*w*.19, h*.52+10);
+    });
+    // services section
+    const sy = h*.65;
+    ctx.fillStyle = '#1B6FCC'; ctx.font = '500 5px sans-serif'; ctx.fillText('SERVICES', 16, sy);
+    ctx.fillStyle = '#0a0a08'; ctx.font = '600 9px sans-serif'; ctx.fillText('つくれるもの.', 16, sy+13);
+    // service items
+    ctx.strokeStyle = '#e8e8e6'; ctx.lineWidth = 0.5;
+    ['Corporate Site','Landing Page','EC Site'].forEach((t,i)=>{
+      const iy = sy+22+i*16;
+      ctx.beginPath(); ctx.moveTo(16,iy); ctx.lineTo(w-16,iy); ctx.stroke();
+      ctx.fillStyle = '#9a9a94'; ctx.font = '400 5px sans-serif'; ctx.fillText('0'+(i+1), 16, iy+10);
+      ctx.fillStyle = '#0a0a08'; ctx.font = '500 6.5px sans-serif'; ctx.fillText(t, 32, iy+10);
+      ctx.fillStyle = '#1B6FCC'; ctx.font = '500 6px sans-serif'; ctx.fillText(['¥98,000〜','¥58,000〜','¥198,000〜'][i], w-52, iy+10);
+    });
+  }
+
+  // About canvas
+  function drawAbout(id) {
+    const c = document.getElementById(id); if (!c) return;
+    const ctx = c.getContext('2d');
+    const r = c.getBoundingClientRect();
+    c.width = r.width * 2; c.height = r.height * 2; ctx.scale(2,2);
+    const w = r.width, h = r.height;
+    ctx.fillStyle = '#f0f0ee'; ctx.fillRect(0,0,w,h);
+    // grid bg
+    ctx.strokeStyle = 'rgba(0,0,0,0.04)'; ctx.lineWidth = 0.5;
+    for(let x=0;x<w;x+=24){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
+    for(let y=0;y<h;y+=24){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+    // large text
+    ctx.fillStyle = 'rgba(27,111,204,0.06)'; ctx.font = '800 '+Math.round(w*.35)+'px sans-serif';
+    ctx.textAlign = 'center'; ctx.fillText('AI', w*.5, h*.45);
+    // center circle
+    ctx.strokeStyle = 'rgba(27,111,204,0.15)'; ctx.lineWidth = 1;
+    [0.35,0.25,0.15].forEach(r2=>{
+      ctx.beginPath(); ctx.arc(w*.5,h*.5,w*r2,0,Math.PI*2); ctx.stroke();
+    });
+    // dot
+    ctx.fillStyle = '#1B6FCC'; ctx.beginPath(); ctx.arc(w*.5,h*.5,6,0,Math.PI*2); ctx.fill();
+    // label
+    ctx.fillStyle = '#0a0a08'; ctx.font = '600 '+Math.round(w*.06)+'px sans-serif';
+    ctx.textAlign = 'center'; ctx.fillText('iniestabluu', w*.5, h*.75);
+    ctx.fillStyle = '#9a9a94'; ctx.font = '400 '+Math.round(w*.04)+'px sans-serif';
+    ctx.fillText('WEB制作スタジオ', w*.5, h*.82);
+  }
+
+  // HAUM canvas
+  function drawHaum(id) {
+    const c = document.getElementById(id); if (!c) return;
+    const ctx = c.getContext('2d');
+    const r = c.parentElement.getBoundingClientRect();
+    c.width = r.width*2; c.height = r.height*2; ctx.scale(2,2);
+    const w = r.width, h = r.height;
+    ctx.fillStyle = '#faf9f7'; ctx.fillRect(0,0,w,h);
+    ctx.fillStyle = '#f0ede8'; ctx.fillRect(0,0,w,22);
+    ['#e0dbd4','#e0dbd4','#e0dbd4'].forEach((c2,i)=>{ctx.fillStyle=c2;ctx.beginPath();ctx.arc(10+i*12,11,3,0,Math.PI*2);ctx.fill();});
+    ctx.fillStyle = '#e8e4de'; ctx.fillRect(w*.3,6,w*.4,10);
+    ctx.fillStyle = 'rgba(250,249,247,0.9)'; ctx.fillRect(0,22,w,22);
+    ctx.fillStyle = '#1a1814'; ctx.font = '500 8px serif'; ctx.fillText('HAUM', 12, 36);
+    ctx.fillStyle = '#b0ada8'; ctx.font = '400 5.5px sans-serif';
+    ['Concept','Menu','Gallery'].forEach((t,i)=>ctx.fillText(t, w-95+i*30, 36));
+    // hero split
+    ctx.fillStyle = '#e8e0d4'; ctx.fillRect(w*.5,44,w*.5,h*.42);
+    // hair lines
+    ctx.strokeStyle = 'rgba(42,37,32,0.2)'; ctx.lineWidth = 0.7;
+    for(let i=0;i<10;i++){
+      const x=w*.55+i*(w*.38/10);
+      ctx.beginPath();ctx.moveTo(x,44);
+      ctx.bezierCurveTo(x+(Math.random()-.5)*12,44+h*.15,x+(Math.random()-.5)*18,44+h*.3,x+(Math.random()-.5)*22,44+h*.42);
+      ctx.stroke();
+    }
+    ctx.fillStyle = '#c9a96e'; ctx.font = '400 5px sans-serif'; ctx.fillText('TOKYO HAIR SALON', 12, 58);
+    ctx.fillStyle = '#1a1814'; ctx.font = '300 11px serif'; ctx.fillText('Your Hair,', 12, 72);
+    ctx.font = 'italic 300 11px serif'; ctx.fillStyle = '#c9a96e'; ctx.fillText('Your Story.', 12, 85);
+    ctx.fillStyle = '#1a1814'; ctx.fillRect(12, 92, 52, 13);
+    ctx.fillStyle = '#fff'; ctx.font = '400 5px sans-serif'; ctx.fillText('予約する', 24, 101);
+    // menu section
+    const my = 44+h*.48;
+    ctx.fillStyle = '#fff'; ctx.fillRect(0,my,w,h-my);
+    ctx.fillStyle = '#c9a96e'; ctx.font = '400 5px sans-serif'; ctx.fillText('MENU', 12, my+12);
+    ctx.fillStyle = '#1a1814'; ctx.font = '300 9px serif'; ctx.fillText('Services', 12, my+24);
+    for(let i=0;i<3;i++){
+      const mx2=12+i*(w*.3+4);
+      ctx.fillStyle = '#faf9f7'; ctx.strokeStyle = '#e8e4de'; ctx.lineWidth = 0.5;
+      ctx.fillRect(mx2,my+30,w*.28,h*.22); ctx.strokeRect(mx2,my+30,w*.28,h*.22);
+      ctx.fillStyle = '#c9a96e'; ctx.font = '400 5px sans-serif'; ctx.fillText(['Cut','Color','Perm'][i], mx2+6, my+42);
+      ctx.fillStyle = '#1a1814'; ctx.font = '300 7px serif'; ctx.fillText(['Hair Cut','Full Color','Digital Perm'][i], mx2+6, my+54);
+      ctx.fillStyle = '#c9a96e'; ctx.font = '400 6px sans-serif'; ctx.fillText(['¥8,800','¥12,100','¥22,000'][i], mx2+6, my+67);
+    }
+  }
+
+  // SORA canvas
+  function drawSora(id) {
+    const c = document.getElementById(id); if (!c) return;
+    const ctx = c.getContext('2d');
+    const r = c.parentElement.getBoundingClientRect();
+    c.width = r.width*2; c.height = r.height*2; ctx.scale(2,2);
+    const w = r.width, h = r.height;
+    ctx.fillStyle = '#0e0c0a'; ctx.fillRect(0,0,w,h);
+    ctx.fillStyle = '#1a1610'; ctx.fillRect(0,0,w,22);
+    ['#2a2520','#2a2520','#2a2520'].forEach((c2,i)=>{ctx.fillStyle=c2;ctx.beginPath();ctx.arc(10+i*12,11,3,0,Math.PI*2);ctx.fill();});
+    ctx.fillStyle = '#2a2520'; ctx.fillRect(w*.3,6,w*.4,10);
+    ctx.fillStyle = 'rgba(14,12,10,0.95)'; ctx.fillRect(0,22,w,22);
+    ctx.fillStyle = '#d4a853'; ctx.font = '400 9px serif'; ctx.fillText('SORA', 12, 36);
+    ctx.fillStyle = '#605850'; ctx.font = '400 5.5px sans-serif';
+    ['Story','Menu','Reserve'].forEach((t,i)=>ctx.fillText(t, w-80+i*25, 36));
+    // hero glow
+    const glow = ctx.createRadialGradient(w*.5,44+h*.45,0,w*.5,44+h*.45,w*.45);
+    glow.addColorStop(0,'rgba(212,168,83,0.18)'); glow.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle = glow; ctx.fillRect(0,44,w,h*.5);
+    // plate
+    ctx.fillStyle = '#f0ece4'; ctx.beginPath(); ctx.ellipse(w*.62,44+h*.58,w*.12,w*.05,0,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#c8843a'; ctx.beginPath(); ctx.ellipse(w*.62,44+h*.56,w*.07,w*.028,0,0,Math.PI*2); ctx.fill();
+    // candle
+    ctx.fillStyle = '#f5f0e8'; ctx.fillRect(w*.5-2,44+h*.2,4,h*.28);
+    const fl = ctx.createRadialGradient(w*.5,44+h*.18,0,w*.5,44+h*.18,10);
+    fl.addColorStop(0,'rgba(255,240,180,1)'); fl.addColorStop(1,'rgba(255,100,0,0)');
+    ctx.fillStyle = fl; ctx.beginPath(); ctx.ellipse(w*.5,44+h*.17,6,9,0,0,Math.PI*2); ctx.fill();
+    // text
+    ctx.fillStyle = 'rgba(212,168,83,0.7)'; ctx.font = '400 5px sans-serif'; ctx.fillText('ITALIAN RESTAURANT', 12, 58);
+    ctx.fillStyle = '#f0ece4'; ctx.font = '400 11px serif'; ctx.fillText('Where Food', 12, 72);
+    ctx.font = 'italic 400 11px serif'; ctx.fillStyle = '#d4a853'; ctx.fillText('meets Art.', 12, 85);
+    ctx.fillStyle = '#d4a853'; ctx.fillRect(12, 92, 56, 13);
+    ctx.fillStyle = '#0e0c0a'; ctx.font = '400 5px sans-serif'; ctx.fillText('ご予約はこちら', 18, 101);
+    // menu section
+    const sy2 = 44+h*.52;
+    ctx.fillStyle = '#161410'; ctx.fillRect(0,sy2,w,h-sy2);
+    ctx.fillStyle = '#d4a853'; ctx.font = '400 5px sans-serif'; ctx.fillText('MENU', 12, sy2+12);
+    ctx.fillStyle = '#f0ece4'; ctx.font = '400 9px serif'; ctx.fillText('Our Cuisine', 12, sy2+24);
+    for(let i=0;i<2;i++){
+      ctx.strokeStyle='rgba(255,255,255,0.07)'; ctx.lineWidth=0.5;
+      ctx.strokeRect(12+i*(w*.47+4),sy2+30,w*.45,h*.16);
+      ctx.fillStyle='#f0ece4'; ctx.font='300 6px serif';
+      ctx.fillText(['Tagliatelle al Tartufo','Filetto di Manzo'][i], 20+i*(w*.47+4), sy2+42);
+      ctx.fillStyle='#d4a853'; ctx.font='400 6px sans-serif';
+      ctx.fillText(['¥3,200','¥5,800'][i], w*.4+i*(w*.47+4), sy2+42);
+    }
+  }
+
+  // Placeholder for Mall Flower
+  function drawMallFlower(id) {
+    const c = document.getElementById(id); if (!c) return;
+    const ctx = c.getContext('2d');
+    const r = c.parentElement.getBoundingClientRect();
+    c.width = r.width*2; c.height = r.height*2; ctx.scale(2,2);
+    const w = r.width, h = r.height;
+    ctx.fillStyle = '#fafaf8'; ctx.fillRect(0,0,w,h);
+    ctx.fillStyle = '#f0f0ee'; ctx.fillRect(0,0,w,22);
+    ['#ddd','#ddd','#ddd'].forEach((c2,i)=>{ctx.fillStyle=c2;ctx.beginPath();ctx.arc(10+i*12,11,3,0,Math.PI*2);ctx.fill();});
+    ctx.fillStyle = 'rgba(249,249,247,0.9)'; ctx.fillRect(0,22,w,22);
+    ctx.fillStyle = '#10b981'; ctx.font = '600 8px sans-serif'; ctx.fillText('Mall Flower', 12, 36);
+    // product grid
+    const gridY = 50;
+    for(let row=0;row<2;row++) for(let col=0;col<3;col++){
+      const px=10+col*(w*.3+5), py=gridY+row*(h*.35+5);
+      ctx.fillStyle = `hsl(${140+col*20+row*15},30%,90%)`; ctx.fillRect(px,py,w*.28,h*.25);
+      ctx.beginPath(); ctx.arc(px+w*.14,py+h*.12,h*.06,0,Math.PI*2);
+      ctx.fillStyle = `hsla(${145+col*20},45%,65%,0.4)`; ctx.fill();
+      ctx.fillStyle = '#1a1814'; ctx.font = '500 5.5px sans-serif';
+      ctx.fillText(['Rose','Tulip','Lily','Daisy','Orchid','Sunflower'][row*3+col], px+4, py+h*.29);
+      ctx.fillStyle = '#10b981'; ctx.font = '500 5.5px sans-serif';
+      ctx.fillText(['¥3,800','¥2,500','¥4,200','¥1,800','¥5,500','¥2,900'][row*3+col], px+4, py+h*.34);
+    }
+    // coming soon
+    ctx.fillStyle = 'rgba(16,185,129,0.08)'; ctx.fillRect(0,h*.78,w,h*.22);
+    ctx.fillStyle = '#10b981'; ctx.font = '600 7px sans-serif'; ctx.textAlign='center'; ctx.fillText('COMING SOON', w*.5, h*.9);
+  }
+
+  window.addEventListener('load', () => {
+    drawMockupCorporate('workCanvas1');
+    drawHaum('workCanvas2');
+    drawSora('workCanvas3');
+    drawMallFlower('workCanvas4');
+    drawAbout('aboutCanvas');
+  });
+  window.addEventListener('resize', () => {
+    drawMockupCorporate('workCanvas1');
+    drawHaum('workCanvas2');
+    drawSora('workCanvas3');
+    drawMallFlower('workCanvas4');
+    drawAbout('aboutCanvas');
+  });
+</script>
 </body>
 </html>
