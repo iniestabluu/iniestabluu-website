@@ -243,10 +243,10 @@
       <h2 class="section-title">制作イメージ</h2>
       <p class="section-desc">LP制作の事例・イメージです。</p>
       <div class="portfolio-grid stagger-children">
-        <div class="portfolio-card"><canvas class="portfolio-canvas" id="pCanvas1"></canvas><div class="portfolio-overlay"></div><div class="portfolio-info"><p class="portfolio-tag">LP</p><h3>SaaS Product Launch</h3><p>SaaS型サービスのローンチLP</p></div></div>
-        <div class="portfolio-card"><canvas class="portfolio-canvas" id="pCanvas2"></canvas><div class="portfolio-overlay"></div><div class="portfolio-info"><p class="portfolio-tag">LP</p><h3>Event Promotion</h3><p>イベント集客LP</p></div></div>
-        <div class="portfolio-card"><canvas class="portfolio-canvas" id="pCanvas3"></canvas><div class="portfolio-overlay"></div><div class="portfolio-info"><p class="portfolio-tag">LP</p><h3>App Download</h3><p>アプリDL促進LP</p></div></div>
-        <div class="portfolio-card"><canvas class="portfolio-canvas" id="pCanvas4"></canvas><div class="portfolio-overlay"></div><div class="portfolio-info"><p class="portfolio-tag">LP</p><h3>Lead Generation</h3><p>BtoBリード獲得LP</p></div></div>
+        <div class="portfolio-card"><canvas class="portfolio-canvas" id="pCanvas1"></canvas><div class="portfolio-overlay"></div><div class="portfolio-info"><p class="portfolio-tag">SaaS Launch</p><h3>STACK</h3><p>AIツールのローンチLP</p></div></div>
+        <div class="portfolio-card"><canvas class="portfolio-canvas" id="pCanvas2"></canvas><div class="portfolio-overlay"></div><div class="portfolio-info"><p class="portfolio-tag">Event</p><h3>TOKYO FEST</h3><p>音楽フェス集客LP</p></div></div>
+        <div class="portfolio-card"><canvas class="portfolio-canvas" id="pCanvas3"></canvas><div class="portfolio-overlay"></div><div class="portfolio-info"><p class="portfolio-tag">App Download</p><h3>Moove</h3><p>ヘルスケアアプリDL促進LP</p></div></div>
+        <div class="portfolio-card"><canvas class="portfolio-canvas" id="pCanvas4"></canvas><div class="portfolio-overlay"></div><div class="portfolio-info"><p class="portfolio-tag">Lead Gen</p><h3>B2B Report</h3><p>BtoBリード獲得LP</p></div></div>
       </div>
     </div>
   </section>
@@ -272,12 +272,194 @@
     const reveals=document.querySelectorAll('.reveal,.stagger-children');
     const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.1});
     reveals.forEach(el=>obs.observe(el));setTimeout(()=>reveals.forEach(el=>el.classList.add('visible')),2000);
-    function draw(id,hue,style){const c=document.getElementById(id);if(!c)return;const ctx=c.getContext('2d'),rect=c.parentElement.getBoundingClientRect();c.width=rect.width*2;c.height=rect.height*2;ctx.scale(2,2);const w=rect.width,h=rect.height;ctx.fillStyle='#f0f0f3';ctx.fillRect(0,0,w,h);
-      if(style==='gradient'){const grd=ctx.createLinearGradient(0,0,w,h);grd.addColorStop(0,'hsla('+hue+',70%,60%,0.08)');grd.addColorStop(1,'hsla('+(hue+40)+',60%,50%,0.12)');ctx.fillStyle=grd;ctx.fillRect(0,0,w,h);ctx.font='700 '+(w*0.08)+'px Space Grotesk';ctx.fillStyle='rgba(0,0,0,0.05)';ctx.fillText('CONVERT',w*0.05,h*0.5);for(let i=0;i<5;i++){ctx.fillStyle='hsla('+hue+',60%,50%,'+(0.04+Math.random()*0.06)+')';ctx.fillRect(w*0.6+i*15,h*0.2+i*20,80,30);}}
-      else if(style==='zigzag'){ctx.strokeStyle='hsla('+hue+',60%,50%,0.1)';ctx.lineWidth=1.5;for(let j=0;j<5;j++){ctx.beginPath();for(let i=0;i<=w;i+=20){ctx.lineTo(i,h*0.15+j*h*0.18+(i%40<20?15:-15));}ctx.stroke();}}
-      else if(style==='dots'){for(let x=20;x<w;x+=25)for(let y=20;y<h;y+=25){ctx.beginPath();ctx.arc(x,y,2+Math.random()*2,0,Math.PI*2);ctx.fillStyle='hsla('+hue+',50%,50%,'+(0.05+Math.random()*0.1)+')';ctx.fill();}}
-      else{for(let i=0;i<8;i++){ctx.fillStyle='hsla('+(hue+i*15)+',55%,55%,'+(0.04+Math.random()*0.06)+')';const rx=Math.random()*w*0.6,ry=Math.random()*h*0.6;ctx.beginPath();ctx.moveTo(rx,ry);ctx.lineTo(rx+60+Math.random()*40,ry);ctx.lineTo(rx+40+Math.random()*30,ry+50+Math.random()*30);ctx.closePath();ctx.fill();}}}
-    window.addEventListener('load',()=>{draw('pCanvas1',35,'gradient');draw('pCanvas2',25,'zigzag');draw('pCanvas3',40,'dots');draw('pCanvas4',30,'triangles');});
+    // Canvas helpers
+    function setup(id){const c=document.getElementById(id);if(!c)return null;const ctx=c.getContext('2d'),r=c.parentElement.getBoundingClientRect();c.width=r.width*2;c.height=r.height*2;ctx.scale(2,2);return{ctx,w:r.width,h:r.height};}
+    function chrome(ctx,w,bar,dot,url){ctx.fillStyle=bar;ctx.fillRect(0,0,w,24);[0,1,2].forEach(i=>{ctx.fillStyle=dot;ctx.beginPath();ctx.arc(10+i*14,12,4,0,Math.PI*2);ctx.fill();});ctx.fillStyle=url;ctx.fillRect(w*0.28,6,w*0.44,12);}
+
+    // 1. SaaS Product Launch - dark with purple gradient glow
+    function drawSaaS(id){
+      const s=setup(id);if(!s)return;const{ctx,w,h}=s;
+      ctx.fillStyle='#0a0618';ctx.fillRect(0,0,w,h);
+      chrome(ctx,w,'#14101f','#24202f','#24202f');
+      // Glow
+      const grd=ctx.createRadialGradient(w*0.7,52+h*0.2,0,w*0.7,52+h*0.2,w*0.6);
+      grd.addColorStop(0,'rgba(168,85,247,0.25)');grd.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=grd;ctx.fillRect(0,24,w,h*0.55);
+      // Nav
+      ctx.fillStyle='rgba(10,6,24,0.9)';ctx.fillRect(0,24,w,28);
+      ctx.fillStyle='#c4b5fd';ctx.font='700 9px sans-serif';ctx.fillText('◆ STACK',14,42);
+      ctx.fillStyle='#6d6587';ctx.font='400 6px sans-serif';
+      ['Features','Pricing','Docs','Blog'].forEach((t,i)=>ctx.fillText(t,w-175+i*40,42));
+      ctx.fillStyle='#a855f7';ctx.fillRect(w-50,34,42,14);
+      ctx.fillStyle='#fff';ctx.font='500 6px sans-serif';ctx.fillText('Start',w-40,44);
+      // Badge
+      ctx.strokeStyle='rgba(168,85,247,0.4)';ctx.lineWidth=0.5;ctx.strokeRect(14,60,110,14);
+      ctx.fillStyle='rgba(168,85,247,0.1)';ctx.fillRect(14,60,110,14);
+      ctx.fillStyle='#c4b5fd';ctx.font='500 5.5px sans-serif';ctx.fillText('✦  Just Launched · v2.0 is live!',18,70);
+      // Hero
+      ctx.fillStyle='#f0ebff';ctx.font='700 '+Math.round(w*0.065)+'px sans-serif';ctx.fillText('Ship 10x Faster',14,94);
+      ctx.fillStyle='#a855f7';ctx.font='700 '+Math.round(w*0.065)+'px sans-serif';ctx.fillText('with AI.',14,112);
+      ctx.fillStyle='#8b82a8';ctx.font='300 6px sans-serif';
+      ctx.fillText('最新AIでコード・デザイン・テストを自動化。',14,124);
+      ctx.fillText('エンジニアの生産性を根本から変える。',14,133);
+      // Double CTA
+      ctx.fillStyle='#a855f7';ctx.beginPath();ctx.roundRect(14,140,86,20,6);ctx.fill();
+      ctx.fillStyle='#fff';ctx.font='600 7px sans-serif';ctx.fillText('無料で試す →',26,153);
+      ctx.strokeStyle='rgba(168,85,247,0.4)';ctx.lineWidth=0.5;ctx.strokeRect(108,140,68,20);
+      ctx.fillStyle='#c4b5fd';ctx.font='500 6.5px sans-serif';ctx.fillText('▶ Watch',120,153);
+      // Social proof
+      ctx.fillStyle='#6d6587';ctx.font='400 5px sans-serif';ctx.fillText('TRUSTED BY',14,172);
+      ['Stripe','Vercel','Linear','Notion'].forEach((b,i)=>{ctx.fillStyle='rgba(196,181,253,0.5)';ctx.font='600 7px sans-serif';ctx.fillText(b,14+i*60,184);});
+      // Product dashboard preview
+      const py=52+h*0.57;
+      ctx.fillStyle='#14101f';ctx.strokeStyle='rgba(168,85,247,0.2)';ctx.lineWidth=0.5;
+      ctx.fillRect(14,py,w-28,h-py-12);ctx.strokeRect(14,py,w-28,h-py-12);
+      // Dashboard sidebar
+      ctx.fillStyle='#1a1530';ctx.fillRect(14,py,w*0.15,h-py-12);
+      for(let i=0;i<4;i++){ctx.fillStyle=i===0?'rgba(168,85,247,0.2)':'transparent';ctx.fillRect(18,py+8+i*14,w*0.13,10);ctx.fillStyle=i===0?'#c4b5fd':'#4b4558';ctx.fillRect(22,py+12+i*14,4,4);}
+      // Chart
+      ctx.beginPath();ctx.moveTo(w*0.2,py+h*0.3);
+      const pts=[0.25,0.22,0.3,0.18,0.12,0.16,0.08,0.06];
+      pts.forEach((p,i)=>ctx.lineTo(w*0.2+i*(w*0.1),py+h*p));
+      ctx.strokeStyle='#a855f7';ctx.lineWidth=1.5;ctx.stroke();
+      ctx.strokeStyle='rgba(168,85,247,0.2)';ctx.lineWidth=0.5;
+      for(let i=0;i<4;i++){ctx.beginPath();ctx.moveTo(w*0.2,py+i*12+10);ctx.lineTo(w-20,py+i*12+10);ctx.stroke();}
+    }
+
+    // 2. Event Promotion - bold orange/red with energy
+    function drawEvent(id){
+      const s=setup(id);if(!s)return;const{ctx,w,h}=s;
+      ctx.fillStyle='#fef3e7';ctx.fillRect(0,0,w,h);
+      chrome(ctx,w,'#f5e4cd','#e0c9a5','#e0c9a5');
+      // Diagonal strips
+      ctx.save();ctx.translate(w*0.65,52);ctx.rotate(-0.18);
+      for(let i=0;i<6;i++){ctx.fillStyle=i%2===0?'#ff5e1a':'#ffa53a';ctx.fillRect(-50,i*24,w*0.8,14);}
+      ctx.restore();
+      // Nav
+      ctx.fillStyle='rgba(254,243,231,0.9)';ctx.fillRect(0,24,w,28);
+      ctx.fillStyle='#1a0e05';ctx.font='900 10px sans-serif';ctx.fillText('TOKYO FEST 2026',14,43);
+      ctx.fillStyle='#7a5035';ctx.font='500 6px sans-serif';
+      ['Lineup','Tickets','Venue','FAQ'].forEach((t,i)=>ctx.fillText(t,w-160+i*38,43));
+      // Date badge
+      ctx.fillStyle='#1a0e05';ctx.fillRect(14,62,54,42);
+      ctx.fillStyle='#ff5e1a';ctx.font='900 7px sans-serif';ctx.fillText('MAY',22,74);
+      ctx.fillStyle='#fff';ctx.font='900 20px sans-serif';ctx.fillText('25',24,96);
+      // Hero text
+      ctx.fillStyle='#1a0e05';ctx.font='900 italic '+Math.round(w*0.08)+'px sans-serif';ctx.fillText('MUSIC',78,94);
+      ctx.font='900 '+Math.round(w*0.08)+'px sans-serif';ctx.fillText('FESTIVAL.',14,122);
+      ctx.fillStyle='#7a5035';ctx.font='500 6px sans-serif';ctx.fillText('日本最大級の音楽フェス、再始動。',14,136);
+      // CTA
+      ctx.fillStyle='#ff5e1a';ctx.fillRect(14,146,100,22);
+      ctx.fillStyle='#fff';ctx.font='700 8px sans-serif';ctx.fillText('チケット購入 →',24,160);
+      // Countdown
+      ctx.fillStyle='#1a0e05';ctx.fillRect(0,h-48,w,48);
+      ctx.fillStyle='#ff5e1a';ctx.font='500 5px sans-serif';ctx.fillText('COUNTDOWN',14,h-34);
+      ['14','DAYS','23','HRS','47','MIN'].forEach((v,i)=>{
+        const vx=14+i*42;const isLbl=i%2===1;
+        ctx.fillStyle=isLbl?'#7a5035':'#ff5e1a';
+        ctx.font=isLbl?'500 5px sans-serif':'900 14px sans-serif';
+        ctx.fillText(v,vx,h-14);
+      });
+    }
+
+    // 3. App Download - bright modern iOS style
+    function drawApp(id){
+      const s=setup(id);if(!s)return;const{ctx,w,h}=s;
+      // Soft gradient background
+      const bg=ctx.createLinearGradient(0,0,w,h);
+      bg.addColorStop(0,'#e6f0ff');bg.addColorStop(1,'#fdf2ff');
+      ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);
+      chrome(ctx,w,'#d9e8ff','#b5cdee','#b5cdee');
+      // Nav
+      ctx.fillStyle='rgba(255,255,255,0.65)';ctx.fillRect(0,24,w,28);
+      ctx.fillStyle='#1e40af';ctx.font='700 10px sans-serif';ctx.fillText('◉ Moove',14,43);
+      ctx.fillStyle='#6b7ca8';ctx.font='500 6px sans-serif';
+      ['機能','料金','サポート'].forEach((t,i)=>ctx.fillText(t,w-140+i*36,43));
+      ctx.fillStyle='#1e40af';ctx.beginPath();ctx.roundRect(w-55,34,48,14,7);ctx.fill();
+      ctx.fillStyle='#fff';ctx.font='600 6px sans-serif';ctx.fillText('ダウンロード',w-51,44);
+      // Left text
+      ctx.fillStyle='#ec4899';ctx.font='600 5px sans-serif';ctx.fillText('✨ NEW APP',14,68);
+      ctx.fillStyle='#0f172a';ctx.font='800 '+Math.round(w*0.065)+'px sans-serif';
+      ctx.fillText('Move Your',14,90);ctx.fillText('Life.',14,108);
+      ctx.fillStyle='#64748b';ctx.font='400 6px sans-serif';
+      ctx.fillText('毎日を記録して、健康を変える。',14,122);
+      ctx.fillText('500万人が使うライフログアプリ。',14,132);
+      // Store buttons
+      ctx.fillStyle='#0f172a';ctx.beginPath();ctx.roundRect(14,140,76,22,5);ctx.fill();
+      ctx.fillStyle='#fff';ctx.font='500 5px sans-serif';ctx.fillText('Download on',22,150);
+      ctx.font='700 8px sans-serif';ctx.fillText('App Store',22,159);
+      ctx.fillStyle='#0f172a';ctx.beginPath();ctx.roundRect(96,140,76,22,5);ctx.fill();
+      ctx.fillStyle='#fff';ctx.font='500 5px sans-serif';ctx.fillText('GET IT ON',104,150);
+      ctx.font='700 8px sans-serif';ctx.fillText('Google Play',104,159);
+      // Rating
+      ctx.fillStyle='#f59e0b';ctx.font='700 8px sans-serif';ctx.fillText('★★★★★',14,176);
+      ctx.fillStyle='#64748b';ctx.font='400 6px sans-serif';ctx.fillText('4.9  •  128K+ レビュー',56,176);
+      // Phone mockup on right
+      const px=w*0.62,py=58,pw=w*0.3,ph=h*0.55;
+      // Shadow
+      ctx.fillStyle='rgba(15,23,42,0.15)';ctx.beginPath();ctx.roundRect(px+4,py+6,pw,ph,14);ctx.fill();
+      // Phone body
+      ctx.fillStyle='#0f172a';ctx.beginPath();ctx.roundRect(px,py,pw,ph,14);ctx.fill();
+      // Screen
+      ctx.fillStyle='#fff';ctx.beginPath();ctx.roundRect(px+3,py+3,pw-6,ph-6,11);ctx.fill();
+      // App header
+      ctx.fillStyle='#ec4899';ctx.fillRect(px+3,py+3,pw-6,ph*0.25);
+      ctx.fillStyle='#fff';ctx.font='700 7px sans-serif';ctx.fillText('Hi Takumi! 👋',px+8,py+16);
+      ctx.fillStyle='rgba(255,255,255,0.8)';ctx.font='400 5px sans-serif';ctx.fillText('Today\u2019s Steps',px+8,py+26);
+      ctx.fillStyle='#fff';ctx.font='800 14px sans-serif';ctx.fillText('8,423',px+8,py+42);
+      // Bottom cards
+      for(let i=0;i<3;i++){
+        ctx.fillStyle='#f1f5f9';ctx.beginPath();ctx.roundRect(px+8,py+ph*0.35+i*(ph*0.18),pw-16,ph*0.14,5);ctx.fill();
+        ctx.fillStyle=['#10b981','#3b82f6','#f59e0b'][i];ctx.beginPath();ctx.arc(px+18,py+ph*0.35+i*(ph*0.18)+ph*0.07,4,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle='#0f172a';ctx.font='600 5px sans-serif';ctx.fillText(['Workout','Sleep','Water'][i],px+28,py+ph*0.35+i*(ph*0.18)+ph*0.08);
+      }
+    }
+
+    // 4. Lead Generation - BtoB clean form/conversion focused
+    function drawLead(id){
+      const s=setup(id);if(!s)return;const{ctx,w,h}=s;
+      ctx.fillStyle='#f8fafc';ctx.fillRect(0,0,w,h);
+      chrome(ctx,w,'#e2e8f0','#cbd5e1','#cbd5e1');
+      // Nav
+      ctx.fillStyle='rgba(248,250,252,0.92)';ctx.fillRect(0,24,w,28);
+      ctx.fillStyle='#0f172a';ctx.font='700 10px sans-serif';ctx.fillText('B2B Report',14,43);
+      ctx.fillStyle='#64748b';ctx.font='500 6px sans-serif';
+      ['サービス','事例','料金'].forEach((t,i)=>ctx.fillText(t,w-120+i*36,43));
+      // Split hero
+      // Left side - text
+      ctx.fillStyle='#059669';ctx.font='600 5px sans-serif';ctx.fillText('FREE WHITEPAPER',14,68);
+      ctx.fillStyle='#0f172a';ctx.font='800 '+Math.round(w*0.055)+'px sans-serif';
+      ctx.fillText('売上を3倍にした',14,88);ctx.fillText('BtoB マーケ戦略',14,104);
+      ctx.fillStyle='#475569';ctx.font='400 6px sans-serif';
+      ctx.fillText('500社の成功事例を徹底分析。',14,118);
+      ctx.fillText('今すぐ実践できる施策を全公開。',14,128);
+      // Checklist
+      const checks=['✓ 競合調査の進め方','✓ リード獲得の新手法','✓ 顧客単価UP事例'];
+      checks.forEach((c,i)=>{ctx.fillStyle='#059669';ctx.font='500 6px sans-serif';ctx.fillText(c,14,144+i*11);});
+      // Trust badges
+      ctx.fillStyle='#f59e0b';ctx.font='700 7px sans-serif';ctx.fillText('★★★★★',14,h-20);
+      ctx.fillStyle='#64748b';ctx.font='400 5.5px sans-serif';ctx.fillText('2,483 DL  •  顧客満足度 98%',56,h-20);
+      // Right side - form card
+      const fx=w*0.55,fy=62,fw=w*0.42,fh=h*0.7;
+      ctx.fillStyle='#fff';ctx.strokeStyle='#e2e8f0';ctx.lineWidth=0.5;
+      ctx.beginPath();ctx.roundRect(fx,fy,fw,fh,8);ctx.fill();ctx.stroke();
+      ctx.fillStyle='#0f172a';ctx.font='700 8px sans-serif';ctx.fillText('無料ダウンロード',fx+10,fy+16);
+      ctx.fillStyle='#64748b';ctx.font='400 5.5px sans-serif';ctx.fillText('1分で完了 / クレカ不要',fx+10,fy+26);
+      // Form fields
+      const labels=['会社名','お名前','メールアドレス','電話番号'];
+      labels.forEach((l,i)=>{
+        const yy=fy+36+i*(fh*0.13);
+        ctx.fillStyle='#64748b';ctx.font='500 5px sans-serif';ctx.fillText(l,fx+10,yy);
+        ctx.fillStyle='#f8fafc';ctx.strokeStyle='#e2e8f0';
+        ctx.beginPath();ctx.roundRect(fx+10,yy+4,fw-20,12,3);ctx.fill();ctx.stroke();
+      });
+      // Submit btn
+      const by=fy+fh-28;
+      ctx.fillStyle='#059669';ctx.beginPath();ctx.roundRect(fx+10,by,fw-20,18,4);ctx.fill();
+      ctx.fillStyle='#fff';ctx.font='700 7px sans-serif';ctx.fillText('資料を無料で受け取る →',fx+fw*0.24,by+12);
+    }
+
+    window.addEventListener('load',()=>{drawSaaS('pCanvas1');drawEvent('pCanvas2');drawApp('pCanvas3');drawLead('pCanvas4');});
   })();
   </script>
 </body>
