@@ -357,7 +357,9 @@
     function setupCanvas(id) {
       const c = document.getElementById(id); if(!c) return null;
       const ctx = c.getContext('2d'), rect = c.parentElement.getBoundingClientRect();
-      c.width = rect.width*2; c.height = rect.height*2; ctx.scale(2,2);
+      const dpr = window.devicePixelRatio || 2;
+      c.width = Math.round(rect.width*dpr); c.height = Math.round(rect.height*dpr); ctx.scale(dpr,dpr);
+      ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
       return { ctx, w: rect.width, h: rect.height };
     }
     function browserChrome(ctx, w, bgBar, bgDot, bgUrl) {

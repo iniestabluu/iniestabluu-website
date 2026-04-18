@@ -1483,9 +1483,10 @@
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
       const rect = canvas.parentElement.getBoundingClientRect();
-      canvas.width = rect.width * 2;
-      canvas.height = rect.height * 2;
-      ctx.scale(2, 2);
+      const dpr = window.devicePixelRatio || 2;
+      canvas.width = Math.round(rect.width * dpr);
+      canvas.height = Math.round(rect.height * dpr);
+      ctx.scale(dpr, dpr);
       const w = rect.width, h = rect.height;
       const r = (v) => Math.round(v);
 
@@ -1710,8 +1711,9 @@
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
       const rect = canvas.parentElement.getBoundingClientRect();
-      canvas.width = rect.width * 2; canvas.height = rect.height * 2;
-      ctx.scale(2, 2);
+      const dpr = window.devicePixelRatio || 2;
+      canvas.width = Math.round(rect.width * dpr); canvas.height = Math.round(rect.height * dpr);
+      ctx.scale(dpr, dpr);
       const w = rect.width, h = rect.height;
       // BG - warm beige
       ctx.fillStyle = '#faf9f7'; ctx.fillRect(0, 0, w, h);
@@ -1770,8 +1772,9 @@
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
       const rect = canvas.parentElement.getBoundingClientRect();
-      canvas.width = rect.width * 2; canvas.height = rect.height * 2;
-      ctx.scale(2, 2);
+      const dpr = window.devicePixelRatio || 2;
+      canvas.width = Math.round(rect.width * dpr); canvas.height = Math.round(rect.height * dpr);
+      ctx.scale(dpr, dpr);
       const w = rect.width, h = rect.height;
       // BG - dark
       ctx.fillStyle = '#0e0c0a'; ctx.fillRect(0, 0, w, h);
@@ -1830,8 +1833,9 @@
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
       const rect = canvas.parentElement.getBoundingClientRect();
-      canvas.width = rect.width * 2; canvas.height = rect.height * 2;
-      ctx.scale(2, 2);
+      const dpr = window.devicePixelRatio || 2;
+      canvas.width = Math.round(rect.width * dpr); canvas.height = Math.round(rect.height * dpr);
+      ctx.scale(dpr, dpr);
       const w = rect.width, h = rect.height;
       // BG dark
       ctx.fillStyle = '#07050f'; ctx.fillRect(0, 0, w, h);
@@ -1894,8 +1898,9 @@
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
       const rect = canvas.parentElement.getBoundingClientRect();
-      canvas.width = rect.width * 2; canvas.height = rect.height * 2;
-      ctx.scale(2, 2);
+      const dpr = window.devicePixelRatio || 2;
+      canvas.width = Math.round(rect.width * dpr); canvas.height = Math.round(rect.height * dpr);
+      ctx.scale(dpr, dpr);
       const w = rect.width, h = rect.height;
       const rose = '#c97c84'; const roseDark = '#a85a66'; const roseLight = 'rgba(201,124,132,0.1)';
       const textC = '#1a1218'; const cream = '#fdf8f5';
