@@ -394,12 +394,14 @@
       ctx.fillStyle = '#4d9ef5'; ctx.font = '500 5.5px sans-serif';
       ctx.fillText('◆  Trusted by 500+ companies', 18, 72);
       // Hero
-      ctx.fillStyle = '#e8eeff'; ctx.font = '700 14px sans-serif';
-      ctx.fillText('Build the Future', 14, 94);
-      ctx.fillStyle = '#4d9ef5'; ctx.font = '700 14px sans-serif';
-      ctx.fillText('of Business.', 14, 110);
-      ctx.fillStyle = '#6d7598'; ctx.font = '300 6px sans-serif';
-      ctx.fillText('次世代のビジネスプラットフォーム。', 14, 124);
+      const cFS = Math.min(Math.max(Math.round(w*0.055), 14), 22);
+      const cY1 = 78 + cFS, cY2 = cY1 + cFS + 4;
+      ctx.fillStyle = '#e8eeff'; ctx.font = '700 ' + cFS + 'px sans-serif';
+      ctx.fillText('Build the Future', 14, cY1);
+      ctx.fillStyle = '#4d9ef5'; ctx.font = '700 ' + cFS + 'px sans-serif';
+      ctx.fillText('of Business.', 14, cY2);
+      ctx.fillStyle = '#6d7598'; ctx.font = '300 ' + Math.max(Math.round(w*0.02),7) + 'px sans-serif';
+      ctx.fillText('次世代のビジネスプラットフォーム。', 14, cY2 + 14);
       // CTA
       ctx.fillStyle = '#4d9ef5'; ctx.fillRect(14, 132, 70, 18);
       ctx.fillStyle = '#fff'; ctx.font = '600 6.5px sans-serif'; ctx.fillText('Get Started →', 22, 144);

@@ -297,11 +297,14 @@
       ctx.fillStyle='rgba(168,85,247,0.1)';ctx.fillRect(14,60,110,14);
       ctx.fillStyle='#c4b5fd';ctx.font='500 5.5px sans-serif';ctx.fillText('✦  Just Launched · v2.0 is live!',18,70);
       // Hero
-      ctx.fillStyle='#f0ebff';ctx.font='700 16px sans-serif';ctx.fillText('Ship 10x Faster',14,92);
-      ctx.fillStyle='#a855f7';ctx.font='700 16px sans-serif';ctx.fillText('with AI.',14,110);
-      ctx.fillStyle='#8b82a8';ctx.font='300 6px sans-serif';
-      ctx.fillText('最新AIでコード・デザイン・テストを自動化。',14,122);
-      ctx.fillText('エンジニアの生産性を根本から変える。',14,131);
+      const sFS=Math.min(Math.max(Math.round(w*0.055),14),22);
+      ctx.fillStyle='#f0ebff';ctx.font='700 '+sFS+'px sans-serif';
+      const sY1=74+sFS, sY2=sY1+sFS+4;
+      ctx.fillText('Ship 10x Faster',14,sY1);
+      ctx.fillStyle='#a855f7';ctx.font='700 '+sFS+'px sans-serif';ctx.fillText('with AI.',14,sY2);
+      ctx.fillStyle='#8b82a8';ctx.font='300 '+Math.max(Math.round(w*0.02),7)+'px sans-serif';
+      ctx.fillText('最新AIでコード・デザイン・テストを自動化。',14,sY2+14);
+      ctx.fillText('エンジニアの生産性を根本から変える。',14,sY2+26);
       // Double CTA
       ctx.fillStyle='#a855f7';ctx.beginPath();ctx.roundRect(14,140,86,20,6);ctx.fill();
       ctx.fillStyle='#fff';ctx.font='600 7px sans-serif';ctx.fillText('無料で試す →',26,153);
@@ -340,14 +343,17 @@
       ctx.fillStyle='#1a0e05';ctx.font='900 10px sans-serif';ctx.fillText('TOKYO FEST 2026',14,43);
       ctx.fillStyle='#7a5035';ctx.font='500 6px sans-serif';
       ['Lineup','Tickets','Venue','FAQ'].forEach((t,i)=>ctx.fillText(t,w-160+i*38,43));
+      const eFS=Math.min(Math.max(Math.round(w*0.06),16),26);
+      const badgeH=Math.round(eFS*2+8);
       // Date badge
-      ctx.fillStyle='#1a0e05';ctx.fillRect(14,60,46,36);
-      ctx.fillStyle='#ff5e1a';ctx.font='900 7px sans-serif';ctx.fillText('MAY',20,72);
-      ctx.fillStyle='#fff';ctx.font='900 18px sans-serif';ctx.fillText('25',20,90);
+      ctx.fillStyle='#1a0e05';ctx.fillRect(14,60,Math.round(eFS*2.8),badgeH);
+      ctx.fillStyle='#ff5e1a';ctx.font='900 '+Math.round(eFS*0.45)+'px sans-serif';ctx.fillText('MAY',20,60+Math.round(eFS*0.75));
+      ctx.fillStyle='#fff';ctx.font='900 '+Math.round(eFS*1.1)+'px sans-serif';ctx.fillText('25',20,60+badgeH-8);
       // Hero text
-      ctx.fillStyle='#1a0e05';ctx.font='900 italic 18px sans-serif';ctx.fillText('MUSIC',70,82);
-      ctx.font='900 18px sans-serif';ctx.fillText('FESTIVAL.',70,100);
-      ctx.fillStyle='#7a5035';ctx.font='500 6px sans-serif';ctx.fillText('日本最大級の音楽フェス、再始動。',14,120);
+      const eX=14+Math.round(eFS*2.8)+10;
+      ctx.fillStyle='#1a0e05';ctx.font='900 italic '+eFS+'px sans-serif';ctx.fillText('MUSIC',eX,60+eFS);
+      ctx.font='900 '+eFS+'px sans-serif';ctx.fillText('FESTIVAL.',eX,60+eFS*2+4);
+      ctx.fillStyle='#7a5035';ctx.font='500 '+Math.max(Math.round(w*0.02),7)+'px sans-serif';ctx.fillText('日本最大級の音楽フェス、再始動。',14,60+badgeH+16);
       // CTA
       ctx.fillStyle='#ff5e1a';ctx.fillRect(14,132,100,22);
       ctx.fillStyle='#fff';ctx.font='700 8px sans-serif';ctx.fillText('チケット購入 →',24,146);
@@ -378,12 +384,14 @@
       ctx.fillStyle='#1e40af';ctx.beginPath();ctx.roundRect(w-55,34,48,14,7);ctx.fill();
       ctx.fillStyle='#fff';ctx.font='600 6px sans-serif';ctx.fillText('ダウンロード',w-51,44);
       // Left text
-      ctx.fillStyle='#ec4899';ctx.font='600 5px sans-serif';ctx.fillText('✨ NEW APP',14,66);
-      ctx.fillStyle='#0f172a';ctx.font='800 16px sans-serif';
-      ctx.fillText('Move Your',14,86);ctx.fillText('Life.',14,104);
-      ctx.fillStyle='#64748b';ctx.font='400 6px sans-serif';
-      ctx.fillText('毎日を記録して、健康を変える。',14,118);
-      ctx.fillText('500万人が使うライフログアプリ。',14,128);
+      const aFS=Math.min(Math.max(Math.round(w*0.055),14),24);
+      ctx.fillStyle='#ec4899';ctx.font='600 '+Math.max(Math.round(w*0.018),6)+'px sans-serif';ctx.fillText('✨ NEW APP',14,66);
+      ctx.fillStyle='#0f172a';ctx.font='800 '+aFS+'px sans-serif';
+      const aY1=70+aFS, aY2=aY1+aFS+4;
+      ctx.fillText('Move Your',14,aY1);ctx.fillText('Life.',14,aY2);
+      ctx.fillStyle='#64748b';ctx.font='400 '+Math.max(Math.round(w*0.02),7)+'px sans-serif';
+      ctx.fillText('毎日を記録して、健康を変える。',14,aY2+14);
+      ctx.fillText('500万人が使うライフログアプリ。',14,aY2+26);
       // Store buttons
       ctx.fillStyle='#0f172a';ctx.beginPath();ctx.roundRect(14,140,76,22,5);ctx.fill();
       ctx.fillStyle='#fff';ctx.font='500 5px sans-serif';ctx.fillText('Download on',22,150);
@@ -427,15 +435,17 @@
       ['サービス','事例','料金'].forEach((t,i)=>ctx.fillText(t,w-120+i*36,43));
       // Split hero
       // Left side - text
-      ctx.fillStyle='#059669';ctx.font='600 5px sans-serif';ctx.fillText('FREE WHITEPAPER',14,66);
-      ctx.fillStyle='#0f172a';ctx.font='800 14px sans-serif';
-      ctx.fillText('売上を3倍にした',14,84);ctx.fillText('BtoB マーケ戦略',14,102);
-      ctx.fillStyle='#475569';ctx.font='400 6px sans-serif';
-      ctx.fillText('500社の成功事例を徹底分析。',14,116);
-      ctx.fillText('今すぐ実践できる施策を全公開。',14,126);
+      const lFS=Math.min(Math.max(Math.round(w*0.05),13),22);
+      ctx.fillStyle='#059669';ctx.font='600 '+Math.max(Math.round(w*0.018),6)+'px sans-serif';ctx.fillText('FREE WHITEPAPER',14,66);
+      ctx.fillStyle='#0f172a';ctx.font='800 '+lFS+'px sans-serif';
+      const lY1=70+lFS, lY2=lY1+lFS+4;
+      ctx.fillText('売上を3倍にした',14,lY1);ctx.fillText('BtoB マーケ戦略',14,lY2);
+      ctx.fillStyle='#475569';ctx.font='400 '+Math.max(Math.round(w*0.02),7)+'px sans-serif';
+      ctx.fillText('500社の成功事例を徹底分析。',14,lY2+14);
+      ctx.fillText('今すぐ実践できる施策を全公開。',14,lY2+26);
       // Checklist
       const checks=['✓ 競合調査の進め方','✓ リード獲得の新手法','✓ 顧客単価UP事例'];
-      checks.forEach((c,i)=>{ctx.fillStyle='#059669';ctx.font='500 6px sans-serif';ctx.fillText(c,14,142+i*11);});
+      checks.forEach((c,i)=>{ctx.fillStyle='#059669';ctx.font='500 '+Math.max(Math.round(w*0.02),7)+'px sans-serif';ctx.fillText(c,14,lY2+42+i*12);});
       // Trust badges
       ctx.fillStyle='#f59e0b';ctx.font='700 7px sans-serif';ctx.fillText('★★★★★',14,h-20);
       ctx.fillStyle='#64748b';ctx.font='400 5.5px sans-serif';ctx.fillText('2,483 DL  •  顧客満足度 98%',56,h-20);
