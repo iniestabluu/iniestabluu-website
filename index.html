@@ -1241,30 +1241,14 @@
           <p>フラワーECサイト</p>
         </div>
       </div>
-      <div class="work-card" data-category="corporate">
+      <a class="work-card" href="https://independence-os-lp.vercel.app" target="_blank" rel="noopener" data-category="lp">
         <div class="work-canvas-wrap"><canvas class="work-canvas" id="workCanvas7"></canvas></div>
         <div class="work-info">
-          <p class="work-type">Architecture</p>
-          <h3>KINOE</h3>
-          <p>建築設計事務所コーポレートサイト</p>
+          <p class="work-type">Product LP / Notion</p>
+          <h3>独立準備OS</h3>
+          <p>Notionテンプレート販売LP</p>
         </div>
-      </div>
-      <div class="work-card" data-category="lp">
-        <div class="work-canvas-wrap"><canvas class="work-canvas" id="workCanvas8"></canvas></div>
-        <div class="work-info">
-          <p class="work-type">Subscription LP</p>
-          <h3>OMAKASE</h3>
-          <p>食のサブスクサービスLP</p>
-        </div>
-      </div>
-      <div class="work-card" data-category="ec">
-        <div class="work-canvas-wrap"><canvas class="work-canvas" id="workCanvas9"></canvas></div>
-        <div class="work-info">
-          <p class="work-type">Fashion EC</p>
-          <h3>VINTA</h3>
-          <p>ヴィンテージ古着ECサイト</p>
-        </div>
-      </div>
+      </a>
     </div>
   </section>
 
@@ -2033,7 +2017,93 @@
       }
     }
 
-    // Draw KINOE - architecture firm (wabi-sabi, earth tone)
+    // Draw 独立準備OS - Notion template LP (iniestabluu brand colors)
+    function drawIndependenceOS(canvasId) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 2;
+      canvas.width = Math.round(rect.width * dpr); canvas.height = Math.round(rect.height * dpr);
+      ctx.scale(dpr, dpr);
+      const w = rect.width, h = rect.height;
+      const bg = '#fafafa', surface = '#ffffff', text = '#18181b', mute = '#71717a';
+      const accent = '#1B6FCC', accent2 = '#1458A8';
+      ctx.fillStyle = bg; ctx.fillRect(0, 0, w, h);
+      // Browser chrome
+      ctx.fillStyle = '#ececec'; ctx.fillRect(0, 0, w, 24);
+      ['#d4d4d4','#d4d4d4','#d4d4d4'].forEach((c,i) => { ctx.fillStyle=c; ctx.beginPath(); ctx.arc(10+i*14,12,4,0,Math.PI*2); ctx.fill(); });
+      ctx.fillStyle = '#f4f4f5'; ctx.fillRect(w*0.28, 6, w*0.44, 12);
+      // Nav
+      ctx.fillStyle = surface; ctx.fillRect(0, 24, w, 28);
+      ctx.fillStyle = text; ctx.font = '700 10px sans-serif'; ctx.fillText('ibluu Templates', 14, 42);
+      ctx.fillStyle = mute; ctx.font = '400 6px sans-serif';
+      ['製品','購入','FAQ'].forEach((t,i) => ctx.fillText(t, w-140+i*34, 42));
+      ctx.fillStyle = accent; ctx.beginPath(); ctx.roundRect(w-48, 34, 40, 14, 3); ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.font = '500 6px sans-serif'; ctx.fillText('購入する', w-40, 44);
+      // Hero section
+      const heroT = 58;
+      // Badge
+      ctx.strokeStyle = accent; ctx.lineWidth = 0.6;
+      ctx.beginPath(); ctx.roundRect(14, heroT, 96, 14, 7); ctx.stroke();
+      ctx.fillStyle = accent; ctx.font = '500 5.5px sans-serif'; ctx.fillText('◆ NOTION TEMPLATE  /  2026', 20, heroT+9);
+      // Headline
+      const iFS = Math.min(Math.max(Math.round(w*0.058), 14), 22);
+      const iY1 = heroT + 18 + iFS, iY2 = iY1 + iFS + 2;
+      ctx.fillStyle = text; ctx.font = '700 ' + iFS + 'px sans-serif'; ctx.fillText('独立準備OS', 14, iY1);
+      ctx.fillStyle = accent2; ctx.font = '700 ' + iFS + 'px sans-serif'; ctx.fillText('2026 — 2027', 14, iY2);
+      ctx.fillStyle = mute; ctx.font = '300 6px sans-serif';
+      ctx.fillText('会社員から独立までの判断・計算・文面を', 14, iY2 + 14);
+      ctx.fillText('Notion一本で管理できるテンプレート。', 14, iY2 + 24);
+      // Price + CTA
+      ctx.fillStyle = accent; ctx.font = '700 14px sans-serif'; ctx.fillText('¥1,980', 14, iY2 + 48);
+      ctx.fillStyle = mute; ctx.font = '400 5.5px sans-serif'; ctx.fillText('買い切り  /  一度で完結', 56, iY2 + 48);
+      ctx.fillStyle = accent; ctx.beginPath(); ctx.roundRect(14, iY2 + 54, 96, 18, 4); ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.font = '600 7px sans-serif'; ctx.fillText('今すぐ購入する →', 26, iY2 + 66);
+      // Right side: Notion-looking page preview card
+      const cX = w*0.54, cY = heroT, cW = w*0.44, cH = h*0.58;
+      ctx.fillStyle = surface; ctx.strokeStyle = '#e4e4e7'; ctx.lineWidth = 0.6;
+      ctx.beginPath(); ctx.roundRect(cX, cY, cW, cH, 6); ctx.fill(); ctx.stroke();
+      // Notion icon row
+      ctx.fillStyle = '#fef3c7'; ctx.beginPath(); ctx.roundRect(cX+10, cY+10, 16, 16, 3); ctx.fill();
+      ctx.fillStyle = '#92400e'; ctx.font = '400 10px sans-serif'; ctx.fillText('💼', cX+12, cY+22);
+      ctx.fillStyle = text; ctx.font = '700 8px sans-serif'; ctx.fillText('独立準備OS 2026-2027', cX+30, cY+22);
+      ctx.fillStyle = mute; ctx.font = '400 5px sans-serif'; ctx.fillText('Notion workspace', cX+30, cY+30);
+      // Section label
+      ctx.fillStyle = mute; ctx.font = '500 5px sans-serif'; ctx.fillText('よく使う3つ', cX+10, cY+46);
+      // 3 tool rows
+      ['🧰  実務ツールキット','⚖️  判断ツール','🧮  手取りシミュレーター'].forEach((t,i) => {
+        const ry = cY + 52 + i*16;
+        ctx.fillStyle = '#f4f4f5'; ctx.beginPath(); ctx.roundRect(cX+10, ry, cW-20, 13, 3); ctx.fill();
+        ctx.fillStyle = text; ctx.font = '500 6px sans-serif'; ctx.fillText(t, cX+14, ry+9);
+      });
+      // DB block
+      const dbY = cY + 104;
+      ctx.fillStyle = mute; ctx.font = '500 5px sans-serif'; ctx.fillText('📈 月次ログ', cX+10, dbY);
+      ctx.fillStyle = '#f9fafb'; ctx.fillRect(cX+10, dbY+4, cW-20, 14);
+      ctx.fillStyle = mute; ctx.font = '500 4.5px sans-serif';
+      ctx.fillText('月', cX+14, dbY+13); ctx.fillText('売上', cX+50, dbY+13); ctx.fillText('学び', cX+92, dbY+13);
+      ['2026/03','2026/04','2026/05'].forEach((m,i) => {
+        const ry = dbY+18+i*12;
+        ctx.fillStyle = i%2===0?surface:'#fafafa'; ctx.fillRect(cX+10, ry, cW-20, 12);
+        ctx.fillStyle = text; ctx.font = '400 5px sans-serif'; ctx.fillText(m, cX+14, ry+8);
+        ctx.fillStyle = accent; ctx.fillText(['¥198,000','¥208,000','¥245,000'][i], cX+50, ry+8);
+        ctx.fillStyle = mute; ctx.fillText(['初受注','継続案件','値上げ成功'][i], cX+92, ry+8);
+      });
+      // Bottom feature strip
+      const fy = heroT + cH + 10;
+      ctx.fillStyle = surface; ctx.fillRect(0, fy, w, h-fy);
+      ctx.strokeStyle = '#e4e4e7'; ctx.lineWidth = 0.4; ctx.beginPath(); ctx.moveTo(0, fy); ctx.lineTo(w, fy); ctx.stroke();
+      ['買い切り','DB6種','文面集'].forEach((t,i) => {
+        const fx = 14+i*(w*0.3+4);
+        ctx.fillStyle = 'rgba(27,111,204,0.08)'; ctx.beginPath(); ctx.arc(fx+10, fy+18, 7, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = accent; ctx.font = '700 6px sans-serif'; ctx.fillText(t, fx+22, fy+16);
+        ctx.fillStyle = mute; ctx.font = '300 5px sans-serif';
+        ctx.fillText(['更新料なし','Notion標準','コピペ可'][i], fx+22, fy+26);
+      });
+    }
+
+    // Draw KINOE - architecture firm (wabi-sabi, earth tone) [unused, retained]
     function drawKinoe(canvasId) {
       const canvas = document.getElementById(canvasId);
       if (!canvas) return;
@@ -2242,9 +2312,7 @@
       drawMockup('workCanvas4', 150, 'ec');
       drawFlowAI('workCanvas5');
       drawLume('workCanvas6');
-      drawKinoe('workCanvas7');
-      drawOmakase('workCanvas8');
-      drawVinta('workCanvas9');
+      drawIndependenceOS('workCanvas7');
     });
 
     // ── Mobile Menu ──
