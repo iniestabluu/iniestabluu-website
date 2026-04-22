@@ -416,6 +416,133 @@
       text-transform: uppercase;
     }
 
+    /* ── Price Banner ── */
+    .price-banner {
+      padding: 2.5rem 0 3rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(77,158,245,0.04), transparent);
+    }
+    .price-banner-head {
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+    .price-banner-label {
+      display: inline-block;
+      font-family: var(--font-en);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    .price-banner-title {
+      font-family: var(--font-jp);
+      font-size: clamp(1.2rem, 2.6vw, 1.6rem);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .price-banner-title em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .price-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .price-card {
+      position: relative;
+      padding: 1.4rem 1.4rem 1.2rem;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: transform 0.3s var(--ease-out), border-color 0.3s var(--ease-out), background 0.3s var(--ease-out);
+      text-decoration: none;
+      color: inherit;
+      overflow: hidden;
+    }
+    .price-card::after {
+      content: '→';
+      position: absolute;
+      top: 1.4rem;
+      right: 1.4rem;
+      font-family: var(--font-en);
+      color: var(--text-3);
+      transition: transform 0.3s var(--ease-out), color 0.3s var(--ease-out);
+    }
+    .price-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-2);
+      background: var(--surface-2);
+    }
+    .price-card:hover::after {
+      transform: translateX(4px);
+      color: var(--accent);
+    }
+    .price-card-type {
+      font-family: var(--font-en);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .price-card-name {
+      font-family: var(--font-jp);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .price-card-amount {
+      font-family: var(--font-en);
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-top: 0.3rem;
+    }
+    .price-card-amount small {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-2);
+      margin-left: 0.25rem;
+    }
+    .price-card-meta {
+      font-family: var(--font-jp);
+      font-size: 0.7rem;
+      color: var(--text-2);
+      margin-top: 0.25rem;
+    }
+    .price-banner-foot {
+      text-align: center;
+      margin-top: 1.75rem;
+      font-family: var(--font-jp);
+      font-size: 0.78rem;
+      color: var(--text-2);
+    }
+    .price-banner-foot a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .price-banner-foot a:hover { border-color: var(--accent); }
+    @media (max-width: 720px) {
+      .price-grid { grid-template-columns: 1fr; gap: 0.75rem; max-width: 420px; padding: 0 1rem; }
+      .price-card { padding: 1.1rem 1.2rem; }
+      .price-card-amount { font-size: 1.55rem; }
+    }
+
     /* ── Marquee ── */
     .marquee {
       padding: 1.5rem 0;
@@ -1119,6 +1246,39 @@
     <div class="hero-scroll">
       <div class="scroll-mouse"></div>
       <span class="scroll-text">Scroll</span>
+    </div>
+  </section>
+
+  <!-- Price Banner -->
+  <section class="price-banner reveal">
+    <div class="container">
+      <div class="price-banner-head">
+        <p class="price-banner-label">Pricing</p>
+        <h2 class="price-banner-title">いくらで、<em>何を作れるか。</em></h2>
+      </div>
+      <div class="price-grid">
+        <a href="lp.html" class="price-card">
+          <p class="price-card-type">Landing Page</p>
+          <h3 class="price-card-name">ランディングページ</h3>
+          <p class="price-card-amount">¥58,000<small>〜</small></p>
+          <p class="price-card-meta">最短3日 / 1ページ完結型</p>
+        </a>
+        <a href="corporate.html" class="price-card">
+          <p class="price-card-type">Corporate Site</p>
+          <h3 class="price-card-name">コーポレートサイト</h3>
+          <p class="price-card-amount">¥98,000<small>〜</small></p>
+          <p class="price-card-meta">最短7日 / 5〜10ページ</p>
+        </a>
+        <a href="ec.html" class="price-card">
+          <p class="price-card-type">EC Site</p>
+          <h3 class="price-card-name">ECサイト</h3>
+          <p class="price-card-amount">¥198,000<small>〜</small></p>
+          <p class="price-card-meta">最短14日 / 決済・在庫込</p>
+        </a>
+      </div>
+      <p class="price-banner-foot">
+        着手金50% → 納品後残金50% ／ 保守は月額¥5,000〜　<a href="#contact">まずは無料相談 →</a>
+      </p>
     </div>
   </section>
 
