@@ -675,6 +675,37 @@
       text-transform: uppercase;
       font-weight: 500;
     }
+    .service-price {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      margin-top: 1.25rem;
+      padding-top: 1.1rem;
+      border-top: 1px solid var(--border);
+    }
+    .service-price-amount {
+      font-family: var(--font-en);
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .service-price-amount small {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--text-2);
+      -webkit-text-fill-color: var(--text-2);
+      margin-left: 0.15rem;
+    }
+    .service-price-meta {
+      font-family: var(--font-jp);
+      font-size: 0.7rem;
+      color: var(--text-2);
+    }
 
     /* ── Works / Portfolio ── */
     .works { overflow: hidden; }
@@ -1249,39 +1280,6 @@
     </div>
   </section>
 
-  <!-- Price Banner -->
-  <section class="price-banner reveal">
-    <div class="container">
-      <div class="price-banner-head">
-        <p class="price-banner-label">Pricing</p>
-        <h2 class="price-banner-title">いくらで、<em>何を作れるか。</em></h2>
-      </div>
-      <div class="price-grid">
-        <a href="lp.html" class="price-card">
-          <p class="price-card-type">Landing Page</p>
-          <h3 class="price-card-name">ランディングページ</h3>
-          <p class="price-card-amount">¥58,000<small>〜</small></p>
-          <p class="price-card-meta">最短3日 / 1ページ完結型</p>
-        </a>
-        <a href="corporate.html" class="price-card">
-          <p class="price-card-type">Corporate Site</p>
-          <h3 class="price-card-name">コーポレートサイト</h3>
-          <p class="price-card-amount">¥98,000<small>〜</small></p>
-          <p class="price-card-meta">最短7日 / 5〜10ページ</p>
-        </a>
-        <a href="ec.html" class="price-card">
-          <p class="price-card-type">EC Site</p>
-          <h3 class="price-card-name">ECサイト</h3>
-          <p class="price-card-amount">¥198,000<small>〜</small></p>
-          <p class="price-card-meta">最短14日 / 決済・在庫込</p>
-        </a>
-      </div>
-      <p class="price-banner-foot">
-        着手金50% → 納品後残金50% ／ 保守は月額¥5,000〜　<a href="#contact">まずは無料相談 →</a>
-      </p>
-    </div>
-  </section>
-
   <!-- Marquee -->
   <div class="marquee">
     <div class="marquee-inner" id="marquee">
@@ -1315,6 +1313,10 @@
           </div>
           <h3>Corporate Site</h3>
           <p>企業の価値を正しく伝えるコーポレートサイト。信頼感のあるデザインと構造設計で、ブランドを形にします。</p>
+          <div class="service-price">
+            <p class="service-price-amount">¥98,000<small>〜</small></p>
+            <p class="service-price-meta">最短7日 / 5〜10ページ</p>
+          </div>
           <span class="service-tag">詳細・料金を見る &rarr;</span>
         </a>
         <a href="lp.html" class="service-card" data-tilt>
@@ -1323,6 +1325,10 @@
           </div>
           <h3>Landing Page</h3>
           <p>広告効果を最大化するLP。データドリブンな設計とビジュアルでコンバージョンを最適化。</p>
+          <div class="service-price">
+            <p class="service-price-amount">¥58,000<small>〜</small></p>
+            <p class="service-price-meta">最短3日 / 1ページ完結型</p>
+          </div>
           <span class="service-tag">詳細・料金を見る &rarr;</span>
         </a>
         <a href="ec.html" class="service-card" data-tilt>
@@ -1331,6 +1337,10 @@
           </div>
           <h3>EC Site</h3>
           <p>商品の世界観を体現するオンラインストア。決済・在庫管理まで一貫対応。売れるECを構築します。</p>
+          <div class="service-price">
+            <p class="service-price-amount">¥198,000<small>〜</small></p>
+            <p class="service-price-meta">最短14日 / 決済・在庫込</p>
+          </div>
           <span class="service-tag">詳細・料金を見る &rarr;</span>
         </a>
       </div>
