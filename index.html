@@ -224,27 +224,40 @@
       overflow: hidden;
       padding-top: 72px;
     }
-    .hero-bg-image {
-      position: absolute;
-      inset: 0;
-      background-image: url('images/hero-tokyo-night.jpg');
-      background-size: cover;
-      background-position: center;
-      opacity: 0.35;
-      filter: saturate(1.1) contrast(1.05);
-      animation: heroBgZoom 30s ease-in-out infinite alternate;
-    }
-    .hero-bg-image::after {
-      content: '';
+    .hero-gradient-bg {
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse at center, transparent 0%, rgba(10,10,15,0.55) 70%, rgba(10,10,15,0.95) 100%),
-        linear-gradient(180deg, rgba(10,10,15,0.4) 0%, transparent 30%, transparent 70%, rgba(10,10,15,0.85) 100%);
+        radial-gradient(ellipse 80% 60% at 20% 30%, rgba(99,102,241,0.18), transparent 60%),
+        radial-gradient(ellipse 70% 50% at 80% 70%, rgba(139,92,246,0.15), transparent 60%),
+        radial-gradient(ellipse 60% 80% at 50% 100%, rgba(27,111,204,0.12), transparent 70%);
+      animation: heroGradShift 18s ease-in-out infinite alternate;
     }
-    @keyframes heroBgZoom {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.08); }
+    @keyframes heroGradShift {
+      0%   { transform: translate(0, 0) scale(1); }
+      50%  { transform: translate(-2%, 1%) scale(1.05); }
+      100% { transform: translate(2%, -1%) scale(1); }
+    }
+    .hero-particles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .hero-particles span {
+      position: absolute;
+      width: 2px; height: 2px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      box-shadow: 0 0 6px rgba(255,255,255,0.6);
+      animation: particleFloat linear infinite;
+      opacity: 0;
+    }
+    @keyframes particleFloat {
+      0%   { transform: translateY(0) translateX(0); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { transform: translateY(-110vh) translateX(20px); opacity: 0; }
     }
     .hero-grid-bg {
       position: absolute;
@@ -1278,9 +1291,21 @@
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-bg-image"></div>
+    <div class="hero-gradient-bg"></div>
     <div class="hero-grid-bg"></div>
     <div class="hero-glow"></div>
+    <div class="hero-particles">
+      <span style="left:8%;  bottom:-10px; animation-duration:22s; animation-delay:0s;"></span>
+      <span style="left:18%; bottom:-10px; animation-duration:28s; animation-delay:3s;"></span>
+      <span style="left:27%; bottom:-10px; animation-duration:19s; animation-delay:6s;"></span>
+      <span style="left:38%; bottom:-10px; animation-duration:26s; animation-delay:1s;"></span>
+      <span style="left:47%; bottom:-10px; animation-duration:24s; animation-delay:9s;"></span>
+      <span style="left:56%; bottom:-10px; animation-duration:21s; animation-delay:4s;"></span>
+      <span style="left:64%; bottom:-10px; animation-duration:27s; animation-delay:11s;"></span>
+      <span style="left:73%; bottom:-10px; animation-duration:23s; animation-delay:2s;"></span>
+      <span style="left:82%; bottom:-10px; animation-duration:25s; animation-delay:7s;"></span>
+      <span style="left:91%; bottom:-10px; animation-duration:20s; animation-delay:13s;"></span>
+    </div>
     <div class="container hero-content">
       <div class="hero-badge">
         <span class="hero-badge-dot"></span>

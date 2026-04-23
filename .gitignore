@@ -1,1 +1,30 @@
+# Vercel
 .vercel
+
+# 環境変数・シークレット
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# OS
+.DS_Store
+Thumbs.db
+
+# エディタ
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ログ・一時ファイル
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# 依存（もし入れたら）
+node_modules/
+
+# Claude Code ローカル設定（プロジェクト設定は含める）
+.claude/settings.local.json
