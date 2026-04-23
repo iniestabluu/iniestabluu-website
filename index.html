@@ -225,6 +225,27 @@
       overflow: hidden;
       padding-top: 72px;
     }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('images/hero-index.jpg');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.22;
+      filter: grayscale(100%) contrast(1.08) brightness(0.95);
+      animation: heroBgZoom 40s ease-in-out infinite alternate;
+    }
+    .hero-bg-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, rgba(15,14,12,0.55) 60%, rgba(15,14,12,0.98) 100%),
+        linear-gradient(180deg, rgba(15,14,12,0.6) 0%, transparent 30%, transparent 65%, rgba(15,14,12,0.92) 100%);
+    }
+    @keyframes heroBgZoom {
+      0%   { transform: scale(1); }
+      100% { transform: scale(1.08); }
+    }
     .hero-rule {
       position: absolute;
       left: 50%; top: 20%;
@@ -1261,6 +1282,8 @@
 
   <!-- Hero -->
   <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-bg-overlay"></div>
     <div class="container hero-content">
       <div class="hero-badge">
         <span class="hero-badge-dot"></span>
