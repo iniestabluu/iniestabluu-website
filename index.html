@@ -12,16 +12,16 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #060810;
-      --surface: #0d1220;
-      --surface-2: #111828;
-      --border: rgba(255,255,255,0.08);
-      --text: #eef0f5;
-      --text-2: #8a90aa;
-      --text-3: #4a5070;
-      --accent: #4d9ef5;
-      --accent-2: #1B6FCC;
-      --accent-glow: rgba(77,158,245,0.18);
+      --bg: #0f0e0c;
+      --surface: #16140f;
+      --surface-2: #1c1913;
+      --border: rgba(235,232,226,0.08);
+      --text: #ebe8e2;
+      --text-2: #8a857a;
+      --text-3: #55514a;
+      --accent: #ebe8e2;
+      --accent-2: #b8b3a8;
+      --accent-glow: rgba(235,232,226,0.05);
       --font-en: 'Sora', sans-serif;
       --font-jp: 'Zen Kaku Gothic New', sans-serif;
       --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -224,51 +224,16 @@
       overflow: hidden;
       padding-top: 72px;
     }
-    .hero-bg-image {
+    .hero-rule {
       position: absolute;
-      inset: 0;
-      background-image: url('images/hero-workspace.jpg');
-      background-size: cover;
-      background-position: center;
-      opacity: 0.28;
-      filter: saturate(0.85) contrast(1.05);
-      animation: heroBgZoom 32s ease-in-out infinite alternate;
+      left: 50%; top: 20%;
+      width: 1px; height: 60%;
+      background: var(--border);
+      transform: translateX(-50%);
+      opacity: 0;
+      animation: fadeIn 1.2s var(--ease-out) 0.6s forwards;
     }
-    .hero-bg-overlay {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 90% 70% at 50% 50%, transparent 0%, rgba(10,10,15,0.5) 60%, rgba(10,10,15,0.95) 100%),
-        linear-gradient(180deg, rgba(10,10,15,0.5) 0%, transparent 25%, transparent 65%, rgba(10,10,15,0.9) 100%);
-    }
-    @keyframes heroBgZoom {
-      0%   { transform: scale(1); }
-      100% { transform: scale(1.08); }
-    }
-    .hero-grid-bg {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(99,102,241,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(99,102,241,0.03) 1px, transparent 1px);
-      background-size: 60px 60px;
-      mask-image: radial-gradient(ellipse 70% 50% at 50% 50%, black 30%, transparent 70%);
-      -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 50%, black 30%, transparent 70%);
-    }
-    .hero-glow {
-      position: absolute;
-      width: 600px; height: 600px;
-      border-radius: 50%;
-      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-      top: 20%; left: 50%;
-      transform: translate(-50%, -50%);
-      filter: blur(80px);
-      animation: glowPulse 6s ease-in-out infinite alternate;
-    }
-    @keyframes glowPulse {
-      0% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-      100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.15); }
-    }
+    @keyframes fadeIn { to { opacity: 1; } }
     .hero-content { position: relative; z-index: 1; width: 100%; text-align: center; }
     .hero-badge {
       display: inline-flex;
@@ -317,10 +282,9 @@
     .hero h1 .line:nth-child(2) span { animation-delay: 2.25s; }
     .hero h1 .line:nth-child(3) span { animation-delay: 2.4s; }
     .hero h1 .gradient-text {
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 50%, #c084fc 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--text-2);
     }
     .hero-sub {
       font-family: var(--font-jp);
@@ -1277,10 +1241,6 @@
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-bg-image"></div>
-    <div class="hero-bg-overlay"></div>
-    <div class="hero-grid-bg"></div>
-    <div class="hero-glow"></div>
     <div class="container hero-content">
       <div class="hero-badge">
         <span class="hero-badge-dot"></span>
