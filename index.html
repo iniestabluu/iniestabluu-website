@@ -752,11 +752,10 @@
     .work-card {
       flex: 0 0 clamp(280px, 32vw, 380px);
       scroll-snap-align: start;
-      padding: 2.5rem 2rem;
-      min-height: 360px;
+      padding: 0;
+      min-height: 440px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       background: transparent;
       border: 1px solid var(--border);
       border-radius: 2px;
@@ -777,13 +776,258 @@
     }
     .work-card:hover::before { opacity: 1; }
     .work-card:hover { transform: translateY(-4px); border-color: var(--text-2); }
+    .work-card:hover .work-thumb::after { opacity: 0.12; }
+    .work-card:hover .work-thumb-frame { transform: scale(1.02); }
     .work-preview, .work-gradient, .work-canvas-wrap, .work-canvas { display: none !important; }
+
+    /* ── Work thumbnail (CSS mockups) ── */
+    .work-thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: #0a0908;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .work-thumb::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at top, rgba(235,232,226,0.15), transparent 60%);
+      opacity: 0.06;
+      transition: opacity 0.5s var(--ease-out);
+      pointer-events: none;
+    }
+    .work-thumb-frame {
+      position: absolute;
+      inset: 14px;
+      background: #16140f;
+      border: 1px solid rgba(235,232,226,0.06);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.6s var(--ease-out);
+      font-family: var(--font-en);
+    }
+    .wtf-bar {
+      display: flex; align-items: center; gap: 3px;
+      padding: 5px 7px;
+      border-bottom: 1px solid rgba(235,232,226,0.05);
+      font-size: 4px; letter-spacing: 0.15em;
+      color: var(--text-3);
+    }
+    .wtf-bar span.dot {
+      width: 4px; height: 4px; border-radius: 50%; background: rgba(235,232,226,0.18);
+    }
+    .wtf-bar .wtf-nav { margin-left: auto; display: flex; gap: 7px; }
+    .wtf-bar .wtf-nav em { font-style: normal; }
+    .wtf-body { flex: 1; display: flex; padding: 10px 12px; min-height: 0; position: relative; }
+
+    /* Corporate variant */
+    .wtf--corporate .wtf-body { flex-direction: column; justify-content: space-between; }
+    .wtf--corporate .wtf-display {
+      font-family: var(--font-en);
+      font-size: 22px;
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      line-height: 0.95;
+      color: var(--text);
+    }
+    .wtf--corporate .wtf-display em { font-style: italic; color: var(--text-2); font-weight: 300; }
+    .wtf--corporate .wtf-meta { display: flex; justify-content: space-between; font-size: 4px; color: var(--text-3); letter-spacing: 0.2em; text-transform: uppercase; }
+    .wtf--corporate .wtf-img {
+      height: 32px; margin: 6px 0;
+      background: linear-gradient(135deg, #2a2620, #16140f);
+      position: relative; overflow: hidden;
+    }
+    .wtf--corporate .wtf-img::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 30% 40%, rgba(235,232,226,0.12), transparent 40%),
+        radial-gradient(circle at 70% 70%, rgba(235,232,226,0.08), transparent 35%);
+    }
+
+    /* Restaurant / editorial variant */
+    .wtf--editorial .wtf-body { flex-direction: column; gap: 4px; padding: 8px 10px 10px; }
+    .wtf--editorial .wtf-hero-img {
+      flex: 1; min-height: 40px;
+      background:
+        linear-gradient(160deg, #1f1c16 0%, #0f0e0c 100%),
+        repeating-linear-gradient(45deg, rgba(235,232,226,0.04) 0 2px, transparent 2px 6px);
+      background-blend-mode: overlay;
+      position: relative;
+    }
+    .wtf--editorial .wtf-hero-img::after {
+      content: 'SORA';
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; letter-spacing: 0.4em; color: rgba(235,232,226,0.35);
+      font-weight: 300;
+    }
+    .wtf--editorial .wtf-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+    .wtf--editorial .wtf-cols div { height: 4px; background: rgba(235,232,226,0.08); }
+    .wtf--editorial .wtf-cols div:nth-child(2) { background: rgba(235,232,226,0.15); width: 70%; }
+
+    /* Salon variant */
+    .wtf--salon .wtf-body { padding: 0; }
+    .wtf--salon .wtf-split { display: grid; grid-template-columns: 1.1fr 1fr; width: 100%; gap: 1px; background: rgba(235,232,226,0.05); }
+    .wtf--salon .wtf-left {
+      background: linear-gradient(180deg, #1a1813, #0f0e0c);
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 12px 10px;
+    }
+    .wtf--salon .wtf-left .k {
+      font-size: 18px; font-weight: 200; letter-spacing: -0.02em; color: var(--text);
+      line-height: 1;
+    }
+    .wtf--salon .wtf-left .sub { font-size: 4px; letter-spacing: 0.25em; color: var(--text-3); margin-top: 6px; text-transform: uppercase; }
+    .wtf--salon .wtf-right {
+      background:
+        radial-gradient(circle at 50% 30%, rgba(235,232,226,0.12), transparent 60%),
+        linear-gradient(135deg, #2a2620 0%, #0f0e0c 100%);
+    }
+
+    /* SaaS LP variant */
+    .wtf--saas .wtf-body { flex-direction: column; gap: 5px; justify-content: center; padding: 12px 14px; }
+    .wtf--saas .wtf-tag {
+      display: inline-block; align-self: flex-start;
+      padding: 2px 6px; border: 1px solid rgba(235,232,226,0.15);
+      border-radius: 99px; font-size: 4px; letter-spacing: 0.2em;
+      color: var(--text-2); text-transform: uppercase;
+    }
+    .wtf--saas .wtf-h {
+      font-size: 15px; font-weight: 500; letter-spacing: -0.03em;
+      color: var(--text); line-height: 1.05;
+    }
+    .wtf--saas .wtf-h span { color: var(--text-3); font-weight: 300; }
+    .wtf--saas .wtf-lines { display: flex; flex-direction: column; gap: 2px; margin-top: 2px; }
+    .wtf--saas .wtf-lines span { height: 2px; background: rgba(235,232,226,0.08); border-radius: 1px; }
+    .wtf--saas .wtf-lines span:first-child { width: 85%; }
+    .wtf--saas .wtf-lines span:last-child { width: 60%; }
+    .wtf--saas .wtf-cta {
+      margin-top: 4px;
+      display: inline-flex; align-self: flex-start;
+      padding: 3px 8px;
+      background: var(--text); color: #0f0e0c;
+      font-size: 5px; letter-spacing: 0.12em; font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    /* Beauty LP variant */
+    .wtf--beauty .wtf-body { padding: 0; }
+    .wtf--beauty .wtf-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 30% 50%, rgba(230,215,200,0.15), transparent 55%),
+        radial-gradient(ellipse at 80% 70%, rgba(200,180,170,0.1), transparent 50%),
+        linear-gradient(180deg, #181511, #0f0e0c);
+    }
+    .wtf--beauty .wtf-center {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 4px;
+    }
+    .wtf--beauty .wtf-center .brand {
+      font-family: var(--font-en); font-weight: 200;
+      font-size: 22px; letter-spacing: 0.25em; color: var(--text);
+    }
+    .wtf--beauty .wtf-center .brand em { font-style: italic; font-weight: 300; }
+    .wtf--beauty .wtf-center .tag {
+      font-size: 4px; letter-spacing: 0.3em; color: var(--text-2);
+      text-transform: uppercase;
+    }
+    .wtf--beauty .wtf-bottle {
+      position: absolute; right: 14px; bottom: 14px;
+      width: 14px; height: 30px; border-radius: 2px 2px 1px 1px;
+      background: linear-gradient(180deg, rgba(235,232,226,0.2), rgba(235,232,226,0.08));
+      border: 1px solid rgba(235,232,226,0.15);
+    }
+
+    /* EC variant */
+    .wtf--ec .wtf-body { padding: 8px 9px; flex-direction: column; gap: 5px; }
+    .wtf--ec .wtf-eyebrow { display: flex; justify-content: space-between; font-size: 4px; letter-spacing: 0.2em; color: var(--text-3); text-transform: uppercase; }
+    .wtf--ec .wtf-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 3px; flex: 1;
+    }
+    .wtf--ec .wtf-grid > div {
+      aspect-ratio: 3 / 4;
+      background: linear-gradient(160deg, #1f1c16, #0f0e0c);
+      position: relative;
+      border: 1px solid rgba(235,232,226,0.04);
+    }
+    .wtf--ec .wtf-grid > div::before {
+      content: '';
+      position: absolute; left: 50%; top: 40%;
+      transform: translate(-50%, -50%);
+      width: 60%; height: 45%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, rgba(235,232,226,0.25), rgba(235,232,226,0.05) 70%);
+    }
+    .wtf--ec .wtf-grid > div:nth-child(1)::before { background: radial-gradient(circle at 35% 35%, #d4a08a, #5a3e33 70%); }
+    .wtf--ec .wtf-grid > div:nth-child(2)::before { background: radial-gradient(circle at 35% 35%, #e8c3c0, #7a4a52 70%); border-radius: 4px; }
+    .wtf--ec .wtf-grid > div:nth-child(3)::before { background: radial-gradient(circle at 35% 35%, #c9d4a8, #4a5a38 70%); border-radius: 50% 50% 4px 4px; }
+    .wtf--ec .wtf-grid > div:nth-child(4)::before { background: radial-gradient(circle at 35% 35%, #b8a8d4, #3e3358 70%); }
+    .wtf--ec .wtf-grid > div:nth-child(5)::before { background: radial-gradient(circle at 35% 35%, #e8d4a0, #7a5e3a 70%); border-radius: 2px; }
+    .wtf--ec .wtf-grid > div:nth-child(6)::before { background: radial-gradient(circle at 35% 35%, #a8c4d4, #385a6a 70%); border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; }
+
+    /* Notion / minimal LP variant */
+    .wtf--notion .wtf-body { flex-direction: column; padding: 10px 12px; gap: 4px; justify-content: center; }
+    .wtf--notion .wtf-kicker { font-size: 4px; letter-spacing: 0.3em; color: var(--text-3); text-transform: uppercase; }
+    .wtf--notion .wtf-jp {
+      font-family: var(--font-jp);
+      font-size: 14px; font-weight: 600; letter-spacing: 0.02em;
+      color: var(--text); line-height: 1.2;
+    }
+    .wtf--notion .wtf-jp strong { border-bottom: 2px solid var(--text); padding-bottom: 1px; font-weight: 600; }
+    .wtf--notion .wtf-doc {
+      margin-top: 4px;
+      padding: 4px 5px;
+      background: #0f0e0c;
+      border: 1px solid rgba(235,232,226,0.06);
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .wtf--notion .wtf-doc span { height: 2px; background: rgba(235,232,226,0.1); border-radius: 1px; }
+    .wtf--notion .wtf-doc span:nth-child(1) { width: 40%; background: rgba(235,232,226,0.2); }
+    .wtf--notion .wtf-doc span:nth-child(3) { width: 75%; }
+    .wtf--notion .wtf-doc span:nth-child(4) { width: 55%; }
+
+    /* Self / iniestabluu variant */
+    .wtf--self .wtf-body { padding: 0; position: relative; }
+    .wtf--self .wtf-bg {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(180deg, rgba(15,14,12,0.5), rgba(15,14,12,0.85)),
+        radial-gradient(ellipse at 50% 40%, rgba(235,232,226,0.18), transparent 70%),
+        linear-gradient(135deg, #1f1c16, #0a0908);
+    }
+    .wtf--self .wtf-wordmark {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-en); font-weight: 200;
+      font-size: 20px; letter-spacing: 0.08em; color: var(--text);
+    }
+    .wtf--self .wtf-wordmark em { font-style: italic; color: var(--text-2); font-weight: 300; }
+    .wtf--self .wtf-foot {
+      position: absolute; bottom: 8px; left: 10px; right: 10px;
+      display: flex; justify-content: space-between;
+      font-size: 4px; letter-spacing: 0.25em; color: var(--text-3); text-transform: uppercase;
+    }
+
+    .work-body {
+      padding: 1.6rem 1.6rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
     .work-index {
       font-family: var(--font-en);
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       font-weight: 400;
       letter-spacing: 0.3em;
       color: var(--text-3);
+      position: absolute;
+      top: 1rem; right: 1rem;
+      z-index: 2;
+      mix-blend-mode: difference;
     }
     .work-info {
       margin-top: auto;
@@ -1242,8 +1486,9 @@
       .hero-scroll { display: none; }
       footer .footer-inner { flex-direction: column; gap: 0.75rem; text-align: center; }
       .works-grid { gap: 1rem; }
-      .work-info { padding: 1.2rem; }
-      .work-info h3 { font-size: 1rem; }
+      .work-body { padding: 1.2rem; }
+      .work-info h3 { font-size: 1.2rem; }
+      .work-card { min-height: auto; }
       .hero h1 { font-size: clamp(2.2rem, 9vw, 3.5rem); }
       .cta h2 { font-size: clamp(1.8rem, 7vw, 3rem); }
       .contact-form { padding: 0 0.5rem; }
@@ -1303,8 +1548,8 @@
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-bg-overlay"></div>
+    <div class="hero-bg" role="img" aria-label="東京の夜景"></div>
+    <div class="hero-bg-overlay" aria-hidden="true"></div>
     <div class="container hero-content">
       <div class="hero-badge">
         <span class="hero-badge-dot"></span>
@@ -1400,7 +1645,7 @@
       <div class="section-header reveal">
         <p class="section-label">Works</p>
         <h2 class="section-title">つくれるもの。</h2>
-        <p class="section-desc">業種・目的に合わせたデザインをご覧ください。コーポレート、LP、ECまで対応します。</p>
+        <p class="section-desc">業種・目的に合わせたデザインをご覧ください。公開中の実例と、新しい業種向けのショーケース案をまとめています。</p>
       </div>
       <div class="works-filter reveal">
         <button class="works-filter-btn active" data-filter="all">All</button>
@@ -1412,65 +1657,182 @@
     <div class="works-grid" id="worksGrid">
       <a class="work-card" href="https://company-website-ten-omega.vercel.app" target="_blank" rel="noopener" data-category="corporate">
         <span class="work-index">01</span>
-        <div class="work-info">
-          <p class="work-type">Corporate Site</p>
-          <h3>iniestabluu</h3>
-          <p>自社コーポレートサイト</p>
-          <span class="work-card-arrow">View →</span>
+        <div class="work-thumb">
+          <div class="work-thumb-frame wtf--self">
+            <div class="wtf-bar">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <div class="wtf-nav"><em>Works</em><em>About</em><em>Contact</em></div>
+            </div>
+            <div class="wtf-body">
+              <div class="wtf-bg"></div>
+              <div class="wtf-wordmark">iniesta<em>bluu</em></div>
+              <div class="wtf-foot"><span>Web Studio</span><span>Est. 2024</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="work-body">
+          <div class="work-info">
+            <p class="work-type">Corporate Site</p>
+            <h3>iniestabluu</h3>
+            <p>自社コーポレートサイト</p>
+            <span class="work-card-arrow">View →</span>
+          </div>
         </div>
       </a>
+
       <a class="work-card" href="https://portfolio-hair.vercel.app" target="_blank" rel="noopener" data-category="corporate">
         <span class="work-index">02</span>
-        <div class="work-info">
-          <p class="work-type">Hair Salon</p>
-          <h3>HAUM</h3>
-          <p>美容室サイト制作</p>
-          <span class="work-card-arrow">View →</span>
+        <div class="work-thumb">
+          <div class="work-thumb-frame wtf--salon">
+            <div class="wtf-bar">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <div class="wtf-nav"><em>Menu</em><em>Stylist</em><em>Book</em></div>
+            </div>
+            <div class="wtf-body">
+              <div class="wtf-split">
+                <div class="wtf-left">
+                  <div class="k">HAUM</div>
+                  <div class="sub">Hair · Tokyo</div>
+                </div>
+                <div class="wtf-right"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="work-body">
+          <div class="work-info">
+            <p class="work-type">Hair Salon</p>
+            <h3>HAUM</h3>
+            <p>美容室サイト制作</p>
+            <span class="work-card-arrow">View →</span>
+          </div>
         </div>
       </a>
+
       <a class="work-card" href="https://portfolio-restaurant-blond.vercel.app" target="_blank" rel="noopener" data-category="corporate">
         <span class="work-index">03</span>
-        <div class="work-info">
-          <p class="work-type">Restaurant</p>
-          <h3>SORA</h3>
-          <p>イタリアンレストランサイト制作</p>
-          <span class="work-card-arrow">View →</span>
+        <div class="work-thumb">
+          <div class="work-thumb-frame wtf--editorial">
+            <div class="wtf-bar">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <div class="wtf-nav"><em>Menu</em><em>Access</em><em>Reserve</em></div>
+            </div>
+            <div class="wtf-body">
+              <div class="wtf-hero-img"></div>
+              <div class="wtf-cols"><div></div><div></div><div></div><div></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="work-body">
+          <div class="work-info">
+            <p class="work-type">Restaurant</p>
+            <h3>SORA</h3>
+            <p>イタリアンレストランサイト制作</p>
+            <span class="work-card-arrow">View →</span>
+          </div>
         </div>
       </a>
+
       <div class="work-card" data-category="lp">
         <span class="work-index">04</span>
-        <div class="work-info">
-          <p class="work-type">Landing Page</p>
-          <h3>FlowAI</h3>
-          <p>SaaS製品ランディングページ</p>
-          <span class="work-card-arrow">Coming Soon</span>
+        <div class="work-thumb">
+          <div class="work-thumb-frame wtf--saas">
+            <div class="wtf-bar">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <div class="wtf-nav"><em>Product</em><em>Pricing</em><em>Login</em></div>
+            </div>
+            <div class="wtf-body">
+              <span class="wtf-tag">New · AI Workflow</span>
+              <div class="wtf-h">Automate<br><span>your busywork.</span></div>
+              <div class="wtf-lines"><span></span><span></span><span></span></div>
+              <span class="wtf-cta">Start Free →</span>
+            </div>
+          </div>
+        </div>
+        <div class="work-body">
+          <div class="work-info">
+            <p class="work-type">Landing Page</p>
+            <h3>FlowAI</h3>
+            <p>SaaS製品ランディングページ</p>
+            <span class="work-card-arrow">Preview Design</span>
+          </div>
         </div>
       </div>
+
       <div class="work-card" data-category="lp">
         <span class="work-index">05</span>
-        <div class="work-info">
-          <p class="work-type">Landing Page</p>
-          <h3>LUME</h3>
-          <p>スキンケアブランドLP</p>
-          <span class="work-card-arrow">Coming Soon</span>
+        <div class="work-thumb">
+          <div class="work-thumb-frame wtf--beauty">
+            <div class="wtf-bar">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <div class="wtf-nav"><em>Story</em><em>Shop</em><em>Journal</em></div>
+            </div>
+            <div class="wtf-body">
+              <div class="wtf-bg"></div>
+              <div class="wtf-center">
+                <div class="brand">LU<em>M</em>E</div>
+                <div class="tag">Pure Skincare</div>
+              </div>
+              <div class="wtf-bottle"></div>
+            </div>
+          </div>
+        </div>
+        <div class="work-body">
+          <div class="work-info">
+            <p class="work-type">Landing Page</p>
+            <h3>LUME</h3>
+            <p>スキンケアブランドLP</p>
+            <span class="work-card-arrow">Preview Design</span>
+          </div>
         </div>
       </div>
+
       <div class="work-card" data-category="ec">
         <span class="work-index">06</span>
-        <div class="work-info">
-          <p class="work-type">EC Site</p>
-          <h3>Mall Flower</h3>
-          <p>フラワーECサイト</p>
-          <span class="work-card-arrow">Coming Soon</span>
+        <div class="work-thumb">
+          <div class="work-thumb-frame wtf--ec">
+            <div class="wtf-bar">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <div class="wtf-nav"><em>Shop</em><em>Gift</em><em>Cart (2)</em></div>
+            </div>
+            <div class="wtf-body">
+              <div class="wtf-eyebrow"><span>Mall Flower</span><span>All Items · 24</span></div>
+              <div class="wtf-grid"><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="work-body">
+          <div class="work-info">
+            <p class="work-type">EC Site</p>
+            <h3>Mall Flower</h3>
+            <p>フラワーECサイト</p>
+            <span class="work-card-arrow">Preview Design</span>
+          </div>
         </div>
       </div>
+
       <a class="work-card" href="https://independence-os-lp.vercel.app" target="_blank" rel="noopener" data-category="lp">
         <span class="work-index">07</span>
-        <div class="work-info">
-          <p class="work-type">Product LP / Notion</p>
-          <h3>独立準備OS</h3>
-          <p>Notionテンプレート販売LP</p>
-          <span class="work-card-arrow">View →</span>
+        <div class="work-thumb">
+          <div class="work-thumb-frame wtf--notion">
+            <div class="wtf-bar">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <div class="wtf-nav"><em>Intro</em><em>Buy</em><em>FAQ</em></div>
+            </div>
+            <div class="wtf-body">
+              <span class="wtf-kicker">Notion Template</span>
+              <div class="wtf-jp">独立する前に、<br><strong>やる順番</strong>が見える。</div>
+              <div class="wtf-doc"><span></span><span></span><span></span><span></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="work-body">
+          <div class="work-info">
+            <p class="work-type">Product LP / Notion</p>
+            <h3>独立準備OS</h3>
+            <p>Notionテンプレート販売LP</p>
+            <span class="work-card-arrow">View →</span>
+          </div>
         </div>
       </a>
     </div>

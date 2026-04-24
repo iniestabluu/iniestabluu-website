@@ -32,7 +32,7 @@
     .nav-back:hover { color: var(--text); }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 clamp(1.5rem, 4vw, 4rem); }
     .page-hero { padding: 10rem 0 5rem; position: relative; overflow: hidden; min-height: 60vh; display: flex; align-items: center; }
-    .page-hero-bg { position: absolute; inset: 0; background-image: url("images/hero-lp.jpg"); background-size: cover; background-position: center; opacity: 0.2; filter: grayscale(100%) contrast(1.08) brightness(0.95); animation: phZoom 40s ease-in-out infinite alternate; }
+    .page-hero-bg { position: absolute; inset: 0; background-image: url("images/hero-tokyo.jpg"); background-size: cover; background-position: center; opacity: 0.35; filter: saturate(0.7) contrast(1.05) brightness(0.8); animation: phZoom 40s ease-in-out infinite alternate; }
     .page-hero-overlay { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 70% at 50% 50%, transparent 0%, rgba(15,14,12,0.55) 55%, rgba(15,14,12,0.98) 100%), linear-gradient(180deg, rgba(15,14,12,0.6) 0%, transparent 30%, transparent 60%, rgba(15,14,12,0.92) 100%); }
     @keyframes phZoom { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
     .page-hero-glow { position: absolute; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%); top: 30%; left: 60%; transform: translate(-50%, -50%); filter: blur(80px); opacity: 0.5; }
@@ -112,9 +112,9 @@
   </nav>
 
   <section class="page-hero">
-
-
-    
+    <div class="page-hero-bg" role="img" aria-label="東京の夜景"></div>
+    <div class="page-hero-overlay" aria-hidden="true"></div>
+    <div class="page-hero-glow" aria-hidden="true"></div>
     <div class="container">
       <p class="page-label">Landing Page</p>
       <h1 class="page-title"><span class="gradient-text">コンバージョン</span>を<br>最大化する。</h1>
