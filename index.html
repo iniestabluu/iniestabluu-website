@@ -7,24 +7,24 @@
   <meta name="description" content="WEB制作のiniestabluu。デザインからコーディングまで、圧倒的なクオリティで届けます。" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0f0e0c;
-      --surface: #16140f;
-      --surface-2: #1c1913;
-      --border: rgba(235,232,226,0.08);
-      --text: #ebe8e2;
-      --text-2: #8a857a;
-      --text-3: #55514a;
-      --accent: #ebe8e2;
-      --accent-2: #b8b3a8;
-      --accent-glow: rgba(235,232,226,0.05);
-      --font-en: 'Inter', sans-serif;
+      --bg: #050912;
+      --surface: #0a1020;
+      --surface-2: #111a2e;
+      --border: rgba(244,241,234,0.08);
+      --text: #f4f1ea;
+      --text-2: #9aa3b8;
+      --text-3: #4e5568;
+      --accent: #e8a766;
+      --accent-2: #d17b3a;
+      --accent-glow: rgba(232,167,102,0.18);
+      --font-en: 'Sora', sans-serif;
       --font-jp: 'Zen Kaku Gothic New', sans-serif;
-      --font-en-sans: 'Inter', sans-serif;
+      --font-en-sans: 'Sora', sans-serif;
       --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
       --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
     }
@@ -239,8 +239,8 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, rgba(15,14,12,0.55) 60%, rgba(15,14,12,0.98) 100%),
-        linear-gradient(180deg, rgba(15,14,12,0.6) 0%, transparent 30%, transparent 65%, rgba(15,14,12,0.92) 100%);
+        radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, rgba(5,9,18,0.55) 60%, rgba(5,9,18,0.98) 100%),
+        linear-gradient(180deg, rgba(5,9,18,0.6) 0%, transparent 30%, transparent 65%, rgba(5,9,18,0.92) 100%);
     }
     @keyframes heroBgZoom {
       0%   { transform: scale(1); }
@@ -260,8 +260,8 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 90% 70% at 50% 50%, transparent 0%, rgba(15,14,12,0.55) 65%, rgba(15,14,12,0.95) 100%),
-        linear-gradient(180deg, rgba(15,14,12,0.5) 0%, transparent 25%, transparent 65%, rgba(15,14,12,0.92) 100%);
+        radial-gradient(ellipse 90% 70% at 50% 50%, transparent 0%, rgba(5,9,18,0.55) 65%, rgba(5,9,18,0.95) 100%),
+        linear-gradient(180deg, rgba(5,9,18,0.5) 0%, transparent 25%, transparent 65%, rgba(5,9,18,0.92) 100%);
     }
     @keyframes heroBgZoom {
       0%   { transform: scale(1); }
@@ -792,7 +792,7 @@
     .work-thumb::after {
       content: '';
       position: absolute; inset: 0;
-      background: radial-gradient(ellipse at top, rgba(235,232,226,0.15), transparent 60%);
+      background: radial-gradient(ellipse at top, rgba(244,241,234,0.15), transparent 60%);
       opacity: 0.06;
       transition: opacity 0.5s var(--ease-out);
       pointer-events: none;
@@ -800,8 +800,8 @@
     .work-thumb-frame {
       position: absolute;
       inset: 14px;
-      background: #16140f;
-      border: 1px solid rgba(235,232,226,0.06);
+      background: #0a1020;
+      border: 1px solid rgba(244,241,234,0.06);
       display: flex;
       flex-direction: column;
       transition: transform 0.6s var(--ease-out);
@@ -810,12 +810,12 @@
     .wtf-bar {
       display: flex; align-items: center; gap: 3px;
       padding: 5px 7px;
-      border-bottom: 1px solid rgba(235,232,226,0.05);
+      border-bottom: 1px solid rgba(244,241,234,0.05);
       font-size: 4px; letter-spacing: 0.15em;
       color: var(--text-3);
     }
     .wtf-bar span.dot {
-      width: 4px; height: 4px; border-radius: 50%; background: rgba(235,232,226,0.18);
+      width: 4px; height: 4px; border-radius: 50%; background: rgba(244,241,234,0.18);
     }
     .wtf-bar .wtf-nav { margin-left: auto; display: flex; gap: 7px; }
     .wtf-bar .wtf-nav em { font-style: normal; }
@@ -835,14 +835,14 @@
     .wtf--corporate .wtf-meta { display: flex; justify-content: space-between; font-size: 4px; color: var(--text-3); letter-spacing: 0.2em; text-transform: uppercase; }
     .wtf--corporate .wtf-img {
       height: 32px; margin: 6px 0;
-      background: linear-gradient(135deg, #2a2620, #16140f);
+      background: linear-gradient(135deg, #2a2620, #0a1020);
       position: relative; overflow: hidden;
     }
     .wtf--corporate .wtf-img::before {
       content: ''; position: absolute; inset: 0;
       background:
-        radial-gradient(circle at 30% 40%, rgba(235,232,226,0.12), transparent 40%),
-        radial-gradient(circle at 70% 70%, rgba(235,232,226,0.08), transparent 35%);
+        radial-gradient(circle at 30% 40%, rgba(244,241,234,0.12), transparent 40%),
+        radial-gradient(circle at 70% 70%, rgba(244,241,234,0.08), transparent 35%);
     }
 
     /* Restaurant / editorial variant */
@@ -850,8 +850,8 @@
     .wtf--editorial .wtf-hero-img {
       flex: 1; min-height: 40px;
       background:
-        linear-gradient(160deg, #1f1c16 0%, #0f0e0c 100%),
-        repeating-linear-gradient(45deg, rgba(235,232,226,0.04) 0 2px, transparent 2px 6px);
+        linear-gradient(160deg, #1f1c16 0%, #050912 100%),
+        repeating-linear-gradient(45deg, rgba(244,241,234,0.04) 0 2px, transparent 2px 6px);
       background-blend-mode: overlay;
       position: relative;
     }
@@ -859,18 +859,18 @@
       content: 'SORA';
       position: absolute; inset: 0;
       display: flex; align-items: center; justify-content: center;
-      font-size: 14px; letter-spacing: 0.4em; color: rgba(235,232,226,0.35);
+      font-size: 14px; letter-spacing: 0.4em; color: rgba(244,241,234,0.35);
       font-weight: 300;
     }
     .wtf--editorial .wtf-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
-    .wtf--editorial .wtf-cols div { height: 4px; background: rgba(235,232,226,0.08); }
-    .wtf--editorial .wtf-cols div:nth-child(2) { background: rgba(235,232,226,0.15); width: 70%; }
+    .wtf--editorial .wtf-cols div { height: 4px; background: rgba(244,241,234,0.08); }
+    .wtf--editorial .wtf-cols div:nth-child(2) { background: rgba(244,241,234,0.15); width: 70%; }
 
     /* Salon variant */
     .wtf--salon .wtf-body { padding: 0; }
-    .wtf--salon .wtf-split { display: grid; grid-template-columns: 1.1fr 1fr; width: 100%; gap: 1px; background: rgba(235,232,226,0.05); }
+    .wtf--salon .wtf-split { display: grid; grid-template-columns: 1.1fr 1fr; width: 100%; gap: 1px; background: rgba(244,241,234,0.05); }
     .wtf--salon .wtf-left {
-      background: linear-gradient(180deg, #1a1813, #0f0e0c);
+      background: linear-gradient(180deg, #1a1813, #050912);
       display: flex; flex-direction: column; justify-content: center;
       padding: 12px 10px;
     }
@@ -881,15 +881,15 @@
     .wtf--salon .wtf-left .sub { font-size: 4px; letter-spacing: 0.25em; color: var(--text-3); margin-top: 6px; text-transform: uppercase; }
     .wtf--salon .wtf-right {
       background:
-        radial-gradient(circle at 50% 30%, rgba(235,232,226,0.12), transparent 60%),
-        linear-gradient(135deg, #2a2620 0%, #0f0e0c 100%);
+        radial-gradient(circle at 50% 30%, rgba(244,241,234,0.12), transparent 60%),
+        linear-gradient(135deg, #2a2620 0%, #050912 100%);
     }
 
     /* SaaS LP variant */
     .wtf--saas .wtf-body { flex-direction: column; gap: 5px; justify-content: center; padding: 12px 14px; }
     .wtf--saas .wtf-tag {
       display: inline-block; align-self: flex-start;
-      padding: 2px 6px; border: 1px solid rgba(235,232,226,0.15);
+      padding: 2px 6px; border: 1px solid rgba(244,241,234,0.15);
       border-radius: 99px; font-size: 4px; letter-spacing: 0.2em;
       color: var(--text-2); text-transform: uppercase;
     }
@@ -899,14 +899,14 @@
     }
     .wtf--saas .wtf-h span { color: var(--text-3); font-weight: 300; }
     .wtf--saas .wtf-lines { display: flex; flex-direction: column; gap: 2px; margin-top: 2px; }
-    .wtf--saas .wtf-lines span { height: 2px; background: rgba(235,232,226,0.08); border-radius: 1px; }
+    .wtf--saas .wtf-lines span { height: 2px; background: rgba(244,241,234,0.08); border-radius: 1px; }
     .wtf--saas .wtf-lines span:first-child { width: 85%; }
     .wtf--saas .wtf-lines span:last-child { width: 60%; }
     .wtf--saas .wtf-cta {
       margin-top: 4px;
       display: inline-flex; align-self: flex-start;
       padding: 3px 8px;
-      background: var(--text); color: #0f0e0c;
+      background: var(--text); color: #050912;
       font-size: 5px; letter-spacing: 0.12em; font-weight: 500;
       text-transform: uppercase;
     }
@@ -918,7 +918,7 @@
       background:
         radial-gradient(ellipse at 30% 50%, rgba(230,215,200,0.15), transparent 55%),
         radial-gradient(ellipse at 80% 70%, rgba(200,180,170,0.1), transparent 50%),
-        linear-gradient(180deg, #181511, #0f0e0c);
+        linear-gradient(180deg, #181511, #050912);
     }
     .wtf--beauty .wtf-center {
       position: absolute; inset: 0;
@@ -937,8 +937,8 @@
     .wtf--beauty .wtf-bottle {
       position: absolute; right: 14px; bottom: 14px;
       width: 14px; height: 30px; border-radius: 2px 2px 1px 1px;
-      background: linear-gradient(180deg, rgba(235,232,226,0.2), rgba(235,232,226,0.08));
-      border: 1px solid rgba(235,232,226,0.15);
+      background: linear-gradient(180deg, rgba(244,241,234,0.2), rgba(244,241,234,0.08));
+      border: 1px solid rgba(244,241,234,0.15);
     }
 
     /* EC variant */
@@ -950,9 +950,9 @@
     }
     .wtf--ec .wtf-grid > div {
       aspect-ratio: 3 / 4;
-      background: linear-gradient(160deg, #1f1c16, #0f0e0c);
+      background: linear-gradient(160deg, #1f1c16, #050912);
       position: relative;
-      border: 1px solid rgba(235,232,226,0.04);
+      border: 1px solid rgba(244,241,234,0.04);
     }
     .wtf--ec .wtf-grid > div::before {
       content: '';
@@ -960,7 +960,7 @@
       transform: translate(-50%, -50%);
       width: 60%; height: 45%;
       border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, rgba(235,232,226,0.25), rgba(235,232,226,0.05) 70%);
+      background: radial-gradient(circle at 35% 35%, rgba(244,241,234,0.25), rgba(244,241,234,0.05) 70%);
     }
     .wtf--ec .wtf-grid > div:nth-child(1)::before { background: radial-gradient(circle at 35% 35%, #d4a08a, #5a3e33 70%); }
     .wtf--ec .wtf-grid > div:nth-child(2)::before { background: radial-gradient(circle at 35% 35%, #e8c3c0, #7a4a52 70%); border-radius: 4px; }
@@ -981,12 +981,12 @@
     .wtf--notion .wtf-doc {
       margin-top: 4px;
       padding: 4px 5px;
-      background: #0f0e0c;
-      border: 1px solid rgba(235,232,226,0.06);
+      background: #050912;
+      border: 1px solid rgba(244,241,234,0.06);
       display: flex; flex-direction: column; gap: 2px;
     }
-    .wtf--notion .wtf-doc span { height: 2px; background: rgba(235,232,226,0.1); border-radius: 1px; }
-    .wtf--notion .wtf-doc span:nth-child(1) { width: 40%; background: rgba(235,232,226,0.2); }
+    .wtf--notion .wtf-doc span { height: 2px; background: rgba(244,241,234,0.1); border-radius: 1px; }
+    .wtf--notion .wtf-doc span:nth-child(1) { width: 40%; background: rgba(244,241,234,0.2); }
     .wtf--notion .wtf-doc span:nth-child(3) { width: 75%; }
     .wtf--notion .wtf-doc span:nth-child(4) { width: 55%; }
 
@@ -995,8 +995,8 @@
     .wtf--self .wtf-bg {
       position: absolute; inset: 0;
       background:
-        linear-gradient(180deg, rgba(15,14,12,0.5), rgba(15,14,12,0.85)),
-        radial-gradient(ellipse at 50% 40%, rgba(235,232,226,0.18), transparent 70%),
+        linear-gradient(180deg, rgba(5,9,18,0.5), rgba(5,9,18,0.85)),
+        radial-gradient(ellipse at 50% 40%, rgba(244,241,234,0.18), transparent 70%),
         linear-gradient(135deg, #1f1c16, #0a0908);
     }
     .wtf--self .wtf-wordmark {
