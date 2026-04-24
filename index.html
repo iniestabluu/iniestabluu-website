@@ -1221,50 +1221,30 @@
     }
 
     /* ── About ── */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1.05fr 1fr;
-      gap: 5rem;
-      align-items: start;
-    }
-    .about-visual {
-      position: relative;
-      aspect-ratio: 4 / 5;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-    }
-    .about-visual img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center;
-      filter: saturate(1.05) contrast(1.05) brightness(0.9);
-      transition: transform 1.2s var(--ease-out);
-    }
-    .about-visual:hover img { transform: scale(1.04); }
-    .about-visual::after {
+    #about { position: relative; overflow: hidden; }
+    #about::before {
       content: '';
       position: absolute; inset: 0;
-      background: linear-gradient(180deg, transparent 40%, rgba(5,9,18,0.5) 100%);
+      background-image: url('images/hero-about.webp');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.12;
+      filter: saturate(0.7) contrast(1.1) brightness(0.55) hue-rotate(200deg);
+      z-index: 0;
+    }
+    #about::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, var(--bg) 0%, rgba(5,9,18,0.6) 40%, var(--bg) 100%);
+      z-index: 0;
       pointer-events: none;
     }
-    .about-visual .about-caption {
-      position: absolute;
-      left: 1.5rem; bottom: 1.2rem;
-      font-family: var(--font-en);
-      font-size: 0.68rem;
-      letter-spacing: 0.25em;
-      color: var(--accent);
-      text-transform: uppercase;
-      z-index: 1;
-    }
-    .about-visual .about-caption em {
-      font-style: normal;
-      color: var(--text-2);
-      display: block;
-      letter-spacing: 0.15em;
-      margin-top: 4px;
-      font-size: 0.6rem;
+    #about > .container { position: relative; z-index: 1; }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      max-width: 780px;
     }
     .about-text {
       font-family: var(--font-jp);
@@ -1723,17 +1703,11 @@
       <div class="section-header reveal">
         <p class="section-label">Works</p>
         <h2 class="section-title">つくれるもの。</h2>
-        <p class="section-desc">業種・目的に合わせたデザインをご覧ください。公開中の実例と、新しい業種向けのショーケース案をまとめています。</p>
-      </div>
-      <div class="works-filter reveal">
-        <button class="works-filter-btn active" data-filter="all">All</button>
-        <button class="works-filter-btn" data-filter="corporate">Corporate</button>
-        <button class="works-filter-btn" data-filter="lp">Landing Page</button>
-        <button class="works-filter-btn" data-filter="ec">EC Site</button>
+        <p class="section-desc">コーポレートサイト・ランディングページ・ECサイトの3種類に対応。それぞれの目的に最適化したデザインをご提案します。</p>
       </div>
     </div>
     <div class="works-grid" id="worksGrid">
-      <a class="work-card" href="https://company-website-ten-omega.vercel.app" target="_blank" rel="noopener" data-category="corporate">
+      <a class="work-card" href="corporate.html" data-category="corporate">
         <span class="work-index">01</span>
         <div class="work-thumb">
           <div class="work-thumb-frame wtf--self">
@@ -1744,75 +1718,22 @@
             <div class="wtf-body">
               <div class="wtf-bg"></div>
               <div class="wtf-wordmark">iniesta<em>bluu</em></div>
-              <div class="wtf-foot"><span>Web Studio</span><span>Est. 2024</span></div>
+              <div class="wtf-foot"><span>Corporate</span><span>Brand Site</span></div>
             </div>
           </div>
         </div>
         <div class="work-body">
           <div class="work-info">
             <p class="work-type">Corporate Site</p>
-            <h3>iniestabluu</h3>
-            <p>自社コーポレートサイト</p>
-            <span class="work-card-arrow">View →</span>
+            <h3>コーポレートサイト</h3>
+            <p>企業の信頼を形にする、洗練された公式サイト。</p>
+            <span class="work-card-arrow">詳細を見る →</span>
           </div>
         </div>
       </a>
 
-      <a class="work-card" href="https://portfolio-hair.vercel.app" target="_blank" rel="noopener" data-category="corporate">
+      <a class="work-card" href="lp.html" data-category="lp">
         <span class="work-index">02</span>
-        <div class="work-thumb">
-          <div class="work-thumb-frame wtf--salon">
-            <div class="wtf-bar">
-              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-              <div class="wtf-nav"><em>Menu</em><em>Stylist</em><em>Book</em></div>
-            </div>
-            <div class="wtf-body">
-              <div class="wtf-split">
-                <div class="wtf-left">
-                  <div class="k">HAUM</div>
-                  <div class="sub">Hair · Tokyo</div>
-                </div>
-                <div class="wtf-right"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="work-body">
-          <div class="work-info">
-            <p class="work-type">Hair Salon</p>
-            <h3>HAUM</h3>
-            <p>美容室サイト制作</p>
-            <span class="work-card-arrow">View →</span>
-          </div>
-        </div>
-      </a>
-
-      <a class="work-card" href="https://portfolio-restaurant-blond.vercel.app" target="_blank" rel="noopener" data-category="corporate">
-        <span class="work-index">03</span>
-        <div class="work-thumb">
-          <div class="work-thumb-frame wtf--editorial">
-            <div class="wtf-bar">
-              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-              <div class="wtf-nav"><em>Menu</em><em>Access</em><em>Reserve</em></div>
-            </div>
-            <div class="wtf-body">
-              <div class="wtf-hero-img"></div>
-              <div class="wtf-cols"><div></div><div></div><div></div><div></div></div>
-            </div>
-          </div>
-        </div>
-        <div class="work-body">
-          <div class="work-info">
-            <p class="work-type">Restaurant</p>
-            <h3>SORA</h3>
-            <p>イタリアンレストランサイト制作</p>
-            <span class="work-card-arrow">View →</span>
-          </div>
-        </div>
-      </a>
-
-      <div class="work-card" data-category="lp">
-        <span class="work-index">04</span>
         <div class="work-thumb">
           <div class="work-thumb-frame wtf--saas">
             <div class="wtf-bar">
@@ -1820,53 +1741,25 @@
               <div class="wtf-nav"><em>Product</em><em>Pricing</em><em>Login</em></div>
             </div>
             <div class="wtf-body">
-              <span class="wtf-tag">New · AI Workflow</span>
-              <div class="wtf-h">Automate<br><span>your busywork.</span></div>
+              <span class="wtf-tag">New · Launch</span>
+              <div class="wtf-h">Convert<br><span>with momentum.</span></div>
               <div class="wtf-lines"><span></span><span></span><span></span></div>
-              <span class="wtf-cta">Start Free →</span>
+              <span class="wtf-cta">Get Started →</span>
             </div>
           </div>
         </div>
         <div class="work-body">
           <div class="work-info">
             <p class="work-type">Landing Page</p>
-            <h3>FlowAI</h3>
-            <p>SaaS製品ランディングページ</p>
-            <span class="work-card-arrow">Preview Design</span>
+            <h3>ランディングページ</h3>
+            <p>コンバージョンに直結する、1ページ完結の集客LP。</p>
+            <span class="work-card-arrow">詳細を見る →</span>
           </div>
         </div>
-      </div>
+      </a>
 
-      <div class="work-card" data-category="lp">
-        <span class="work-index">05</span>
-        <div class="work-thumb">
-          <div class="work-thumb-frame wtf--beauty">
-            <div class="wtf-bar">
-              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-              <div class="wtf-nav"><em>Story</em><em>Shop</em><em>Journal</em></div>
-            </div>
-            <div class="wtf-body">
-              <div class="wtf-bg"></div>
-              <div class="wtf-center">
-                <div class="brand">LU<em>M</em>E</div>
-                <div class="tag">Pure Skincare</div>
-              </div>
-              <div class="wtf-bottle"></div>
-            </div>
-          </div>
-        </div>
-        <div class="work-body">
-          <div class="work-info">
-            <p class="work-type">Landing Page</p>
-            <h3>LUME</h3>
-            <p>スキンケアブランドLP</p>
-            <span class="work-card-arrow">Preview Design</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="work-card" data-category="ec">
-        <span class="work-index">06</span>
+      <a class="work-card" href="ec.html" data-category="ec">
+        <span class="work-index">03</span>
         <div class="work-thumb">
           <div class="work-thumb-frame wtf--ec">
             <div class="wtf-bar">
@@ -1874,7 +1767,7 @@
               <div class="wtf-nav"><em>Shop</em><em>Gift</em><em>Cart (2)</em></div>
             </div>
             <div class="wtf-body">
-              <div class="wtf-eyebrow"><span>Mall Flower</span><span>All Items · 24</span></div>
+              <div class="wtf-eyebrow"><span>Store</span><span>All Items · 24</span></div>
               <div class="wtf-grid"><div></div><div></div><div></div><div></div><div></div><div></div></div>
             </div>
           </div>
@@ -1882,34 +1775,9 @@
         <div class="work-body">
           <div class="work-info">
             <p class="work-type">EC Site</p>
-            <h3>Mall Flower</h3>
-            <p>フラワーECサイト</p>
-            <span class="work-card-arrow">Preview Design</span>
-          </div>
-        </div>
-      </div>
-
-      <a class="work-card" href="https://independence-os-lp.vercel.app" target="_blank" rel="noopener" data-category="lp">
-        <span class="work-index">07</span>
-        <div class="work-thumb">
-          <div class="work-thumb-frame wtf--notion">
-            <div class="wtf-bar">
-              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-              <div class="wtf-nav"><em>Intro</em><em>Buy</em><em>FAQ</em></div>
-            </div>
-            <div class="wtf-body">
-              <span class="wtf-kicker">Notion Template</span>
-              <div class="wtf-jp">独立する前に、<br><strong>やる順番</strong>が見える。</div>
-              <div class="wtf-doc"><span></span><span></span><span></span><span></span></div>
-            </div>
-          </div>
-        </div>
-        <div class="work-body">
-          <div class="work-info">
-            <p class="work-type">Product LP / Notion</p>
-            <h3>独立準備OS</h3>
-            <p>Notionテンプレート販売LP</p>
-            <span class="work-card-arrow">View →</span>
+            <h3>ECサイト</h3>
+            <p>決済・在庫管理まで込みで、すぐに売れるショップを。</p>
+            <span class="work-card-arrow">詳細を見る →</span>
           </div>
         </div>
       </a>
@@ -1981,10 +1849,6 @@
         <h2 class="section-title">私たちについて。</h2>
       </div>
       <div class="about-grid">
-        <div class="about-visual reveal">
-          <img src="images/hero-about.webp" alt="チームで作業するiniestabluuのメンバーと夕暮れの東京" />
-          <p class="about-caption">Studio — Tokyo<em>Build Fast. Ship Beautiful.</em></p>
-        </div>
         <div class="reveal">
           <p class="about-text">
             <strong>iniestabluu</strong>は「速さ」と「品質」にこだわるWEB制作スタジオです。<br><br>
