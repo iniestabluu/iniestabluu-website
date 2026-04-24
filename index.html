@@ -1146,6 +1146,26 @@
     }
 
     /* ── Process ── */
+    #process { position: relative; overflow: hidden; }
+    #process::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url('images/hero-process.avif');
+      background-size: cover;
+      background-position: center top;
+      opacity: 0.18;
+      filter: saturate(0.6) contrast(1.1) brightness(0.6) hue-rotate(200deg);
+      z-index: 0;
+    }
+    #process::after {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, rgba(5,9,18,0.75) 70%, rgba(5,9,18,0.98) 100%),
+        linear-gradient(180deg, rgba(5,9,18,0.85) 0%, transparent 30%, transparent 70%, rgba(5,9,18,0.95) 100%);
+      z-index: 0;
+    }
+    #process > .container { position: relative; z-index: 1; }
     .process-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -1203,9 +1223,48 @@
     /* ── About ── */
     .about-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.05fr 1fr;
       gap: 5rem;
       align-items: start;
+    }
+    .about-visual {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+    }
+    .about-visual img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: saturate(1.05) contrast(1.05) brightness(0.9);
+      transition: transform 1.2s var(--ease-out);
+    }
+    .about-visual:hover img { transform: scale(1.04); }
+    .about-visual::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(5,9,18,0.5) 100%);
+      pointer-events: none;
+    }
+    .about-visual .about-caption {
+      position: absolute;
+      left: 1.5rem; bottom: 1.2rem;
+      font-family: var(--font-en);
+      font-size: 0.68rem;
+      letter-spacing: 0.25em;
+      color: var(--accent);
+      text-transform: uppercase;
+      z-index: 1;
+    }
+    .about-visual .about-caption em {
+      font-style: normal;
+      color: var(--text-2);
+      display: block;
+      letter-spacing: 0.15em;
+      margin-top: 4px;
+      font-size: 0.6rem;
     }
     .about-text {
       font-family: var(--font-jp);
@@ -1922,6 +1981,10 @@
         <h2 class="section-title">私たちについて。</h2>
       </div>
       <div class="about-grid">
+        <div class="about-visual reveal">
+          <img src="images/hero-about.webp" alt="チームで作業するiniestabluuのメンバーと夕暮れの東京" />
+          <p class="about-caption">Studio — Tokyo<em>Build Fast. Ship Beautiful.</em></p>
+        </div>
         <div class="reveal">
           <p class="about-text">
             <strong>iniestabluu</strong>は「速さ」と「品質」にこだわるWEB制作スタジオです。<br><br>
@@ -1934,22 +1997,22 @@
             <tr><td>Business</td><td>WEB制作代行</td></tr>
           </table>
         </div>
-        <div class="about-values-grid stagger-children">
-          <div class="value-card">
-            <p class="value-num">01</p>
-            <h4>Speed First</h4>
-            <p>速さは正義。まず動かし、素早く改善する。</p>
-          </div>
-          <div class="value-card">
-            <p class="value-num">02</p>
-            <h4>Pixel Perfect</h4>
-            <p>細部のこだわりが、全体の品質を決める。</p>
-          </div>
-          <div class="value-card">
-            <p class="value-num">03</p>
-            <h4>Result Driven</h4>
-            <p>見た目だけでなく、ビジネス成果にコミットする。</p>
-          </div>
+      </div>
+      <div class="about-values-grid stagger-children" style="grid-template-columns: repeat(3, 1fr); margin-top: 4rem;">
+        <div class="value-card">
+          <p class="value-num">01</p>
+          <h4>Speed First</h4>
+          <p>速さは正義。まず動かし、素早く改善する。</p>
+        </div>
+        <div class="value-card">
+          <p class="value-num">02</p>
+          <h4>Pixel Perfect</h4>
+          <p>細部のこだわりが、全体の品質を決める。</p>
+        </div>
+        <div class="value-card">
+          <p class="value-num">03</p>
+          <h4>Result Driven</h4>
+          <p>見た目だけでなく、ビジネス成果にコミットする。</p>
         </div>
       </div>
     </div>
