@@ -1147,26 +1147,6 @@
     }
 
     /* ── Process ── */
-    #process { position: relative; overflow: hidden; }
-    #process::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image: url('images/hero-process.avif');
-      background-size: cover;
-      background-position: center top;
-      opacity: 0.18;
-      filter: saturate(0.6) contrast(1.1) brightness(0.6) hue-rotate(200deg);
-      z-index: 0;
-    }
-    #process::after {
-      content: '';
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, rgba(5,9,18,0.75) 70%, rgba(5,9,18,0.98) 100%),
-        linear-gradient(180deg, rgba(5,9,18,0.85) 0%, transparent 30%, transparent 70%, rgba(5,9,18,0.95) 100%);
-      z-index: 0;
-    }
-    #process > .container { position: relative; z-index: 1; }
     .process-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
