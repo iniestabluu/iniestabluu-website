@@ -257,8 +257,7 @@
   (function() {
     'use strict';
     const cursor=document.getElementById('cursor'),dot=document.getElementById('cursorDot');let cx=0,cy=0,dx=0,dy=0;
-    document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;dot.style.left=cx+'px';dot.style.top=cy+'px';if(!cursor.classList.contains('active')){cursor.classList.add('active');dot.classList.add('active');}});
-    function raf(){dx+=(cx-dx)*0.1;dy+=(cy-dy)*0.1;cursor.style.left=dx+'px';cursor.style.top=dy+'px';requestAnimationFrame(raf);}raf();
+    document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;cursor.style.left=cx+'px';cursor.style.top=cy+'px';dot.style.left=cx+'px';dot.style.top=cy+'px';if(!cursor.classList.contains('active')){cursor.classList.add('active');dot.classList.add('active');}});
     document.querySelectorAll('a,button,.pricing-card,.portfolio-card,.include-item').forEach(el=>{el.addEventListener('mouseenter',()=>cursor.classList.add('hovering'));el.addEventListener('mouseleave',()=>cursor.classList.remove('hovering'));});
     const reveals=document.querySelectorAll('.reveal,.stagger-children');
     const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.1});

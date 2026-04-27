@@ -1221,25 +1221,6 @@
     }
 
     /* ── About ── */
-    #about { position: relative; overflow: hidden; }
-    #about::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image: url('images/hero-about.webp');
-      background-size: cover;
-      background-position: center;
-      opacity: 0.12;
-      filter: saturate(0.7) contrast(1.1) brightness(0.55) hue-rotate(200deg);
-      z-index: 0;
-    }
-    #about::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(180deg, var(--bg) 0%, rgba(5,9,18,0.6) 40%, var(--bg) 100%);
-      z-index: 0;
-      pointer-events: none;
-    }
-    #about > .container { position: relative; z-index: 1; }
     .about-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -1972,6 +1953,8 @@
 
     document.addEventListener('mousemove', e => {
       cx = e.clientX; cy = e.clientY;
+      cursor.style.left = cx + 'px';
+      cursor.style.top = cy + 'px';
       dot.style.left = cx + 'px';
       dot.style.top = cy + 'px';
       if (!cursor.classList.contains('active')) {
@@ -1979,15 +1962,6 @@
         dot.classList.add('active');
       }
     });
-
-    function raf() {
-      dx += (cx - dx) * 0.1;
-      dy += (cy - dy) * 0.1;
-      cursor.style.left = dx + 'px';
-      cursor.style.top = dy + 'px';
-      requestAnimationFrame(raf);
-    }
-    raf();
 
     const hoverEls = document.querySelectorAll('a, button, .service-card, .work-card, .value-card, .process-step');
     hoverEls.forEach(el => {
