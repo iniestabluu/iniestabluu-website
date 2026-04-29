@@ -990,6 +990,76 @@
     .wtf--notion .wtf-doc span:nth-child(3) { width: 75%; }
     .wtf--notion .wtf-doc span:nth-child(4) { width: 55%; }
 
+    /* AURUM Architects (建築事務所) variant */
+    .wtf--aurum .wtf-body {
+      flex-direction: column;
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .wtf--aurum .wtf-aurum-bg {
+      position: absolute; inset: 0;
+      background-image: url('images/portfolio/aurum-hero.png');
+      background-size: cover;
+      background-position: center;
+    }
+    .wtf--aurum .wtf-aurum-overlay {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(180deg, rgba(10,10,12,0.35) 0%, rgba(10,10,12,0.15) 35%, rgba(10,10,12,0.7) 100%);
+    }
+    .wtf--aurum .wtf-aurum-brand {
+      position: absolute;
+      top: 14px; left: 14px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.32em;
+      color: #f0ebe0;
+      line-height: 1;
+      z-index: 2;
+    }
+    .wtf--aurum .wtf-aurum-brand small {
+      display: block;
+      font-size: 4px;
+      letter-spacing: 0.45em;
+      margin-top: 3px;
+      opacity: 0.85;
+      font-weight: 300;
+    }
+    .wtf--aurum .wtf-aurum-title {
+      position: absolute;
+      bottom: 22px; left: 14px;
+      font-family: 'Shippori Mincho', serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: #fff;
+      line-height: 1.5;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+      z-index: 2;
+    }
+    .wtf--aurum .wtf-aurum-sub {
+      position: absolute;
+      bottom: 10px; left: 14px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5px;
+      letter-spacing: 0.4em;
+      color: rgba(240,235,224,0.75);
+      z-index: 2;
+    }
+    .wtf--aurum .wtf-bar {
+      background: rgba(245,243,238,0.94);
+      border-bottom: 1px solid rgba(26,23,20,0.08);
+    }
+    .wtf--aurum .wtf-bar .dot { background: rgba(26,23,20,0.2); }
+    .wtf--aurum .wtf-nav em {
+      font-family: 'Shippori Mincho', serif;
+      color: rgba(26,23,20,0.7);
+      font-style: normal;
+      font-size: 4px;
+    }
+
     /* Matcha LP variant (翠香園) */
     .wtf--matcha .wtf-body {
       flex-direction: column;
@@ -1740,18 +1810,20 @@
       </div>
     </div>
     <div class="works-grid" id="worksGrid">
-      <a class="work-card" href="corporate.html" data-category="corporate">
+      <a class="work-card" href="https://portfolio-architect-nu.vercel.app" target="_blank" rel="noopener" data-category="corporate">
         <span class="work-index">01</span>
         <div class="work-thumb">
-          <div class="work-thumb-frame wtf--self">
+          <div class="work-thumb-frame wtf--aurum">
             <div class="wtf-bar">
               <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-              <div class="wtf-nav"><em>Works</em><em>About</em><em>Contact</em></div>
+              <div class="wtf-nav"><em>私たちについて</em><em>プロジェクト</em><em>設計思想</em></div>
             </div>
             <div class="wtf-body">
-              <div class="wtf-bg"></div>
-              <div class="wtf-wordmark">iniesta<em>bluu</em></div>
-              <div class="wtf-foot"><span>Corporate</span><span>Brand Site</span></div>
+              <div class="wtf-aurum-bg"></div>
+              <div class="wtf-aurum-overlay"></div>
+              <div class="wtf-aurum-brand">AURUM<small>ARCHITECTS</small></div>
+              <div class="wtf-aurum-title">時を超える建築を、<br/>未来の風景へ。</div>
+              <div class="wtf-aurum-sub">AURUM ARCHITECTS</div>
             </div>
           </div>
         </div>
@@ -1759,7 +1831,7 @@
           <div class="work-info">
             <p class="work-type">Corporate Site</p>
             <h3>コーポレートサイト</h3>
-            <p>企業の信頼を形にする公式サイト。</p>
+            <p>AURUM ARCHITECTS — 建築事務所の公式サイト。</p>
             <span class="work-card-arrow">詳細を見る →</span>
           </div>
         </div>
