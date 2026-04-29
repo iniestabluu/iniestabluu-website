@@ -573,41 +573,6 @@
       .price-card-amount { font-size: 1.55rem; }
     }
 
-    /* ── Marquee ── */
-    .marquee {
-      padding: 1.5rem 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      overflow: hidden;
-      white-space: nowrap;
-    }
-    .marquee-inner {
-      display: inline-flex;
-      animation: marquee 25s linear infinite;
-    }
-    .marquee-item {
-      font-size: clamp(0.85rem, 1.5vw, 1rem);
-      font-weight: 500;
-      color: var(--text-3);
-      padding: 0 1.5rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      display: inline-flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
-    .marquee-item .sep {
-      width: 4px; height: 4px;
-      border-radius: 50%;
-      background: var(--accent);
-      opacity: 0.5;
-      flex-shrink: 0;
-    }
-    @keyframes marquee {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
     /* ── Section Base ── */
     .section { padding: clamp(5rem, 10vw, 9rem) 0; }
     .section-label {
@@ -1734,24 +1699,6 @@
       <span class="scroll-text">Scroll</span>
     </div>
   </section>
-
-  <!-- Marquee -->
-  <div class="marquee">
-    <div class="marquee-inner" id="marquee">
-      <span class="marquee-item">Corporate Site <span class="sep"></span></span>
-      <span class="marquee-item">Landing Page <span class="sep"></span></span>
-      <span class="marquee-item">EC Site <span class="sep"></span></span>
-      <span class="marquee-item">UI/UX Design <span class="sep"></span></span>
-      <span class="marquee-item">Web Application <span class="sep"></span></span>
-      <span class="marquee-item">Speed Delivery <span class="sep"></span></span>
-      <span class="marquee-item">Corporate Site <span class="sep"></span></span>
-      <span class="marquee-item">Landing Page <span class="sep"></span></span>
-      <span class="marquee-item">EC Site <span class="sep"></span></span>
-      <span class="marquee-item">UI/UX Design <span class="sep"></span></span>
-      <span class="marquee-item">Web Application <span class="sep"></span></span>
-      <span class="marquee-item">Speed Delivery <span class="sep"></span></span>
-    </div>
-  </div>
 
   <!-- Services -->
   <section id="services" class="section">
