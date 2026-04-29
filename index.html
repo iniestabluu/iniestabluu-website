@@ -7,7 +7,7 @@
   <meta name="description" content="WEB制作のiniestabluu。デザインからコーディングまで、圧倒的なクオリティで届けます。" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -990,6 +990,66 @@
     .wtf--notion .wtf-doc span:nth-child(3) { width: 75%; }
     .wtf--notion .wtf-doc span:nth-child(4) { width: 55%; }
 
+    /* Matcha LP variant (翠香園) */
+    .wtf--matcha .wtf-body {
+      flex-direction: column;
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .wtf--matcha .wtf-matcha-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 30% 30%, rgba(127,160,90,0.18), transparent 60%),
+        linear-gradient(135deg, #1a1815 0%, #0d0c0a 100%);
+    }
+    .wtf--matcha .wtf-matcha-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.4) 100%);
+    }
+    .wtf--matcha .wtf-matcha-brand {
+      position: absolute;
+      top: 14px; left: 14px;
+      font-family: 'Shippori Mincho', serif;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: #d4cfc0;
+      z-index: 2;
+    }
+    .wtf--matcha .wtf-matcha-title {
+      position: absolute;
+      bottom: 28px; left: 14px;
+      font-family: 'Shippori Mincho', serif;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: #f4f1ea;
+      line-height: 1.3;
+      z-index: 2;
+    }
+    .wtf--matcha .wtf-matcha-title em {
+      font-style: normal;
+      color: #a8c47c;
+    }
+    .wtf--matcha .wtf-matcha-sub {
+      position: absolute;
+      bottom: 14px; left: 14px;
+      font-family: 'Shippori Mincho', serif;
+      font-size: 7px;
+      letter-spacing: 0.3em;
+      color: #9a9588;
+      z-index: 2;
+    }
+    .wtf--matcha .wtf-bar {
+      background: rgba(10,8,6,0.85);
+      border-bottom: 1px solid rgba(244,241,234,0.06);
+    }
+    .wtf--matcha .wtf-nav em {
+      font-family: 'Shippori Mincho', serif;
+      color: #d4cfc0;
+      font-style: normal;
+    }
+
     /* Self / iniestabluu variant */
     .wtf--self .wtf-body { padding: 0; position: relative; }
     .wtf--self .wtf-bg {
@@ -1697,16 +1757,17 @@
       <a class="work-card" href="https://portfolio-matcha-lp.vercel.app" target="_blank" rel="noopener" data-category="lp">
         <span class="work-index">02</span>
         <div class="work-thumb">
-          <div class="work-thumb-frame wtf--saas">
+          <div class="work-thumb-frame wtf--matcha">
             <div class="wtf-bar">
               <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-              <div class="wtf-nav"><em>Product</em><em>Pricing</em><em>Login</em></div>
+              <div class="wtf-nav"><em>こだわり</em><em>商品</em><em>購入</em></div>
             </div>
             <div class="wtf-body">
-              <span class="wtf-tag">New · Launch</span>
-              <div class="wtf-h">Convert<br><span>with momentum.</span></div>
-              <div class="wtf-lines"><span></span><span></span><span></span></div>
-              <span class="wtf-cta">Get Started →</span>
+              <div class="wtf-matcha-bg"></div>
+              <div class="wtf-matcha-overlay"></div>
+              <div class="wtf-matcha-brand">翠香園</div>
+              <div class="wtf-matcha-title">本<em>物</em>の抹茶を。</div>
+              <div class="wtf-matcha-sub">京都・宇治より</div>
             </div>
           </div>
         </div>
@@ -1714,7 +1775,7 @@
           <div class="work-info">
             <p class="work-type">Landing Page</p>
             <h3>ランディングページ</h3>
-            <p>成果に直結する集客用LP。</p>
+            <p>翠香園 — 京都・宇治の抹茶LP。</p>
             <span class="work-card-arrow">詳細を見る →</span>
           </div>
         </div>
