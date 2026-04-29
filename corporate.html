@@ -39,7 +39,7 @@
 
     /* Hero */
     .page-hero { padding: 10rem 0 5rem; position: relative; overflow: hidden; min-height: 60vh; display: flex; align-items: center; }
-    .page-hero-bg { position: absolute; inset: 0; background-image: url("images/hero-corridor.png"); background-size: cover; background-position: center; opacity: 0.85; filter: saturate(1.05) contrast(1.05) brightness(0.95); animation: phZoom 40s ease-in-out infinite alternate; }
+    .page-hero-bg { position: absolute; inset: 0; background-image: url("images/hero-corporate.jpg"); background-size: cover; background-position: center; opacity: 0.7; filter: saturate(1.1) contrast(1.05) brightness(0.9); animation: phZoom 40s ease-in-out infinite alternate; }
     .page-hero-overlay { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 70% at 50% 50%, transparent 0%, rgba(5,9,18,0.55) 55%, rgba(5,9,18,0.98) 100%), linear-gradient(180deg, rgba(5,9,18,0.6) 0%, transparent 30%, transparent 60%, rgba(5,9,18,0.92) 100%); }
     @keyframes phZoom { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
     .page-hero-glow { position: absolute; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%); top: 30%; left: 30%; transform: translate(-50%, -50%); filter: blur(80px); opacity: 0.5; }
@@ -49,9 +49,6 @@
     .page-title { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; letter-spacing: -0.05em; line-height: 1.05; margin-bottom: 1.5rem; }
     .page-title .gradient-text { font-style: italic; font-weight: 300; color: var(--text-2); }
     .page-desc { font-family: var(--font-jp); font-size: 1rem; color: var(--text-2); line-height: 2; max-width: 600px; }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2.5rem; }
-    .btn-ghost { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.85rem 2rem; background: transparent; color: var(--text); font-size: 0.85rem; font-weight: 600; border: 1px solid var(--border); border-radius: 12px; font-family: var(--font-en); transition: border-color 0.3s, color 0.3s, transform 0.3s var(--ease-spring); }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
 
     /* Section */
     .section { padding: clamp(4rem, 8vw, 7rem) 0; }
@@ -151,12 +148,8 @@
     <div class="page-hero-glow" aria-hidden="true"></div>
     <div class="container">
       <p class="page-label">Corporate Site</p>
-      <h1 class="page-title">成果につながる、<br>Web体験を<span class="gradient-text">設計</span>する。</h1>
-      <p class="page-desc">戦略立案から設計、デザイン、実装、改善まで。<br>ブランドの価値を伝え、事業の成長につなげるWebサイトを一貫して制作します。</p>
-      <div class="hero-actions">
-        <a href="#contact" class="btn-primary">制作のご相談 <span class="btn-arrow">&rarr;</span></a>
-        <a href="#portfolio" class="btn-ghost">実績を見る <span class="btn-arrow">&rarr;</span></a>
-      </div>
+      <h1 class="page-title">企業の「顔」を<br><span class="gradient-text">デザイン</span>する。</h1>
+      <p class="page-desc">信頼感のあるデザインと構造設計で、企業の価値を正しく伝えるコーポレートサイトを制作します。</p>
     </div>
   </section>
 
