@@ -1301,6 +1301,14 @@
       display: grid;
       gap: 2rem;
     }
+    .about-values-grid--3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 768px) {
+      .about-values-grid--3 {
+        grid-template-columns: 1fr;
+      }
+    }
     .value-card {
       padding: 2rem;
       background: var(--surface);
@@ -1888,7 +1896,7 @@
           </table>
         </div>
       </div>
-      <div class="about-values-grid stagger-children" style="grid-template-columns: repeat(3, 1fr); margin-top: 4rem;">
+      <div class="about-values-grid about-values-grid--3 stagger-children" style="margin-top: 4rem;">
         <div class="value-card">
           <p class="value-num">01</p>
           <h4>Speed First</h4>
