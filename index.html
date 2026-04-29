@@ -12,9 +12,9 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #050912;
-      --surface: #0a1020;
-      --surface-2: #111a2e;
+      --bg: #0d0c0a;
+      --surface: #15130f;
+      --surface-2: #1c1914;
       --border: rgba(244,241,234,0.08);
       --text: #f4f1ea;
       --text-2: #9aa3b8;
@@ -240,8 +240,8 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, rgba(5,9,18,0.55) 60%, rgba(5,9,18,0.98) 100%),
-        linear-gradient(180deg, rgba(5,9,18,0.6) 0%, transparent 30%, transparent 65%, rgba(5,9,18,0.92) 100%);
+        radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, rgba(13,12,10,0.55) 60%, rgba(13,12,10,0.98) 100%),
+        linear-gradient(180deg, rgba(13,12,10,0.6) 0%, transparent 30%, transparent 65%, rgba(13,12,10,0.92) 100%);
     }
     @keyframes heroBgZoom {
       0%   { transform: scale(1); }
@@ -261,8 +261,8 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 90% 70% at 50% 50%, transparent 0%, rgba(5,9,18,0.55) 65%, rgba(5,9,18,0.95) 100%),
-        linear-gradient(180deg, rgba(5,9,18,0.5) 0%, transparent 25%, transparent 65%, rgba(5,9,18,0.92) 100%);
+        radial-gradient(ellipse 90% 70% at 50% 50%, transparent 0%, rgba(13,12,10,0.55) 65%, rgba(13,12,10,0.95) 100%),
+        linear-gradient(180deg, rgba(13,12,10,0.5) 0%, transparent 25%, transparent 65%, rgba(13,12,10,0.92) 100%);
     }
     @keyframes heroBgZoom {
       0%   { transform: scale(1); }
@@ -703,510 +703,123 @@
     }
 
     /* ── Works / Portfolio ── */
-    .works { overflow: hidden; }
-    .works-scroll {
-      display: flex;
-      gap: 2rem;
-      padding: 0 clamp(1.5rem, 4vw, 4rem);
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      cursor: grab;
-    }
-    .works-scroll::-webkit-scrollbar { display: none; }
-    .works-scroll:active { cursor: grabbing; }
-    .work-card {
-      flex: 0 0 clamp(280px, 32vw, 380px);
-      scroll-snap-align: start;
-      padding: 0;
-      min-height: 440px;
-      display: flex;
-      flex-direction: column;
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      transition: all 0.5s var(--ease-out);
-      text-decoration: none;
-      color: inherit;
-      position: relative;
-      overflow: hidden;
-    }
-    .work-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--surface);
-      opacity: 0;
-      transition: opacity 0.5s var(--ease-out);
-      z-index: -1;
-    }
-    .work-card:hover::before { opacity: 1; }
-    .work-card:hover { transform: translateY(-4px); border-color: var(--text-2); }
-    .work-card:hover .work-thumb::after { opacity: 0.12; }
-    .work-card:hover .work-thumb-frame { transform: scale(1.02); }
-    .work-preview, .work-gradient, .work-canvas-wrap, .work-canvas { display: none !important; }
-
-    /* ── Work thumbnail (CSS mockups) ── */
-    .work-thumb {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      background: #0a0908;
-      border-bottom: 1px solid var(--border);
-      overflow: hidden;
-    }
-    .work-thumb::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse at top, rgba(244,241,234,0.15), transparent 60%);
-      opacity: 0.06;
-      transition: opacity 0.5s var(--ease-out);
-      pointer-events: none;
-    }
-    .work-thumb-frame {
-      position: absolute;
-      inset: 14px;
-      background: #0a1020;
-      border: 1px solid rgba(244,241,234,0.06);
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.6s var(--ease-out);
-      font-family: var(--font-en);
-    }
-    .wtf-bar {
-      display: flex; align-items: center; gap: 3px;
-      padding: 5px 7px;
-      border-bottom: 1px solid rgba(244,241,234,0.05);
-      font-size: 4px; letter-spacing: 0.15em;
-      color: var(--text-3);
-    }
-    .wtf-bar span.dot {
-      width: 4px; height: 4px; border-radius: 50%; background: rgba(244,241,234,0.18);
-    }
-    .wtf-bar .wtf-nav { margin-left: auto; display: flex; gap: 7px; }
-    .wtf-bar .wtf-nav em { font-style: normal; }
-    .wtf-body { flex: 1; display: flex; padding: 10px 12px; min-height: 0; position: relative; }
-
-    /* Corporate variant */
-    .wtf--corporate .wtf-body { flex-direction: column; justify-content: space-between; }
-    .wtf--corporate .wtf-display {
-      font-family: var(--font-en);
-      font-size: 22px;
-      font-weight: 300;
-      letter-spacing: -0.03em;
-      line-height: 0.95;
-      color: var(--text);
-    }
-    .wtf--corporate .wtf-display em { font-style: italic; color: var(--text-2); font-weight: 300; }
-    .wtf--corporate .wtf-meta { display: flex; justify-content: space-between; font-size: 4px; color: var(--text-3); letter-spacing: 0.2em; text-transform: uppercase; }
-    .wtf--corporate .wtf-img {
-      height: 32px; margin: 6px 0;
-      background: linear-gradient(135deg, #2a2620, #0a1020);
-      position: relative; overflow: hidden;
-    }
-    .wtf--corporate .wtf-img::before {
-      content: ''; position: absolute; inset: 0;
-      background:
-        radial-gradient(circle at 30% 40%, rgba(244,241,234,0.12), transparent 40%),
-        radial-gradient(circle at 70% 70%, rgba(244,241,234,0.08), transparent 35%);
-    }
-
-    /* Restaurant / editorial variant */
-    .wtf--editorial .wtf-body { flex-direction: column; gap: 4px; padding: 8px 10px 10px; }
-    .wtf--editorial .wtf-hero-img {
-      flex: 1; min-height: 40px;
-      background:
-        linear-gradient(160deg, #1f1c16 0%, #050912 100%),
-        repeating-linear-gradient(45deg, rgba(244,241,234,0.04) 0 2px, transparent 2px 6px);
-      background-blend-mode: overlay;
-      position: relative;
-    }
-    .wtf--editorial .wtf-hero-img::after {
-      content: 'SORA';
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px; letter-spacing: 0.4em; color: rgba(244,241,234,0.35);
-      font-weight: 300;
-    }
-    .wtf--editorial .wtf-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
-    .wtf--editorial .wtf-cols div { height: 4px; background: rgba(244,241,234,0.08); }
-    .wtf--editorial .wtf-cols div:nth-child(2) { background: rgba(244,241,234,0.15); width: 70%; }
-
-    /* Salon variant */
-    .wtf--salon .wtf-body { padding: 0; }
-    .wtf--salon .wtf-split { display: grid; grid-template-columns: 1.1fr 1fr; width: 100%; gap: 1px; background: rgba(244,241,234,0.05); }
-    .wtf--salon .wtf-left {
-      background: linear-gradient(180deg, #1a1813, #050912);
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 12px 10px;
-    }
-    .wtf--salon .wtf-left .k {
-      font-size: 18px; font-weight: 200; letter-spacing: -0.02em; color: var(--text);
-      line-height: 1;
-    }
-    .wtf--salon .wtf-left .sub { font-size: 4px; letter-spacing: 0.25em; color: var(--text-3); margin-top: 6px; text-transform: uppercase; }
-    .wtf--salon .wtf-right {
-      background:
-        radial-gradient(circle at 50% 30%, rgba(244,241,234,0.12), transparent 60%),
-        linear-gradient(135deg, #2a2620 0%, #050912 100%);
-    }
-
-    /* SaaS LP variant */
-    .wtf--saas .wtf-body { flex-direction: column; gap: 5px; justify-content: center; padding: 12px 14px; }
-    .wtf--saas .wtf-tag {
-      display: inline-block; align-self: flex-start;
-      padding: 2px 6px; border: 1px solid rgba(244,241,234,0.15);
-      border-radius: 99px; font-size: 4px; letter-spacing: 0.2em;
-      color: var(--text-2); text-transform: uppercase;
-    }
-    .wtf--saas .wtf-h {
-      font-size: 15px; font-weight: 500; letter-spacing: -0.03em;
-      color: var(--text); line-height: 1.05;
-    }
-    .wtf--saas .wtf-h span { color: var(--text-3); font-weight: 300; }
-    .wtf--saas .wtf-lines { display: flex; flex-direction: column; gap: 2px; margin-top: 2px; }
-    .wtf--saas .wtf-lines span { height: 2px; background: rgba(244,241,234,0.08); border-radius: 1px; }
-    .wtf--saas .wtf-lines span:first-child { width: 85%; }
-    .wtf--saas .wtf-lines span:last-child { width: 60%; }
-    .wtf--saas .wtf-cta {
-      margin-top: 4px;
-      display: inline-flex; align-self: flex-start;
-      padding: 3px 8px;
-      background: var(--text); color: #050912;
-      font-size: 5px; letter-spacing: 0.12em; font-weight: 500;
-      text-transform: uppercase;
-    }
-
-    /* Beauty LP variant */
-    .wtf--beauty .wtf-body { padding: 0; }
-    .wtf--beauty .wtf-bg {
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse at 30% 50%, rgba(230,215,200,0.15), transparent 55%),
-        radial-gradient(ellipse at 80% 70%, rgba(200,180,170,0.1), transparent 50%),
-        linear-gradient(180deg, #181511, #050912);
-    }
-    .wtf--beauty .wtf-center {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 4px;
-    }
-    .wtf--beauty .wtf-center .brand {
-      font-family: var(--font-en); font-weight: 200;
-      font-size: 22px; letter-spacing: 0.25em; color: var(--text);
-    }
-    .wtf--beauty .wtf-center .brand em { font-style: italic; font-weight: 300; }
-    .wtf--beauty .wtf-center .tag {
-      font-size: 4px; letter-spacing: 0.3em; color: var(--text-2);
-      text-transform: uppercase;
-    }
-    .wtf--beauty .wtf-bottle {
-      position: absolute; right: 14px; bottom: 14px;
-      width: 14px; height: 30px; border-radius: 2px 2px 1px 1px;
-      background: linear-gradient(180deg, rgba(244,241,234,0.2), rgba(244,241,234,0.08));
-      border: 1px solid rgba(244,241,234,0.15);
-    }
-
-    /* EC variant */
-    .wtf--ec .wtf-body { padding: 8px 9px; flex-direction: column; gap: 5px; }
-    .wtf--ec .wtf-eyebrow { display: flex; justify-content: space-between; font-size: 4px; letter-spacing: 0.2em; color: var(--text-3); text-transform: uppercase; }
-    .wtf--ec .wtf-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 3px; flex: 1;
-    }
-    .wtf--ec .wtf-grid > div {
-      aspect-ratio: 3 / 4;
-      background: linear-gradient(160deg, #1f1c16, #050912);
-      position: relative;
-      border: 1px solid rgba(244,241,234,0.04);
-    }
-    .wtf--ec .wtf-grid > div::before {
-      content: '';
-      position: absolute; left: 50%; top: 40%;
-      transform: translate(-50%, -50%);
-      width: 60%; height: 45%;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, rgba(244,241,234,0.25), rgba(244,241,234,0.05) 70%);
-    }
-    .wtf--ec .wtf-grid > div:nth-child(1)::before { background: radial-gradient(circle at 35% 35%, #d4a08a, #5a3e33 70%); }
-    .wtf--ec .wtf-grid > div:nth-child(2)::before { background: radial-gradient(circle at 35% 35%, #e8c3c0, #7a4a52 70%); border-radius: 4px; }
-    .wtf--ec .wtf-grid > div:nth-child(3)::before { background: radial-gradient(circle at 35% 35%, #c9d4a8, #4a5a38 70%); border-radius: 50% 50% 4px 4px; }
-    .wtf--ec .wtf-grid > div:nth-child(4)::before { background: radial-gradient(circle at 35% 35%, #b8a8d4, #3e3358 70%); }
-    .wtf--ec .wtf-grid > div:nth-child(5)::before { background: radial-gradient(circle at 35% 35%, #e8d4a0, #7a5e3a 70%); border-radius: 2px; }
-    .wtf--ec .wtf-grid > div:nth-child(6)::before { background: radial-gradient(circle at 35% 35%, #a8c4d4, #385a6a 70%); border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; }
-
-    /* Notion / minimal LP variant */
-    .wtf--notion .wtf-body { flex-direction: column; padding: 10px 12px; gap: 4px; justify-content: center; }
-    .wtf--notion .wtf-kicker { font-size: 4px; letter-spacing: 0.3em; color: var(--text-3); text-transform: uppercase; }
-    .wtf--notion .wtf-jp {
-      font-family: var(--font-jp);
-      font-size: 14px; font-weight: 600; letter-spacing: 0.02em;
-      color: var(--text); line-height: 1.2;
-    }
-    .wtf--notion .wtf-jp strong { border-bottom: 2px solid var(--text); padding-bottom: 1px; font-weight: 600; }
-    .wtf--notion .wtf-doc {
-      margin-top: 4px;
-      padding: 4px 5px;
-      background: #050912;
-      border: 1px solid rgba(244,241,234,0.06);
-      display: flex; flex-direction: column; gap: 2px;
-    }
-    .wtf--notion .wtf-doc span { height: 2px; background: rgba(244,241,234,0.1); border-radius: 1px; }
-    .wtf--notion .wtf-doc span:nth-child(1) { width: 40%; background: rgba(244,241,234,0.2); }
-    .wtf--notion .wtf-doc span:nth-child(3) { width: 75%; }
-    .wtf--notion .wtf-doc span:nth-child(4) { width: 55%; }
-
-    /* AURUM Architects (建築事務所) variant */
-    .wtf--aurum .wtf-body {
-      flex-direction: column;
-      padding: 0;
-      position: relative;
-      overflow: hidden;
-    }
-    .wtf--aurum .wtf-aurum-bg {
-      position: absolute; inset: 0;
-      background-image: url('images/portfolio/aurum-hero.png');
-      background-size: cover;
-      background-position: center;
-    }
-    .wtf--aurum .wtf-aurum-overlay {
-      position: absolute; inset: 0;
-      background:
-        linear-gradient(180deg, rgba(10,10,12,0.35) 0%, rgba(10,10,12,0.15) 35%, rgba(10,10,12,0.7) 100%);
-    }
-    .wtf--aurum .wtf-aurum-brand {
-      position: absolute;
-      top: 14px; left: 14px;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.32em;
-      color: #f0ebe0;
-      line-height: 1;
-      z-index: 2;
-    }
-    .wtf--aurum .wtf-aurum-brand small {
-      display: block;
-      font-size: 4px;
-      letter-spacing: 0.45em;
-      margin-top: 3px;
-      opacity: 0.85;
-      font-weight: 300;
-    }
-    .wtf--aurum .wtf-aurum-title {
-      position: absolute;
-      bottom: 22px; left: 14px;
-      font-family: 'Shippori Mincho', serif;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      color: #fff;
-      line-height: 1.5;
-      text-shadow: 0 1px 8px rgba(0,0,0,0.4);
-      z-index: 2;
-    }
-    .wtf--aurum .wtf-aurum-sub {
-      position: absolute;
-      bottom: 10px; left: 14px;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 5px;
-      letter-spacing: 0.4em;
-      color: rgba(240,235,224,0.75);
-      z-index: 2;
-    }
-    .wtf--aurum .wtf-bar {
-      background: rgba(245,243,238,0.94);
-      border-bottom: 1px solid rgba(26,23,20,0.08);
-    }
-    .wtf--aurum .wtf-bar .dot { background: rgba(26,23,20,0.2); }
-    .wtf--aurum .wtf-nav em {
-      font-family: 'Shippori Mincho', serif;
-      color: rgba(26,23,20,0.7);
-      font-style: normal;
-      font-size: 4px;
-    }
-
-    /* Matcha LP variant (翠香園) */
-    .wtf--matcha .wtf-body {
-      flex-direction: column;
-      padding: 0;
-      position: relative;
-      overflow: hidden;
-    }
-    .wtf--matcha .wtf-matcha-bg {
-      position: absolute; inset: 0;
-      background-image: url('images/portfolio/matcha-hero.png');
-      background-size: cover;
-      background-position: center;
-      filter: saturate(1.05) contrast(1.05);
-    }
-    .wtf--matcha .wtf-matcha-overlay {
-      position: absolute; inset: 0;
-      background:
-        linear-gradient(180deg, rgba(10,8,6,0.15) 0%, rgba(10,8,6,0.55) 60%, rgba(10,8,6,0.85) 100%),
-        radial-gradient(ellipse at 70% 40%, rgba(127,160,90,0.15), transparent 60%);
-    }
-    .wtf--matcha .wtf-matcha-brand {
-      position: absolute;
-      top: 14px; left: 14px;
-      font-family: 'Shippori Mincho', serif;
-      font-size: 9px;
-      letter-spacing: 0.2em;
-      color: #d4cfc0;
-      z-index: 2;
-    }
-    .wtf--matcha .wtf-matcha-title {
-      position: absolute;
-      bottom: 28px; left: 14px;
-      font-family: 'Shippori Mincho', serif;
-      font-size: 18px;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      color: #f4f1ea;
-      line-height: 1.3;
-      z-index: 2;
-    }
-    .wtf--matcha .wtf-matcha-title em {
-      font-style: normal;
-      color: #a8c47c;
-    }
-    .wtf--matcha .wtf-matcha-sub {
-      position: absolute;
-      bottom: 14px; left: 14px;
-      font-family: 'Shippori Mincho', serif;
-      font-size: 7px;
-      letter-spacing: 0.3em;
-      color: #9a9588;
-      z-index: 2;
-    }
-    .wtf--matcha .wtf-bar {
-      background: rgba(10,8,6,0.85);
-      border-bottom: 1px solid rgba(244,241,234,0.06);
-    }
-    .wtf--matcha .wtf-nav em {
-      font-family: 'Shippori Mincho', serif;
-      color: #d4cfc0;
-      font-style: normal;
-    }
-
-    /* Self / iniestabluu variant */
-    .wtf--self .wtf-body { padding: 0; position: relative; }
-    .wtf--self .wtf-bg {
-      position: absolute; inset: 0;
-      background:
-        linear-gradient(180deg, rgba(5,9,18,0.5), rgba(5,9,18,0.85)),
-        radial-gradient(ellipse at 50% 40%, rgba(244,241,234,0.18), transparent 70%),
-        linear-gradient(135deg, #1f1c16, #0a0908);
-    }
-    .wtf--self .wtf-wordmark {
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-en); font-weight: 200;
-      font-size: 20px; letter-spacing: 0.08em; color: var(--text);
-    }
-    .wtf--self .wtf-wordmark em { font-style: italic; color: var(--text-2); font-weight: 300; }
-    .wtf--self .wtf-foot {
-      position: absolute; bottom: 8px; left: 10px; right: 10px;
-      display: flex; justify-content: space-between;
-      font-size: 4px; letter-spacing: 0.25em; color: var(--text-3); text-transform: uppercase;
-    }
-
-    .work-body {
-      padding: 1.6rem 1.6rem 1.8rem;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-    .work-index {
-      font-family: var(--font-en);
-      font-size: 0.7rem;
-      font-weight: 400;
-      letter-spacing: 0.3em;
-      color: var(--text-3);
-      position: absolute;
-      top: 1rem; right: 1rem;
-      z-index: 2;
-      mix-blend-mode: difference;
-    }
-    .work-info {
-      margin-top: auto;
-    }
-    .work-type {
-      font-family: var(--font-en);
-      font-size: 0.68rem;
-      color: var(--text-2);
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      margin-bottom: 1.2rem;
-      font-weight: 400;
-    }
-    .work-info h3 {
-      font-family: var(--font-jp);
-      font-size: clamp(1.4rem, 2.2vw, 1.8rem);
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      line-height: 1.2;
-      white-space: nowrap;
-      margin-bottom: 0.8rem;
-    }
-    .work-info p {
-      font-family: var(--font-jp);
-      font-size: 0.82rem;
-      color: var(--text-2);
-      line-height: 1.7;
-      letter-spacing: 0.02em;
-    }
-    .work-card-arrow {
-      font-family: var(--font-en);
-      font-size: 0.75rem;
-      color: var(--text-2);
-      letter-spacing: 0.15em;
-      margin-top: 1.5rem;
-      transition: transform 0.3s var(--ease-out);
-      display: inline-block;
-    }
-    .work-card:hover .work-card-arrow { transform: translateX(4px); color: var(--text); }
-
-    /* ── Works Filter & Grid ── */
-    .works-filter {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 2.5rem;
-      flex-wrap: wrap;
-    }
-    .works-filter-btn {
-      padding: 0.4rem 1.2rem;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--text-3);
-      font-size: 0.72rem;
-      font-family: var(--font-en);
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition: all 0.25s var(--ease-out);
-    }
-    .works-filter-btn.active,
-    .works-filter-btn:hover {
-      background: var(--accent-2);
-      border-color: var(--accent-2);
-      color: #fff;
-    }
+    .works { padding: 0 clamp(1.5rem, 4vw, 4rem); }
     .works-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      gap: 1.6rem;
+    }
+    .work-card {
+      background: var(--surface-2);
+      overflow: hidden;
+      transition: transform 0.6s var(--ease-out), box-shadow 0.6s var(--ease-out), border-color 0.6s var(--ease-out);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+    }
+    .work-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+      border-color: rgba(232,219,184,0.22);
+    }
+    .work-mockup {
+      aspect-ratio: 4/3;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1f1c16, #0a0908);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .work-mockup::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: var(--bg-img);
+      background-size: cover;
+      background-position: center;
+      opacity: 0.55;
+      transition: transform 1.2s var(--ease-out), opacity 0.6s;
+    }
+    .work-card:hover .work-mockup::before {
+      transform: scale(1.06);
+      opacity: 0.75;
+    }
+    .work-mockup-frame {
+      position: relative;
+      width: 70%;
+      aspect-ratio: 16/10;
+      background: #0a0908;
+      border: 1px solid rgba(232,219,184,0.18);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 24px 50px rgba(0,0,0,0.6);
+      z-index: 2;
+    }
+    .work-mockup-frame::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 14px;
+      background: rgba(0,0,0,0.5);
+      border-bottom: 1px solid rgba(232,219,184,0.1);
+    }
+    .work-mockup-frame::after {
+      content: '';
+      position: absolute;
+      top: 4px; left: 6px;
+      width: 6px; height: 6px;
+      background: #555;
+      border-radius: 50%;
+      box-shadow: 10px 0 0 #555, 20px 0 0 #555;
+    }
+    .work-mockup-img {
+      position: absolute;
+      inset: 14px 0 0 0;
+      background-size: cover;
+      background-position: center;
+    }
+    .work-info {
+      padding: 1.6rem 1.8rem 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .work-info-text h3 {
+      font-family: var(--font-jp);
+      font-weight: 500;
+      font-size: 1.05rem;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .work-info-text p {
+      font-family: var(--font-jp);
+      font-size: 0.78rem;
+      color: var(--text-3);
+      letter-spacing: 0.06em;
+    }
+    .work-arrow {
+      font-family: var(--font-en);
+      font-size: 1.1rem;
+      color: var(--accent);
+      transition: transform 0.3s;
+    }
+    .work-card:hover .work-arrow { transform: translateX(6px); }
+    .works-all {
+      display: flex; justify-content: flex-end;
+      margin-top: 2.5rem;
       padding: 0 clamp(1.5rem, 4vw, 4rem);
     }
-    .works-grid .work-card {
-      flex: none;
-      opacity: 1;
-      transition: transform 0.4s var(--ease-out), opacity 0.3s ease;
-    }
-    .works-grid .work-card.hidden {
-      display: none;
+    .works-all a {
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 0.3rem;
     }
     @media (max-width: 1024px) {
       .works-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1398,8 +1011,8 @@
       content: '';
       position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse 80% 70% at 50% 50%, transparent 0%, rgba(5,9,18,0.55) 55%, rgba(5,9,18,0.92) 100%),
-        linear-gradient(180deg, rgba(5,9,18,0.6) 0%, transparent 30%, transparent 60%, rgba(5,9,18,0.92) 100%);
+        radial-gradient(ellipse 80% 70% at 50% 50%, transparent 0%, rgba(13,12,10,0.55) 55%, rgba(13,12,10,0.92) 100%),
+        linear-gradient(180deg, rgba(13,12,10,0.6) 0%, transparent 30%, transparent 60%, rgba(13,12,10,0.92) 100%);
       z-index: 0;
     }
     .cta .container, .cta-glow { position: relative; z-index: 1; }
@@ -1759,84 +1372,50 @@
       </div>
     </div>
     <div class="works-grid" id="worksGrid">
-      <a class="work-card" href="https://portfolio-architect-nu.vercel.app" target="_blank" rel="noopener" data-category="corporate">
-        <span class="work-index">01</span>
-        <div class="work-thumb">
-          <div class="work-thumb-frame wtf--aurum">
-            <div class="wtf-bar">
-              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-              <div class="wtf-nav"><em>私たちについて</em><em>プロジェクト</em><em>設計思想</em></div>
-            </div>
-            <div class="wtf-body">
-              <div class="wtf-aurum-bg"></div>
-              <div class="wtf-aurum-overlay"></div>
-              <div class="wtf-aurum-brand">AURUM<small>ARCHITECTS</small></div>
-              <div class="wtf-aurum-title">時を超える建築を、<br/>未来の風景へ。</div>
-              <div class="wtf-aurum-sub">AURUM ARCHITECTS</div>
-            </div>
+      <a class="work-card reveal" href="https://portfolio-architect-nu.vercel.app" target="_blank" rel="noopener">
+        <div class="work-mockup" style="--bg-img:url('images/portfolio/work-aurum.png');">
+          <div class="work-mockup-frame">
+            <div class="work-mockup-img" style="background-image:url('images/portfolio/work-aurum.png');"></div>
           </div>
         </div>
-        <div class="work-body">
-          <div class="work-info">
-            <p class="work-type">Corporate Site</p>
-            <h3>コーポレートサイト</h3>
-            <p>AURUM ARCHITECTS — 建築事務所の公式サイト。</p>
-            <span class="work-card-arrow">詳細を見る →</span>
+        <div class="work-info">
+          <div class="work-info-text">
+            <h3>AURUM ARCHITECTS 公式サイト</h3>
+            <p>コーポレート / Webデザイン / 開発</p>
           </div>
+          <span class="work-arrow">→</span>
         </div>
       </a>
-
-      <a class="work-card" href="https://portfolio-matcha-lp.vercel.app" target="_blank" rel="noopener" data-category="lp">
-        <span class="work-index">02</span>
-        <div class="work-thumb">
-          <div class="work-thumb-frame wtf--matcha">
-            <div class="wtf-bar">
-              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-              <div class="wtf-nav"><em>こだわり</em><em>商品</em><em>購入</em></div>
-            </div>
-            <div class="wtf-body">
-              <div class="wtf-matcha-bg"></div>
-              <div class="wtf-matcha-overlay"></div>
-              <div class="wtf-matcha-brand">翠香園</div>
-              <div class="wtf-matcha-title">本<em>物</em>の抹茶を。</div>
-              <div class="wtf-matcha-sub">京都・宇治より</div>
-            </div>
+      <a class="work-card reveal" href="https://portfolio-matcha-lp.vercel.app" target="_blank" rel="noopener">
+        <div class="work-mockup" style="--bg-img:url('images/portfolio/work-matcha.png');">
+          <div class="work-mockup-frame">
+            <div class="work-mockup-img" style="background-image:url('images/portfolio/work-matcha.png');"></div>
           </div>
         </div>
-        <div class="work-body">
-          <div class="work-info">
-            <p class="work-type">Landing Page</p>
-            <h3>ランディングページ</h3>
-            <p>翠香園 — 京都・宇治の抹茶LP。</p>
-            <span class="work-card-arrow">詳細を見る →</span>
+        <div class="work-info">
+          <div class="work-info-text">
+            <h3>翠香園 抹茶ブランドLP</h3>
+            <p>ブランディング / LP / 開発</p>
           </div>
+          <span class="work-arrow">→</span>
         </div>
       </a>
-
-      <a class="work-card" href="ec.html" data-category="ec">
-        <span class="work-index">03</span>
-        <div class="work-thumb">
-          <div class="work-thumb-frame wtf--ec">
-            <div class="wtf-bar">
-              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-              <div class="wtf-nav"><em>Shop</em><em>Gift</em><em>Cart (2)</em></div>
-            </div>
-            <div class="wtf-body">
-              <div class="wtf-eyebrow"><span>Store</span><span>All Items · 24</span></div>
-              <div class="wtf-grid"><div></div><div></div><div></div><div></div><div></div><div></div></div>
-            </div>
+      <a class="work-card reveal" href="ec.html">
+        <div class="work-mockup" style="--bg-img:linear-gradient(135deg, #2a2620, #0a0908);">
+          <div class="work-mockup-frame">
+            <div class="work-mockup-img" style="background:linear-gradient(135deg, #1f1c16, #0a0908); display:flex; align-items:center; justify-content:center; color:var(--text-3); font-family:var(--font-en); font-size:1.2rem; letter-spacing:0.3em;">COMING SOON</div>
           </div>
         </div>
-        <div class="work-body">
-          <div class="work-info">
-            <p class="work-type">EC Site</p>
-            <h3>ECサイト</h3>
-            <p>決済・在庫込みのショップ。</p>
-            <span class="work-card-arrow">詳細を見る →</span>
+        <div class="work-info">
+          <div class="work-info-text">
+            <h3>新規ECサイト準備中</h3>
+            <p>EC構築 / デザイン / 開発・運用</p>
           </div>
+          <span class="work-arrow">→</span>
         </div>
       </a>
     </div>
+    <div class="works-all"><a href="#contact">すべての制作実績を見る →</a></div>
   </section>
 
   <!-- Stats -->
