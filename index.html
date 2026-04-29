@@ -250,35 +250,24 @@
     .hero-bg {
       position: absolute;
       inset: 0;
-      background-image: url('images/hero-index.jpg');
+      background-image: url('images/hero-corridor.png');
       background-size: cover;
       background-position: center;
-      opacity: 0.78;
-      filter: saturate(1.1) contrast(1.05) brightness(0.9);
+      opacity: 0.95;
+      filter: saturate(1.05) contrast(1.05) brightness(0.95);
       animation: heroBgZoom 40s ease-in-out infinite alternate;
     }
     .hero-bg-overlay {
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(ellipse 90% 70% at 50% 50%, transparent 0%, rgba(13,12,10,0.55) 65%, rgba(13,12,10,0.95) 100%),
-        linear-gradient(180deg, rgba(13,12,10,0.5) 0%, transparent 25%, transparent 65%, rgba(13,12,10,0.92) 100%);
+      background: linear-gradient(90deg, rgba(13,12,10,0.85) 0%, rgba(13,12,10,0.55) 40%, rgba(13,12,10,0.15) 70%, transparent 100%);
     }
     @keyframes heroBgZoom {
       0%   { transform: scale(1); }
       100% { transform: scale(1.08); }
     }
-    .hero-rule {
-      position: absolute;
-      left: 50%; top: 20%;
-      width: 1px; height: 60%;
-      background: var(--border);
-      transform: translateX(-50%);
-      opacity: 0;
-      animation: fadeIn 1.2s var(--ease-out) 0.6s forwards;
-    }
     @keyframes fadeIn { to { opacity: 1; } }
-    .hero-content { position: relative; z-index: 1; width: 100%; text-align: center; }
+    .hero-content { position: relative; z-index: 1; width: 100%; text-align: left; max-width: 920px; }
     .hero-badge {
       display: inline-flex;
       align-items: center;
@@ -306,12 +295,13 @@
       50% { opacity: 0.5; transform: scale(0.8); }
     }
     .hero h1 {
-      font-family: var(--font-en);
-      font-size: clamp(2.8rem, 7.5vw, 6rem);
+      font-family: var(--font-jp);
+      font-size: clamp(2.2rem, 5.5vw, 4.5rem);
       font-weight: 500;
-      letter-spacing: -0.01em;
-      line-height: 1.05;
-      margin-bottom: 2.5rem;
+      letter-spacing: 0.02em;
+      line-height: 1.4;
+      margin-bottom: 2.2rem;
+      color: var(--text);
     }
     .hero h1 .line {
       display: block;
@@ -335,8 +325,8 @@
       font-family: var(--font-jp);
       font-size: clamp(0.95rem, 1.5vw, 1.15rem);
       color: var(--text-2);
-      max-width: 500px;
-      margin: 0 auto 3rem;
+      max-width: 640px;
+      margin: 0 0 3rem;
       line-height: 1.9;
       opacity: 0;
       animation: fadeUp 0.7s var(--ease-out) 2.6s forwards;
@@ -344,7 +334,8 @@
     .hero-actions {
       display: flex;
       gap: 1rem;
-      justify-content: center;
+      justify-content: flex-start;
+      flex-wrap: wrap;
       opacity: 0;
       animation: fadeUp 0.7s var(--ease-out) 2.8s forwards;
     }
@@ -359,45 +350,37 @@
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
-      padding: 0.85rem 2rem;
-      background: var(--text);
+      padding: 1rem 2.2rem;
+      background: var(--accent);
       color: var(--bg);
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       font-weight: 600;
-      border-radius: 12px;
-      border: none;
-      font-family: var(--font-en);
-      letter-spacing: 0.01em;
+      font-family: var(--font-jp);
+      border-radius: 4px;
+      border: 1px solid var(--accent);
+      letter-spacing: 0.05em;
       position: relative;
       overflow: hidden;
-      transition: transform 0.3s var(--ease-spring), box-shadow 0.3s ease;
+      transition: background 0.3s, color 0.3s, transform 0.3s var(--ease-spring), box-shadow 0.3s ease;
     }
-    .btn-primary::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.15) 100%);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
-    .btn-primary:hover::before { opacity: 1; }
+    .btn-primary:hover { background: transparent; color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.25); }
     .btn-primary:active { transform: translateY(0) scale(0.97); }
     .btn-ghost {
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
-      padding: 0.85rem 2rem;
+      padding: 1rem 2.2rem;
       background: transparent;
-      color: var(--text-2);
-      font-size: 0.85rem;
+      color: var(--accent);
+      font-size: 0.9rem;
       font-weight: 500;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      font-family: var(--font-en);
-      transition: color 0.3s, border-color 0.3s, transform 0.3s var(--ease-spring);
+      font-family: var(--font-jp);
+      border-radius: 4px;
+      border: 1px solid var(--accent);
+      letter-spacing: 0.05em;
+      transition: background 0.3s, color 0.3s, border-color 0.3s, transform 0.3s var(--ease-spring);
     }
-    .btn-ghost:hover { color: var(--text); border-color: var(--text-3); transform: translateY(-2px); }
+    .btn-ghost:hover { background: var(--accent); color: var(--bg); transform: translateY(-2px); }
     .btn-ghost:active { transform: translateY(0) scale(0.97); }
     .btn-arrow {
       transition: transform 0.3s var(--ease-out);
@@ -1289,22 +1272,17 @@
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-bg" role="img" aria-label="東京の夜景"></div>
+    <div class="hero-bg" role="img" aria-label="夜景の見える廊下"></div>
     <div class="hero-bg-overlay" aria-hidden="true"></div>
     <div class="container hero-content">
-      <div class="hero-badge">
-        <span class="hero-badge-dot"></span>
-        Web Production Studio
-      </div>
       <h1>
-        <span class="line"><span>We craft</span></span>
-        <span class="line"><span><span class="gradient-text">digital</span> experiences</span></span>
-        <span class="line"><span>that convert.</span></span>
+        <span class="line"><span>成果につながる、</span></span>
+        <span class="line"><span>Web体験を設計する。</span></span>
       </h1>
-      <p class="hero-sub">デザインからコーディングまで。ビジネスを加速させるWEBサイトを、圧倒的なクオリティで。</p>
+      <p class="hero-sub">戦略立案から設計、デザイン、実装、改善まで。<br/>ブランドの価値を伝え、事業の成長につなげるWebサイトを一貫して制作します。</p>
       <div class="hero-actions">
-        <a href="#contact" class="btn-primary">お問い合わせ <span class="btn-arrow">&rarr;</span></a>
-        <a href="#works" class="btn-ghost">実績を見る <span class="btn-arrow">&darr;</span></a>
+        <a href="#contact" class="btn-primary">制作のご相談 <span class="btn-arrow">&rarr;</span></a>
+        <a href="#works" class="btn-ghost">実績を見る <span class="btn-arrow">&rarr;</span></a>
       </div>
     </div>
     <div class="hero-scroll">
