@@ -999,13 +999,16 @@
     }
     .wtf--matcha .wtf-matcha-bg {
       position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse at 30% 30%, rgba(127,160,90,0.18), transparent 60%),
-        linear-gradient(135deg, #1a1815 0%, #0d0c0a 100%);
+      background-image: url('images/portfolio/matcha-hero.png');
+      background-size: cover;
+      background-position: center;
+      filter: saturate(1.05) contrast(1.05);
     }
     .wtf--matcha .wtf-matcha-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.4) 100%);
+      background:
+        linear-gradient(180deg, rgba(10,8,6,0.15) 0%, rgba(10,8,6,0.55) 60%, rgba(10,8,6,0.85) 100%),
+        radial-gradient(ellipse at 70% 40%, rgba(127,160,90,0.15), transparent 60%);
     }
     .wtf--matcha .wtf-matcha-brand {
       position: absolute;
